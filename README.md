@@ -1,5 +1,5 @@
-# RealEstateManager_P7
-Projet 7 de mon parcours Android
+# RealEstateManager_P8
+Projet 8 de mon parcours Android
 
 Une grande agence new-yorkaise est spécialisée dans la vente de biens d’exception : duplex, lofts, penthouse et manoirs.
 Jusqu’à présent, elle a fonctionné selon les bonnes vieilles techniques du 19ème siècle : des dossiers papier et un crayon.
