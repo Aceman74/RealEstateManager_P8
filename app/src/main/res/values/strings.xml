@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
+    <string name="real_estate_manager">Real Estate Manager</string>
+    <string name="login">Login</string>
 </resources>
