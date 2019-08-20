@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/primaryTextColor"
+    android:layout_margin="2dp"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="2dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="start"
+    android:layout_weight="0.3">
+
+    <ImageView
+        android:id="@+id/property_img"
+        android:layout_width="120dp"
+        android:layout_height="120dp" />
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:gravity="start|center"
+        android:layout_weight="0.5">
+
+
+        <TextView
+            android:id="@+id/property_type_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            android:text="Appartement"
+            android:textStyle="bold"
+            android:textSize="@dimen/small_title_size"
+            android:textColor="@color/secondaryTextColor"/>
+
+
+        <TextView
+            android:id="@+id/property_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            android:text="Location"
+            android:textSize="@dimen/normal_text_size"
+            android:textColor="@color/primaryLightColor"/>
+
+        <TextView
+            android:id="@+id/property_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            android:text="$ 5 000 000"
+            android:textSize="@dimen/normal_title_size"
+            android:textColor="@color/secondaryColor"/>
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:gravity="center">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/property_item_sold_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
