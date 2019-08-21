@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "678160980400",
+    "firebase_url": "https://real-estate-mana-1566319924578.firebaseio.com",
+    "project_id": "real-estate-mana-1566319924578",
+    "storage_bucket": "real-estate-mana-1566319924578.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:678160980400:android:653930854394cca3",
+        "android_client_info": {
+          "package_name": "com.openclassrooms.realestatemanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "678160980400-b9gm3f0ljbka2dhb09kk14povao0j09b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.openclassrooms.realestatemanager",
+            "certificate_hash": "1925843f6777e7b752ddf9403dcdded9cddfe3ee"
+          }
+        },
+        {
+          "client_id": "678160980400-pofgo2k1o1d0c4c7jk6gaku4kdq14hqt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzlOIZRkYygRJL0PKdMakt41BSARczyUc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "678160980400-pofgo2k1o1d0c4c7jk6gaku4kdq14hqt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

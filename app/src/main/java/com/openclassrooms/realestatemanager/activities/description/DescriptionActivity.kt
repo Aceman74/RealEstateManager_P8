@@ -1,24 +1,28 @@
-package com.openclassrooms.realestatemanager.activities
+package com.openclassrooms.realestatemanager.activities.description
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.design.widget.NavigationView
-import android.support.v4.view.ViewPager
+import android.view.Menu
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
+import androidx.viewpager.widget.ViewPager
 import android.view.MenuItem
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.adapters.PageAdapter
+import com.openclassrooms.realestatemanager.fragments.description.DescriptionContract
+import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_description.*
 import timber.log.Timber
 
-class DescriptionActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var pager:ViewPager
+
+class DescriptionActivity(override val activityLayout: Int = R.layout.activity_description) : BaseActivity(), DescriptionContract.DescriptionViewInterface, NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
+
+    private lateinit var pager: ViewPager
     private lateinit var pagerAdapter: PageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_description)
         pager = description_viewpager
         configureNavigationView()
         configureViewPager()
@@ -46,11 +50,11 @@ class DescriptionActivity : AppCompatActivity(), NavigationView.OnNavigationItem
             R.id.drawer_third -> {
                 Timber.i("Click third")
             }
-            R.id.bottom_description -> {
+            R.id.bottom_main_list -> {
                 pager.currentItem = 0
                 Timber.i("Click Description")
             }
-            R.id.bottom_location -> {
+            R.id.bottom_main_map -> {
                 pager.currentItem = 1
                 Timber.i("Click Location")
             }
@@ -59,7 +63,11 @@ class DescriptionActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         }
         return true
     }
-
+   override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return true
+    }
     fun configureNavigationView() {
         description_nav_view.setNavigationItemSelectedListener(this)
         description_bottom_navigation.setOnNavigationItemSelectedListener(this)

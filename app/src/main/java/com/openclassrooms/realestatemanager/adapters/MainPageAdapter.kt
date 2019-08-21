@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.openclassrooms.realestatemanager.fragments.list.ListFragment
 
-import com.openclassrooms.realestatemanager.fragments.description.DescriptionFragment
-import com.openclassrooms.realestatemanager.fragments.location.LocationFragment
+import com.openclassrooms.realestatemanager.fragments.map.MapFragment
 
 
-class PageAdapter(mgr: FragmentManager, private val mContext: Context) : FragmentPagerAdapter(mgr) {
+class MainPageAdapter(mgr: FragmentManager, private val mContext: Context) : FragmentPagerAdapter(mgr) {
 
 
     /**
@@ -30,9 +30,9 @@ class PageAdapter(mgr: FragmentManager, private val mContext: Context) : Fragmen
     override fun getItem(position: Int): Fragment? {
         when (position) {
             0 //Page number 1
-            -> return DescriptionFragment.newInstance()
+            -> return ListFragment.newInstance()
             1 //Page number 2
-            -> return LocationFragment.newInstance()
+            -> return MapFragment.newInstance()
             else -> return null
         }
     }

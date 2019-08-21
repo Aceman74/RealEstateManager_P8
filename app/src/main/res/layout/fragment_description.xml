@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
     android:orientation="vertical"
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp"
-    tools:context=".fragments.DescriptionFragment">
+    tools:context=".fragments.description.DescriptionFragment">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
         android:orientation="horizontal"
             android:layout_weight="0.5">
 
-<android.support.v7.widget.AppCompatImageView
+<androidx.appcompat.widget.AppCompatImageView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:src="@android:drawable/ic_input_add"/>
@@ -80,7 +80,7 @@
             android:layout_weight="0.5">
 
 
-                <android.support.v7.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@android:drawable/ic_input_add"/>
@@ -168,7 +168,7 @@
                 android:orientation="horizontal"
                 android:layout_weight="0.5">
 
-                <android.support.v7.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@android:drawable/ic_input_add"/>
@@ -188,7 +188,7 @@
                 android:layout_weight="0.5"
                 >
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@android:drawable/ic_input_add"/>
@@ -286,7 +286,7 @@
                 android:orientation="horizontal"
                 android:layout_weight="0.5">
 
-                <android.support.v7.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@android:drawable/ic_input_add"/>
@@ -306,7 +306,7 @@
                 android:layout_weight="0.5">
 
 
-                <android.support.v7.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@android:drawable/ic_input_add"/>
@@ -382,7 +382,7 @@
                 android:orientation="horizontal"
                 android:layout_weight="0.5">
 
-                <android.support.v7.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@android:drawable/ic_input_add"/>
@@ -402,7 +402,7 @@
                 android:layout_weight="0.5"
                 >
 
-                <android.support.v7.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@android:drawable/ic_input_add"/>
@@ -467,4 +467,4 @@
         </LinearLayout>
     </LinearLayout>
             </ScrollView>
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

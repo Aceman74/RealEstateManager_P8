@@ -1,25 +1,24 @@
-package com.openclassrooms.realestatemanager.fragments
+package com.openclassrooms.realestatemanager.fragments.location
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.openclassrooms.realestatemanager.BuildConfig
-
 import com.openclassrooms.realestatemanager.R
-import kotlinx.android.synthetic.main.fragment_location.*
 
-class LocationFragment : Fragment(), OnMapReadyCallback {
-    lateinit var mMap:GoogleMap
-    lateinit var mMapsFragment:SupportMapFragment
+
+class LocationFragment : Fragment(), LocationContract.LocationViewInterface, OnMapReadyCallback {
+    override fun onMapReady(p0: GoogleMap?) {
+    }
+
     lateinit var mPlaces: PlacesClient
-    private var API_KEY:String = BuildConfig.google_maps_key
+    private var API_KEY: String = BuildConfig.google_maps_key
 
     companion object {
 
@@ -37,16 +36,9 @@ class LocationFragment : Fragment(), OnMapReadyCallback {
 
     fun initializeMapsAndPlaces() {
 
-        mMapsFragment = childFragmentManager.findFragmentById(R.id.location_map) as SupportMapFragment
-        mMapsFragment.getMapAsync(this)
-        // Setup Places Client
-        if (!Places.isInitialized()) {
-            context?.let { Places.initialize(it, API_KEY) }
-            mPlaces = context?.let { Places.createClient(it) }!!
-        }
-    }
-    override fun onMapReady(p0: GoogleMap?) {
+        Places.initialize(requireContext(), API_KEY)
 
+// Create a new Places client instance
+        mPlaces = Places.createClient(requireContext())
     }
-
 }
