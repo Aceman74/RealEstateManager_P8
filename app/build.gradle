@@ -2,6 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'jacoco-android'
+apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
+apply plugin: 'io.fabric'   //  CrashLytics
 
 android {
     compileSdkVersion 29
@@ -71,9 +74,6 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.14'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
-
-    apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
-    apply plugin: 'io.fabric'   //  CrashLytics
 
 }
 repositories {

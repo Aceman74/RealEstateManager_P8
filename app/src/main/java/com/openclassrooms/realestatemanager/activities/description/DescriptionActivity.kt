@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.activities.description
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -8,6 +9,7 @@ import com.google.android.material.navigation.NavigationView
 import androidx.viewpager.widget.ViewPager
 import android.view.MenuItem
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.activities.main.MainActivity
 import com.openclassrooms.realestatemanager.adapters.PageAdapter
 import com.openclassrooms.realestatemanager.fragments.description.DescriptionContract
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
@@ -45,9 +47,13 @@ class DescriptionActivity(override val activityLayout: Int = R.layout.activity_d
                  */
             }
             R.id.drawer_second -> {
+                val intent = Intent(baseContext, MainActivity::class.java)
+                startActivity(intent)
                 Timber.i("Click second")
             }
-            R.id.drawer_third -> {
+            R.id.drawer_third ->
+            {                    val intent = Intent(baseContext, DescriptionActivity::class.java)
+                startActivity(intent)
                 Timber.i("Click third")
             }
             R.id.bottom_main_list -> {
