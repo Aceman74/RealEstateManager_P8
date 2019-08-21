@@ -11,6 +11,7 @@ import com.openclassrooms.realestatemanager.fragments.LocationFragment
 
 class PageAdapter(mgr: FragmentManager, private val mContext: Context) : FragmentPagerAdapter(mgr) {
 
+
     /**
      * Page numbers.
      *

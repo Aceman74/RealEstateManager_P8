@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <item
-        android:id="@+id/bottom_maps"
+        android:id="@+id/bottom_description"
         android:enabled="true"
         android:icon="@android:drawable/ic_dialog_info"
         android:title="Description"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/bottom_list_view"
+        android:id="@+id/bottom_location"
         android:enabled="true"
         android:icon="@android:drawable/ic_dialog_map"
         android:title="Location"

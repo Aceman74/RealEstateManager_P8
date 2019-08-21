@@ -8,13 +8,13 @@
 
             <group android:checkableBehavior="none">
                 <item
-                    android:id="@+id/drawer_your_lunch"
+                    android:id="@+id/drawer_first"
                     android:title="test" />
                 <item
-                    android:id="@+id/drawer_settings"
+                    android:id="@+id/drawer_second"
                     android:title="test2" />
                 <item
-                    android:id="@+id/drawer_logout"
+                    android:id="@+id/drawer_third"
                     android:title="test3" />
             </group>
 

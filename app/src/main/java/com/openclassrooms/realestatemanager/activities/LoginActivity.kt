@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
+import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import kotlinx.android.synthetic.main.activity_login.*
+import timber.log.Timber
 
 /**
  * Created by Lionel JOFFRAY - on 06/08/2019.
@@ -18,6 +20,8 @@ class LoginActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        if (BuildConfig.DEBUG)
+            Timber.plant(Timber.DebugTree())
         login_btn.setOnClickListener {
             val intent = Intent(baseContext, DescriptionActivity::class.java)
             startActivity(intent)

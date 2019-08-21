@@ -5,4 +5,13 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="surface">Surface</string>
+    <string name="number_of_rooms">Number of rooms</string>
+    <string name="number_of_bathrooms">Number of bathrooms</string>
+    <string name="number_of_bedrooms">Number of bedrooms</string>
+    <string name="name">Name</string>
+    <string name="available">Available</string>
+    <string name="date_added">Date added</string>
+    <string name="last_modification">Last modification</string>
+    <string name="location">Location</string>
 </resources>
