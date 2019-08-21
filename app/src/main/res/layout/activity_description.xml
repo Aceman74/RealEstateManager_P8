@@ -152,7 +152,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/primaryColor"
+            android:background="@color/secondaryDarkColor"
             app:itemIconTint="@color/primaryTextColor"
             app:itemTextColor="@color/primaryTextColor"
             app:menu="@menu/description_bottom_navigation" />
@@ -164,7 +164,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/primaryColor"
+        android:background="@color/secondaryDarkColor"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/navigation_drawer_header"
         app:menu="@menu/navigation_drawer"
