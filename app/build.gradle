@@ -20,10 +20,13 @@ android {
     buildTypes {
         debug {
             buildConfigField "String", "google_maps_key", "\"AIzaSyAmRODU3jNUDegOT_p9eqZQytzUnX5oHXI\""
+            buildConfigField "String", "Zillow_api_key", "\"X1-ZWz17pcwlrq3uz_77v70\""
+
         }
         release {
             minifyEnabled false
             buildConfigField "String", "google_maps_key", "\"AIzaSyAmRODU3jNUDegOT_p9eqZQytzUnX5oHXI\""
+            buildConfigField "String", "Zillow_api_key", "\"X1-ZWz17pcwlrq3uz_77v70\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
