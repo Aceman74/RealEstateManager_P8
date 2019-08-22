@@ -1,16 +1,10 @@
 package com.openclassrooms.realestatemanager.activities.login
 
 
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.annotations.Nullable
-import com.google.firebase.firestore.DocumentSnapshot
-import com.openclassrooms.realestatemanager.activities.api.UserHelper
-import com.openclassrooms.realestatemanager.data.User
-import com.openclassrooms.realestatemanager.utils.DateSetter
 import com.openclassrooms.realestatemanager.utils.base.BasePresenter
-import java.util.*
 
 /**
  * Created by Lionel JOFFRAY - on 28/05/2019.

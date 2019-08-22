@@ -15,6 +15,7 @@ import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsListener
 import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.Utils.isInternetAvailable
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_login.*
@@ -39,6 +40,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
         mPresenter.attachView(this)
         checkPermission()
         isCurrentUserLogged
+        isInternetAvailable(applicationContext)
 
 
         login_btn.setOnClickListener {

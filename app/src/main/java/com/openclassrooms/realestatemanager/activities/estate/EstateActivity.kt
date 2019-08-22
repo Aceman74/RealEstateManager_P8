@@ -1,7 +1,6 @@
-package com.openclassrooms.realestatemanager.activities.description
+package com.openclassrooms.realestatemanager.activities.estate
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -9,6 +8,7 @@ import com.google.android.material.navigation.NavigationView
 import androidx.viewpager.widget.ViewPager
 import android.view.MenuItem
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.activities.login.EstateContract
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
 import com.openclassrooms.realestatemanager.adapters.PageAdapter
 import com.openclassrooms.realestatemanager.fragments.description.DescriptionContract
@@ -18,7 +18,7 @@ import timber.log.Timber
 
 
 
-class DescriptionActivity(override val activityLayout: Int = R.layout.activity_description) : BaseActivity(), DescriptionContract.DescriptionViewInterface, NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
+class EstateActivity(override val activityLayout: Int = R.layout.activity_description) : BaseActivity(), EstateContract.EstateViewInterface, NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var pager: ViewPager
     private lateinit var pagerAdapter: PageAdapter
@@ -52,7 +52,7 @@ class DescriptionActivity(override val activityLayout: Int = R.layout.activity_d
                 Timber.i("Click second")
             }
             R.id.drawer_third ->
-            {                    val intent = Intent(baseContext, DescriptionActivity::class.java)
+            {                    val intent = Intent(baseContext, EstateActivity::class.java)
                 startActivity(intent)
                 Timber.i("Click third")
             }

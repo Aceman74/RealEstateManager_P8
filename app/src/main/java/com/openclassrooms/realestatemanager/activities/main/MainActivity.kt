@@ -4,18 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.activities.description.DescriptionActivity
-import com.openclassrooms.realestatemanager.activities.login.DescriptionContract
+import com.openclassrooms.realestatemanager.activities.estate.EstateActivity
 import com.openclassrooms.realestatemanager.activities.login.MainContract
 import com.openclassrooms.realestatemanager.adapters.MainPageAdapter
-import com.openclassrooms.realestatemanager.adapters.PageAdapter
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_description.*
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
@@ -45,7 +41,7 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
                 Timber.i("Click second")
             }
             R.id.drawer_third ->
-            {                    val intent = Intent(baseContext, DescriptionActivity::class.java)
+            {                    val intent = Intent(baseContext, EstateActivity::class.java)
                 startActivity(intent)
                 Timber.i("Click third")
             }

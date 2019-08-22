@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.main.MainActivity"></activity>
-        <activity android:name=".activities.description.DescriptionActivity" />
+        <activity android:name=".activities.estate.EstateActivity" />
         <activity
             android:name=".activities.login.LoginActivity"
             android:theme="@style/AppTheme.NoTitle">

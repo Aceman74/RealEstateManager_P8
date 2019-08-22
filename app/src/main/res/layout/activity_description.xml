@@ -5,7 +5,7 @@
     android:id="@+id/description_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.description.DescriptionActivity">
+    tools:context=".activities.estate.EstateActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -153,8 +153,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@color/secondaryDarkColor"
-            app:itemIconTint="@color/primaryTextColor"
-            app:itemTextColor="@color/primaryTextColor"
+            app:itemIconTint="@drawable/bottom_navigation_selector"
+            app:itemTextColor="@drawable/bottom_navigation_selector"
             app:menu="@menu/description_bottom_navigation" />
 
     </LinearLayout>

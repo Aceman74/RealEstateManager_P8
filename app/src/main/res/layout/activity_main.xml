@@ -43,8 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@color/secondaryDarkColor"
-            app:itemIconTint="@color/primaryTextColor"
-            app:itemTextColor="@color/primaryTextColor"
+            app:itemIconTint="@drawable/bottom_navigation_selector"
+            app:itemTextColor="@drawable/bottom_navigation_selector"
             app:menu="@menu/main_bottom_navigation" />
 
     </LinearLayout>

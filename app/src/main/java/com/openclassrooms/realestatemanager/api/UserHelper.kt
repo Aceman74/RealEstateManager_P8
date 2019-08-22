@@ -1,11 +1,10 @@
-package com.openclassrooms.realestatemanager.activities.api
+package com.openclassrooms.realestatemanager.api
 
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.openclassrooms.realestatemanager.data.User
-import java.util.*
 
 /**
  * Created by Lionel JOFFRAY - on 02/05/2019.
