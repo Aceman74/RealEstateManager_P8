@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'jacoco-android'
 apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
@@ -34,8 +34,8 @@ android {
         unitTests.includeAndroidResources = true
     }
     compileOptions {
-        sourceCompatibility = kotlin_version
-        targetCompatibility = kotlin_version
+        sourceCompatibility = "1.8"
+        targetCompatibility = "1.8"
     }
     buildToolsVersion = '28.0.3'
 }
