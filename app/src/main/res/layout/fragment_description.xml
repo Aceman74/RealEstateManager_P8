@@ -465,6 +465,53 @@
 
             </LinearLayout>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="@dimen/normal_margin"
+                            android:text="@string/location"
+                            android:textColor="@color/secondaryTextColor" />
+
+                    </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/location_left_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.5"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/fragment_loc_address"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/normal_margin"
+                                android:text="FULL ADDRESS" />
+
+                            <ImageView
+                                android:id="@+id/fragment_loc_maps_static"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/static_maps" />
+
+                        </LinearLayout>
+                </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
             </ScrollView>
 </androidx.cardview.widget.CardView>

@@ -137,25 +137,13 @@
                 app:cardElevation="2dp">
 
 
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/description_viewpager"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+
+                <include layout="@layout/fragment_description"/>
 
             </androidx.cardview.widget.CardView>
 
 
         </LinearLayout>
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/description_bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/secondaryDarkColor"
-            app:itemIconTint="@drawable/bottom_navigation_selector"
-            app:itemTextColor="@drawable/bottom_navigation_selector"
-            app:menu="@menu/description_bottom_navigation" />
 
     </LinearLayout>
 

@@ -15,4 +15,5 @@
     <string name="last_modification">Last modification</string>
     <string name="location">Location</string>
     <string name="error_unknown_error">an unknown error has occurred</string>
+    <string name="static_maps">static maps</string>
 </resources>

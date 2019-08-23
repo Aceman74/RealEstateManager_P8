@@ -10,7 +10,7 @@ import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.activities.estate.EstateActivity
 import com.openclassrooms.realestatemanager.activities.login.MainContract
-import com.openclassrooms.realestatemanager.adapters.MainPageAdapter
+import com.openclassrooms.realestatemanager.adapters.MainPagerAdapter
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
@@ -18,7 +18,7 @@ import timber.log.Timber
 class MainActivity(override val activityLayout: Int = R.layout.activity_main) : BaseActivity(), MainContract.MainViewInterface, NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var pager: ViewPager
-    private lateinit var pagerAdapter: MainPageAdapter
+    private lateinit var mPagerAdapter: MainPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +68,7 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
         main_activity_bottom_navigation.setOnNavigationItemSelectedListener(this)
     }
     fun configureViewPager() {
-        pagerAdapter = MainPageAdapter(supportFragmentManager,applicationContext)
-        pager.adapter = pagerAdapter
+        mPagerAdapter = MainPagerAdapter(supportFragmentManager,applicationContext)
+        pager.adapter = mPagerAdapter
     }
 }

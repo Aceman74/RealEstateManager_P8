@@ -1,9 +1,6 @@
 package com.openclassrooms.realestatemanager
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.wifi.WifiManager
-import androidx.test.core.app.ApplicationProvider
+
 import org.junit.Test
 
 import org.junit.Assert.*

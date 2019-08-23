@@ -9,7 +9,7 @@ import com.openclassrooms.realestatemanager.fragments.list.ListFragment
 import com.openclassrooms.realestatemanager.fragments.map.MapFragment
 
 
-class MainPageAdapter(mgr: FragmentManager, private val mContext: Context) : FragmentPagerAdapter(mgr) {
+class MainPagerAdapter(mgr: FragmentManager, private val mContext: Context) : FragmentPagerAdapter(mgr) {
 
 
     /**
