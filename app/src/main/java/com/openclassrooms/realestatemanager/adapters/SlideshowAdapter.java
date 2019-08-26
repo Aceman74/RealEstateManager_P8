@@ -42,7 +42,7 @@ public class SlideshowAdapter extends RecyclerView.Adapter<SlideshowAdapter.MyVi
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-      //  updateWithFreshInfo(mImageList.get(position), holder, position);
+      //  updateWithFreshInfo(mEstateList.get(position), holder, position);
     }
 
     /**

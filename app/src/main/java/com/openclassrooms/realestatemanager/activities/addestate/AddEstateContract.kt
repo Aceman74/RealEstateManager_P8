@@ -9,9 +9,9 @@ import com.openclassrooms.realestatemanager.utils.base.BaseView
  *
  * The contracts for Main Activity.
  */
-interface EstateContract {
+interface AddEstateContract {
 
-    interface EstatePresenterInterface
+    interface AddEstatePresenterInterface
 
-    interface EstateViewInterface : BaseView
+    interface AddEstateViewInterface : BaseView
 }

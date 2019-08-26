@@ -6,12 +6,9 @@
         android:id="@+id/toolbar_add"
         android:icon="@android:drawable/ic_menu_add"
         android:title="Add"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/toolbar_edit"
-        android:icon="@android:drawable/ic_menu_edit"
-        android:title="Edit"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        />
+
     <item
         android:id="@+id/toolbar_search"
         android:icon="@android:drawable/ic_menu_search"

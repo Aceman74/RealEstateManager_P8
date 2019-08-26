@@ -9,4 +9,4 @@ import com.openclassrooms.realestatemanager.utils.base.BasePresenter
  *
  * The presenter for Login Activity.
  */
-class EstatePresenter : BasePresenter(), EstateContract.EstatePresenterInterface
+class AddEstatePresenter : BasePresenter(), AddEstateContract.AddEstatePresenterInterface

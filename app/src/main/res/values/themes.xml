@@ -1,7 +1,7 @@
 <resources>
 
     <!-- MAIN THEME -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
@@ -9,9 +9,10 @@
     </style>
 
     <!-- LOGIN ACTIVITY -->
-    <style name="AppTheme.NoTitle" parent="AppTheme">
+    <style name="AppTheme.Login" parent="AppTheme">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="actionBarTheme">@null</item>
     </style>
+
 </resources>

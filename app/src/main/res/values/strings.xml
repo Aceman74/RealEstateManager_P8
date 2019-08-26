@@ -16,4 +16,17 @@
     <string name="location">Location</string>
     <string name="error_unknown_error">an unknown error has occurred</string>
     <string name="static_maps">static maps</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
+    <string name="description">Description</string>
+    <string name="describe_the_property_here">Full description here.</string>
+    <string name="sqft">sqft</string>
+    <string name="rooms">rooms</string>
+    <string name="bathrooms">bathrooms</string>
+    <string name="bedrooms">bedrooms</string>
+    <string name="agent_details">Agent details</string>
+    <string name="agent_name_example">Agent Name example</string>
+    <string name="for_sale_sold">For Sale / Sold</string>
+    <string name="date">Date</string>
+    <string name="_0">0</string>
 </resources>
