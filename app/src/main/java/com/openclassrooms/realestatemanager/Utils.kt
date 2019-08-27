@@ -4,6 +4,10 @@ import android.app.usage.NetworkStatsManager
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
+import android.view.View
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -58,5 +62,15 @@ object Utils {
         val network = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         activeNetwork = wifi.isWifiEnabled || network.activeNetworkInfo != null && network.activeNetworkInfo.isConnected
         return activeNetwork
+    }
+
+    fun snackBarPreset(view: View, message:String) : Unit{
+        val snack = Snackbar.make(view,message, Snackbar.LENGTH_LONG)
+        val snackView = snack.view
+        val txtView = snackView.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+        snackView.setPadding(0,0,0,0)
+        txtView.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        txtView.setBackgroundResource(R.color.primaryDarkColor)
+        return snack.show()
     }
 }
