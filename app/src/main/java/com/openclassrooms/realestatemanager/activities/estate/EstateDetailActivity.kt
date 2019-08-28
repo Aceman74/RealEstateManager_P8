@@ -29,7 +29,7 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(findViewById(R.id.detail_estate_toolbar))
-        configureDrawerLayout(detail_estate_drawer_layout,detail_estate_toolbar)
+        configureDrawerLayout(detail_estate_drawer_layout, detail_estate_toolbar)
         configureItemListeners()
     }
 
@@ -69,16 +69,17 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
             super.onBackPressed()
         }
     }
+
     /**
      * On Toolbar item selected.
      */
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.toolbar_edit -> {
-            Toast.makeText(this,"Edit action", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Edit action", Toast.LENGTH_LONG).show()
             true
         }
-        android.R.id.home ->{
-            Toast.makeText(this,"Home action", Toast.LENGTH_LONG).show()
+        android.R.id.home -> {
+            Toast.makeText(this, "Home action", Toast.LENGTH_LONG).show()
             true
         }
         else -> {
@@ -92,9 +93,11 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
         menuInflater.inflate(R.menu.detail_estate_toolbar_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
+
     fun configureItemListeners() {
         detail_estate_nav_view.setNavigationItemSelectedListener(this)
     }
+
     /**
      * Initialize the recyclerview for history.
      */

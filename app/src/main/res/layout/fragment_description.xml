@@ -7,143 +7,161 @@
     android:orientation="vertical"
     tools:context=".activities.estate.EstateDetailActivity">
 
-        <LinearLayout
-            android:id="@+id/add_estate_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="start"
-            android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/add_estate_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="start"
+        android:orientation="horizontal">
 
-            <androidx.cardview.widget.CardView
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp"
+            android:orientation="vertical"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:orientation="vertical"
-                app:cardCornerRadius="2dp"
-                app:cardElevation="2dp">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/relative_layout"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/normal_margin"
+                    android:layout_weight="0.3"
+                    android:gravity="start"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/desc_estate_type_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/estate_type"
+                        android:textColor="@color/secondaryTextColor"
+                        android:textSize="@dimen/small_title_size"
+                        android:textStyle="bold"
+                        android:layout_margin="@dimen/small_margin"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?android:attr/selectableItemBackground"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/desc_estate_type_img"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:src="@android:drawable/ic_menu_edit"
+                        android:layout_toEndOf="@+id/desc_estate_type_txt"
+                        android:layout_margin="@dimen/small_margin"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:id="@+id/desc_estate_neighborhood_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/neighborhood"
+                        android:textColor="@color/primaryLightColor"
+                        android:textSize="@dimen/normal_text_size"
+                        android:layout_below="@+id/desc_estate_type_txt"
+                        android:background="?android:attr/selectableItemBackground"  />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/desc_neighbourhood_img"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:src="@android:drawable/ic_menu_edit"
+                        android:layout_below="@+id/desc_estate_type_txt"
+                        android:layout_toEndOf="@+id/desc_estate_neighborhood_txt"
+                        android:layout_margin="@dimen/small_margin"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:id="@+id/money_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/normal_title_size"
+                        android:textColor="@color/secondaryColor"
+                        android:layout_below="@+id/desc_estate_neighborhood_txt"
+                        android:layout_margin="@dimen/small_margin"
+                        android:text="$" />
+
+                    <TextView
+                        android:id="@+id/desc_estate_price_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/set_price"
+                        android:textColor="@color/secondaryColor"
+                        android:textSize="@dimen/normal_title_size"
+                        android:layout_below="@+id/desc_estate_neighborhood_txt"
+                        android:layout_toEndOf="@+id/money_icon"
+                        android:layout_margin="@dimen/small_margin"
+                        android:textStyle="bold"
+                        android:background="?android:attr/selectableItemBackground" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/desc_price_img"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:src="@android:drawable/ic_menu_edit"
+                        android:layout_below="@+id/desc_estate_neighborhood_txt"
+                        android:layout_toEndOf="@+id/desc_estate_price_txt"
+                        android:layout_margin="@dimen/small_margin"
+                        android:visibility="invisible" />
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:baselineAligned="false">
+                    android:layout_gravity="center"
+                    android:layout_weight="0.7"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/relative_layout"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/normal_margin"
-                        android:layout_weight="0.3"
-                        android:gravity="start"
-                        android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/add_estate_state_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/available"
+                        android:textColor="@android:color/holo_green_light"
+                        android:textSize="@dimen/normal_text_size"
+                        android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/add_estate_type_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/estate_type"
-                            android:textColor="@color/secondaryTextColor"
-                            android:textSize="@dimen/small_title_size"
-                            android:textStyle="bold"
-                            android:layout_margin="@dimen/small_margin" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/desc_estate_type_img"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@android:color/transparent"
-                            android:src="@android:drawable/ic_menu_edit"
-                            android:layout_toEndOf="@+id/add_estate_type_txt"
-                            android:layout_margin="@dimen/small_margin"
-                            android:visibility="invisible" />
-
-                        <TextView
-                            android:id="@+id/add_estate_neighborhood"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Location"
-                            android:textColor="@color/primaryLightColor"
-                            android:textSize="@dimen/normal_text_size"
-                            android:layout_below="@+id/add_estate_type_txt" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/desc_neighbourhood_img"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@android:color/transparent"
-                            android:src="@android:drawable/ic_menu_edit"
-                            android:layout_below="@+id/add_estate_type_txt"
-                            android:layout_toEndOf="@+id/add_estate_neighborhood"
-                            android:layout_margin="@dimen/small_margin"
-                            android:visibility="invisible" />
-
-                        <TextView
-                            android:id="@+id/add_estate_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$ Set price"
-                            android:textColor="@color/secondaryColor"
-                            android:textSize="@dimen/normal_title_size"
-                            android:layout_below="@+id/add_estate_neighborhood"
-                            android:layout_margin="@dimen/small_margin" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/desc_price_img"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@android:color/transparent"
-                            android:src="@android:drawable/ic_menu_edit"
-                            android:layout_below="@+id/add_estate_neighborhood"
-                            android:layout_toEndOf="@+id/add_estate_price"
-                            android:layout_margin="@dimen/small_margin"
-                            android:visibility="invisible" />
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.7"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/add_estate_state_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/available"
-                            android:textColor="@android:color/holo_green_light"
-                            android:textSize="@dimen/normal_text_size"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/detail_estate_date_sold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/primaryLightColor"
-                            android:textSize="@dimen/normal_text_size"
+                    <TextView
+                        android:id="@+id/detail_estate_date_sold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primaryLightColor"
+                        android:textSize="@dimen/normal_text_size"
 
 
-                            />
-
-                    </LinearLayout>
+                        />
 
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
 
-        <ScrollView
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                app:cardCornerRadius="2dp"
-                app:cardElevation="2dp">
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="2dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -151,25 +169,29 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/desc_description_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@drawable/gradient"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:id="@+id/desc_title"
+                        android:id="@+id/desc_description_txt"
                         android:layout_margin="@dimen/normal_margin"
                         android:text="@string/description"
-                        android:textColor="@color/secondaryTextColor" />
+                        android:textColor="@color/secondaryTextColor"
+                        android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/desc_description_img"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="@android:color/transparent"
+                        android:background="?android:attr/selectableItemBackground"
                         android:src="@android:drawable/ic_menu_edit"
-                        android:layout_toEndOf="@+id/desc_title"
+                        android:layout_toEndOf="@+id/desc_description_txt"
                         android:layout_margin="@dimen/small_margin"
                         android:visibility="invisible" />
                 </RelativeLayout>
@@ -243,35 +265,43 @@
                     android:baselineAligned="false">
 
                     <LinearLayout
+                        android:id="@+id/desc_sqft_layout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_weight="0.5"
                         android:gravity="start"
                         android:layout_marginStart="@dimen/small_margin"
-                        android:layout_marginBottom="@dimen/small_margin">
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?android:attr/selectableItemBackground">
 
                         <TextView
-                            android:id="@+id/surface_txt_view"
+                            android:id="@+id/desc_sqft_choice_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin"
                             android:gravity="center"
                             android:text="@string/_0"
-                            android:layout_gravity="center" />
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryTextColor"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="@string/sqft"
-                            android:layout_gravity="center" />
+                            android:layout_gravity="center"
+                            android:textColor="@color/secondaryTextColor"
+                            android:textStyle="italic"/>
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/desc_sqft_img"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:background="@android:color/transparent"
+                            android:background="?android:attr/selectableItemBackground"
                             android:src="@android:drawable/ic_menu_edit"
                             android:layout_margin="@dimen/small_margin"
                             android:visibility="invisible" />
@@ -279,35 +309,41 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/desc_rooms_layout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_weight="0.5"
                         android:gravity="start"
                         android:layout_marginStart="@dimen/small_margin"
-                        android:layout_marginBottom="@dimen/small_margin">
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:background="?android:attr/selectableItemBackground" >
 
                         <TextView
-                            android:id="@+id/rooms_txt_view"
+                            android:id="@+id/desc_rooms_choice_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin"
                             android:gravity="center"
                             android:text="@string/_0"
-                            android:layout_gravity="center" />
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryTextColor"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="@string/rooms"
-                            android:layout_gravity="center" />
+                            android:layout_gravity="center"
+                            android:textColor="@color/secondaryTextColor"
+                            android:textStyle="italic"/>
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/desc_rooms_img"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:background="@android:color/transparent"
+                            android:background="?android:attr/selectableItemBackground"
                             android:src="@android:drawable/ic_menu_edit"
                             android:layout_margin="@dimen/small_margin"
                             android:visibility="invisible" />
@@ -374,71 +410,83 @@
                     android:baselineAligned="false">
 
                     <LinearLayout
+                        android:id="@+id/desc_bathrooms_layout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_weight="0.5"
                         android:gravity="start"
                         android:layout_marginStart="@dimen/small_margin"
-                        android:layout_marginBottom="@dimen/small_margin">
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:background="?android:attr/selectableItemBackground" >
 
                         <TextView
-                            android:id="@+id/bathrooms_txt_view"
+                            android:id="@+id/desc_bathrooms_choice_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_margin="@dimen/small_margin"
                             android:gravity="center"
-                            android:text="@string/_0" />
+                            android:text="@string/_0"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryTextColor"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="@string/bathrooms"
-                            android:layout_gravity="center" />
+                            android:layout_gravity="center"
+                            android:textColor="@color/secondaryTextColor"
+                            android:textStyle="italic"/>
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/desc_bathrooms_img"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:background="@android:color/transparent"
+                            android:background="?android:attr/selectableItemBackground"
                             android:src="@android:drawable/ic_menu_edit"
                             android:layout_margin="@dimen/small_margin"
                             android:visibility="invisible" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/desc_bedrooms_layout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_weight="0.5"
                         android:gravity="start"
                         android:layout_marginStart="@dimen/small_margin"
-                        android:layout_marginBottom="@dimen/small_margin">
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:background="?android:attr/selectableItemBackground" >
 
 
                         <TextView
-                            android:id="@+id/bedrooms_txt_view"
+                            android:id="@+id/desc_bedrooms_choice_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin"
                             android:gravity="center"
                             android:layout_gravity="center"
-                            android:text="@string/_0" />
+                            android:text="@string/_0"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryTextColor"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="@string/bedrooms"
-                            android:layout_gravity="center" />
+                            android:layout_gravity="center"
+                            android:textColor="@color/secondaryTextColor"
+                            android:textStyle="italic"/>
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/desc_bedrooms_img"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:background="@android:color/transparent"
+                            android:background="?android:attr/selectableItemBackground"
                             android:src="@android:drawable/ic_menu_edit"
                             android:layout_margin="@dimen/small_margin"
                             android:visibility="invisible" />
@@ -449,14 +497,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@drawable/gradient">
 
                     <TextView
                         android:id="@+id/fragment_desc_agent"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/normal_margin"
-                        android:text="@string/agent_details" />
+                        android:text="@string/agent_details"
+                        android:textColor="@color/secondaryTextColor"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -523,40 +574,46 @@
                         android:layout_marginBottom="@dimen/small_margin">
 
                         <TextView
-                            android:id="@+id/agent_txt_view"
+                            android:id="@+id/desc_agent_choice_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin"
                             android:gravity="center"
                             android:text="@string/agent_name_example"
-                            android:layout_gravity="center" />
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryTextColor"/>
 
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/desc_available_layout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_weight="0.5"
                         android:gravity="start"
                         android:layout_marginStart="@dimen/small_margin"
-                        android:layout_marginBottom="@dimen/small_margin">
+                        android:layout_marginBottom="@dimen/small_margin"
+                        android:background="?android:attr/selectableItemBackground" >
 
                         <TextView
-                            android:id="@+id/avaiable_txt_view"
+                            android:id="@+id/desc_available_choice_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin"
                             android:gravity="center"
                             android:text="@string/for_sale_sold"
-                            android:layout_gravity="center" />
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryTextColor"/>
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/desc_avaiable_img"
+                            android:id="@+id/desc_available_img"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:background="@android:color/transparent"
+                            android:background="?android:attr/selectableItemBackground"
                             android:src="@android:drawable/ic_menu_edit"
                             android:layout_margin="@dimen/small_margin"
                             android:visibility="invisible" />
@@ -626,13 +683,15 @@
                         android:layout_marginBottom="@dimen/small_margin">
 
                         <TextView
-                            android:id="@+id/date_added_txt_view"
+                            android:id="@+id/desc_date_added_choice_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin"
                             android:gravity="center"
                             android:text="@string/date"
-                            android:layout_gravity="center" />
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryTextColor"/>
 
 
                     </LinearLayout>
@@ -648,12 +707,14 @@
 
 
                         <TextView
-                            android:id="@+id/last_modified_txt_view"
+                            android:id="@+id/desc_last_mod_date_choice_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_margin"
                             android:gravity="center"
-                            android:layout_gravity="center" />
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondaryTextColor"/>
 
 
                     </LinearLayout>
@@ -673,14 +734,16 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:background="@drawable/gradient">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_margin="@dimen/normal_margin"
                                 android:text="@string/location"
-                                android:textColor="@color/secondaryTextColor" />
+                                android:textColor="@color/secondaryTextColor"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 
@@ -708,6 +771,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </ScrollView>
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
 </LinearLayout>

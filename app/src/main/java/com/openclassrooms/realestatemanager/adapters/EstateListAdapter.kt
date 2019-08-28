@@ -55,12 +55,12 @@ class EstateListAdapter(var mEstateList: List<Estate>, private val mContext: Con
      * View Holder .
      *
      */
-    class MyViewHolder (view: View) : RecyclerView.ViewHolder(view){
-        var type:TextView = view.estate_type_txt
-        var neighborhood:TextView = view.detail_estate_neighborhood
-        var price:TextView = view.detail_estate_price
-        var sold:ImageView = view.estate_item_sold_icon
-        var picture:ImageView = view.estate_img
+    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var type: TextView = view.estate_type_txt
+        var neighborhood: TextView = view.detail_estate_neighborhood
+        var price: TextView = view.detail_estate_price
+        var sold: ImageView = view.estate_item_sold_icon
+        var picture: ImageView = view.estate_img
 
 
     }

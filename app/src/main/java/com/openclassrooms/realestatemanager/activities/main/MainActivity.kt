@@ -27,7 +27,7 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
         super.onCreate(savedInstanceState)
         pager = main_activity_viewpager
         setSupportActionBar(findViewById(R.id.main_toolbar))
-        configureDrawerLayout(main_drawer_layout,main_toolbar)
+        configureDrawerLayout(main_drawer_layout, main_toolbar)
         configureItemListeners()
         configureViewPager()
     }
@@ -41,7 +41,7 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
 
         when (id) {
             R.id.drawer_first -> {
-                val intent = Intent(baseContext,AddEstateActivity::class.java)
+                val intent = Intent(baseContext, AddEstateActivity::class.java)
                 startActivity(intent)
                 Timber.i("Click Create")
             }
@@ -80,22 +80,23 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
             super.onBackPressed()
         }
     }
+
     /**
      * On Toolbar item selected.
      */
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.toolbar_add -> {
-            Toast.makeText(this,"Add action",Toast.LENGTH_LONG).show()
-            intent = Intent(this,AddEstateActivity::class.java)
+            Toast.makeText(this, "Add action", Toast.LENGTH_LONG).show()
+            intent = Intent(this, AddEstateActivity::class.java)
             startActivity(intent)
             true
         }
         R.id.toolbar_search -> {
-            Toast.makeText(this,"Search action",Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Search action", Toast.LENGTH_LONG).show()
             true
         }
-        android.R.id.home ->{
-            Toast.makeText(this,"Home action",Toast.LENGTH_LONG).show()
+        android.R.id.home -> {
+            Toast.makeText(this, "Home action", Toast.LENGTH_LONG).show()
             true
         }
 
@@ -120,7 +121,7 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
     }
 
     fun configureViewPager() {
-        mPagerAdapter = MainPagerAdapter(supportFragmentManager,applicationContext)
+        mPagerAdapter = MainPagerAdapter(supportFragmentManager, applicationContext)
         pager.adapter = mPagerAdapter
     }
 }

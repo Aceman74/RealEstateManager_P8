@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.models
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -9,5 +10,5 @@ import androidx.room.PrimaryKey
  */
 
 @Entity(foreignKeys = [ForeignKey(entity = Estate::class, parentColumns = arrayOf("pid"), childColumns = arrayOf("eid"))])
-data class Picture(@PrimaryKey(autoGenerate = true) var pid: Long,
-                   var picture: String)
+data class Picture(@PrimaryKey(autoGenerate = true) var pid: Long = 0,
+                   @ColumnInfo(typeAffinity = ColumnInfo.BLOB) var picture: ByteArray? = null)

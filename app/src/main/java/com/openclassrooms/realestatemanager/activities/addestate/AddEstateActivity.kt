@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.activities.addestate
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -8,6 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.NumberPicker
 import androidx.core.view.GravityCompat
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.Utils
@@ -20,15 +22,19 @@ import com.openclassrooms.realestatemanager.utils.rxbus.RxBus
 import com.openclassrooms.realestatemanager.utils.rxbus.RxEvent
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_add_estate.*
+import kotlinx.android.synthetic.main.fragment_add_images.*
 import kotlinx.android.synthetic.main.fragment_description.*
 import timber.log.Timber
+import java.io.IOException
 
 
-class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add_estate) : BaseActivity(), AddEstateContract.AddEstateViewInterface, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, NumberPicker.OnValueChangeListener, NumberPickerDialog.OnDialogFinish {
-    var mStringResult: String = ""
+class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add_estate) : BaseActivity(), AddEstateContract.AddEstateViewInterface, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, NumberPicker.OnValueChangeListener {
+    var mPriceResut: String = ""
+    var mDescResult: String = ""
     var mIntResult: Int = 0
     var mPickerArray = IntArray(9)
     private lateinit var pickerDisposable: Disposable
+    var PICK_IMAGE_REQUEST = 50
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,59 +42,109 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         configureDrawerLayout(add_estate_drawer_layout, add_estate_toolbar)
         configureItemListeners()
         configureEditView()
-        date_added_txt_view.text = Utils.todayDate
-        agent_txt_view.text = currentUser?.displayName.toString()
+        desc_date_added_choice_txt.text = Utils.todayDate
+        desc_agent_choice_txt.text = currentUser?.displayName.toString()
 
-        pickerDisposable = RxBus.listen(RxEvent.PickerEvent::class.java).subscribe {
-            mStringResult = it.string
+        pickerDisposable = RxBus.listen(RxEvent.PickerDescEvent::class.java).subscribe {
+            mDescResult = it.desc
+            mIntResult = it.nbr
+        }
+        pickerDisposable = RxBus.listen(RxEvent.PickerPriceEvent::class.java).subscribe {
+            mPriceResut = it.price
             mIntResult = it.nbr
         }
     }
 
     override fun onClick(v: View?) {
         when (v) {
-            desc_estate_type_img -> {
+            desc_estate_type_img, desc_estate_type_txt -> {
                 showNumberPicker(1, mPickerArray[0])
                 Timber.i("Click Type")
             }
-            desc_neighbourhood_img -> {
+            desc_neighbourhood_img, desc_estate_neighborhood_txt -> {
                 showNumberPicker(2, mPickerArray[1])
                 Timber.i("Click Neighbourhood")
             }
-            desc_price_img -> {
+            desc_price_img, desc_estate_price_txt -> {
                 showNumberPicker(3, mPickerArray[0])
                 Timber.i("Click Price")
             }
-            desc_description_img -> {
+            desc_description_img, desc_description_layout -> {
                 showNumberPicker(4, mPickerArray[0])
                 Timber.i("Click Description")
             }
-            desc_sqft_img -> {
+            desc_sqft_img, desc_sqft_layout -> {
                 showNumberPicker(5, mPickerArray[4])
                 Timber.i("Click Sqft")
             }
-            desc_rooms_img -> {
+            desc_rooms_img, desc_rooms_layout -> {
                 showNumberPicker(6, mPickerArray[5])
                 Timber.i("Click Rooms")
             }
-            desc_bathrooms_img -> {
+            desc_bathrooms_img, desc_bathrooms_layout -> {
                 showNumberPicker(7, mPickerArray[6])
                 Timber.i("Click Bathrooms")
             }
-            desc_bedrooms_img -> {
+            desc_bedrooms_img, desc_bedrooms_layout -> {
                 showNumberPicker(8, mPickerArray[7])
                 Timber.i("Click Bedrooms")
             }
-            desc_avaiable_img -> {
+            desc_available_img, desc_available_layout -> {
                 showNumberPicker(9, mPickerArray[8])
                 Timber.i("Click Available")
+            }
+            first_pic -> {
+                PICK_IMAGE_REQUEST = 1
+                openGallery()
+            }
+            second_pic -> {
+                PICK_IMAGE_REQUEST = 2
+                openGallery()
+            }
+            third_pic -> {
+                PICK_IMAGE_REQUEST = 3
+                openGallery()
+            }
+            fourth_pic -> {
+                PICK_IMAGE_REQUEST = 4
+                openGallery()
             }
         }
     }
 
-    override fun onString(string: String, nbr: Int) {
-        mStringResult = string
-        mIntResult = nbr
+
+    fun openGallery() {
+        val intent = Intent()
+// Show only images, no videos or anything else
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+// Always show the chooser (if there are multiple options available)
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+            lateinit var imageView: ImageView
+            val uri = data.data
+
+            try {
+                Timber.tag("URI $PICK_IMAGE_REQUEST").i("$uri")
+                when (PICK_IMAGE_REQUEST) {
+                    1 -> imageView = first_pic
+                    2 -> imageView = second_pic
+                    3 -> imageView = third_pic
+                    4 -> imageView = fourth_pic
+                }
+                Glide.with(this)
+                        .load(uri)
+                        .centerCrop()
+                        .into(imageView)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -101,38 +157,38 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
 
         when (i) {
             1 -> {
-                add_estate_type_txt.text = picker.displayedValues[newVal]
+                desc_estate_type_txt.text = picker.displayedValues[newVal]
                 mPickerArray[0] = newVal
             }
             2 -> {
-                add_estate_neighborhood.text = picker.displayedValues[newVal]
+                desc_estate_neighborhood_txt.text = picker.displayedValues[newVal]
                 mPickerArray[1] = newVal
             }
             3 -> {
-                add_estate_price.text = mStringResult
+                desc_estate_price_txt.text = mPriceResut
             }
             4 -> {
-                fragment_desc_desc_txt.text = mStringResult
+                fragment_desc_desc_txt.text = mDescResult
             }
             5 -> {
-                surface_txt_view.text = newVal.toString()
+                desc_sqft_choice_txt.text = newVal.toString()
                 mPickerArray[4] = newVal
             }
             6 -> {
-                rooms_txt_view.text = newVal.toString()
+                desc_rooms_choice_txt.text = newVal.toString()
                 mPickerArray[5] = newVal
             }
             7 -> {
-                bathrooms_txt_view.text = newVal.toString()
+                desc_bathrooms_choice_txt.text = newVal.toString()
                 mPickerArray[6] = newVal
             }
             8 -> {
-                bedrooms_txt_view.text = newVal.toString()
+                desc_bedrooms_choice_txt.text = newVal.toString()
                 mPickerArray[7] = newVal
             }
 
             9 -> {
-                avaiable_txt_view.text = picker.displayedValues[newVal]
+                desc_available_choice_txt.text = picker.displayedValues[newVal]
                 mPickerArray[8] = newVal
                 when (newVal) {
                     0 -> {
@@ -168,17 +224,30 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         desc_rooms_img.visibility = ImageView.VISIBLE
         desc_bathrooms_img.visibility = ImageView.VISIBLE
         desc_bedrooms_img.visibility = ImageView.VISIBLE
-        desc_avaiable_img.visibility = ImageView.VISIBLE
+        desc_available_img.visibility = ImageView.VISIBLE
 
         desc_estate_type_img.setOnClickListener(this)
+        desc_estate_type_txt.setOnClickListener(this)
         desc_neighbourhood_img.setOnClickListener(this)
+        desc_estate_neighborhood_txt.setOnClickListener(this)
         desc_price_img.setOnClickListener(this)
+        desc_estate_price_txt.setOnClickListener(this)
         desc_description_img.setOnClickListener(this)
+        desc_description_layout.setOnClickListener(this)
         desc_sqft_img.setOnClickListener(this)
+        desc_sqft_layout.setOnClickListener(this)
         desc_rooms_img.setOnClickListener(this)
+        desc_rooms_layout.setOnClickListener(this)
         desc_bathrooms_img.setOnClickListener(this)
+        desc_bathrooms_layout.setOnClickListener(this)
         desc_bedrooms_img.setOnClickListener(this)
-        desc_avaiable_img.setOnClickListener(this)
+        desc_bedrooms_layout.setOnClickListener(this)
+        desc_available_img.setOnClickListener(this)
+        desc_available_layout.setOnClickListener(this)
+        first_pic.setOnClickListener(this)
+        second_pic.setOnClickListener(this)
+        third_pic.setOnClickListener(this)
+        fourth_pic.setOnClickListener(this)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

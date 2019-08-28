@@ -5,5 +5,7 @@ package com.openclassrooms.realestatemanager.utils.rxbus
  */
 class RxEvent {
 
-    data class PickerEvent(val string: String,val nbr:Int)
+    data class PickerPriceEvent(val price: String, val nbr: Int)
+
+    data class PickerDescEvent(val desc: String, val nbr: Int)
 }

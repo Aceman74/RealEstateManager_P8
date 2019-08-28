@@ -7,6 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".activities.addestate.AddEstateActivity">
 
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,20 +26,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
         <LinearLayout
             android:id="@+id/add_estate_pager"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <include layout="@layout/fragment_add_images" />
 
             <include layout="@layout/fragment_description" />
 
         </LinearLayout>
 
     </LinearLayout>
-
+</ScrollView>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/add_estate_nav_view"
         android:layout_width="wrap_content"

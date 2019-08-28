@@ -30,4 +30,8 @@
     <string name="date">Date</string>
     <string name="_0">0</string>
     <string name="estate_type">Estate Type</string>
+    <string name="main_picture">Main Picture</string>
+    <string name="additional">Additional</string>
+    <string name="neighborhood">Neighborhood</string>
+    <string name="set_price">Set price</string>
 </resources>

@@ -29,6 +29,7 @@ abstract class BasePresenter {
     fun attachView(v: BaseView) {
         mView = v
     }
+
     fun getView(): BaseView {
         return mView
     }

@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.karumi.dexter.Dexter
@@ -159,7 +158,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
     private fun configureTextViewQuantity() {
     val quantity = Utils.convertDollarToEuro(200)
     textViewQuantity.textSize = 20f
-    textViewQuantity.text = quantity.toString()   //  Fix the variable, convert from int to string.
+    textViewQuantity.text = quantity.toString()   //  Fix the variable, convert from int to desc.
     }
 
      */

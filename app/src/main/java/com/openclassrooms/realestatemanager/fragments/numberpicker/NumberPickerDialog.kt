@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.fragments.numberpicker
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.InputType
 import android.widget.EditText
 import android.widget.NumberPicker
 import androidx.appcompat.app.AlertDialog
@@ -11,8 +12,6 @@ import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.utils.rxbus.RxBus
 import com.openclassrooms.realestatemanager.utils.rxbus.RxEvent
-import io.opencensus.trace.MessageEvent
-import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -21,8 +20,8 @@ import org.greenrobot.eventbus.EventBus
 class NumberPickerDialog(val i: Int, mOldVal: Int?) : DialogFragment() {
     private lateinit var valueChangeListener: NumberPicker.OnValueChangeListener
     private var mOldVal: Int? = mOldVal
-    var string:String = ""
-    var nbr:Int = 0
+    var string: String = ""
+    var nbr: Int = 0
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -71,6 +70,7 @@ class NumberPickerDialog(val i: Int, mOldVal: Int?) : DialogFragment() {
                 numberPicker.tag = 3
                 editText.tag = 3
                 nbr = 3
+                editText.inputType = InputType.TYPE_CLASS_NUMBER
             }
             4 -> {
 
@@ -84,6 +84,7 @@ class NumberPickerDialog(val i: Int, mOldVal: Int?) : DialogFragment() {
             5 -> {
                 numberPicker.minValue = 5
                 numberPicker.maxValue = 110000
+                numberPicker.value = 5
 
                 builder.setTitle("Square Feet")
                 builder.setMessage("Choose square feet :")
@@ -125,24 +126,29 @@ class NumberPickerDialog(val i: Int, mOldVal: Int?) : DialogFragment() {
             }
 
         }
-        if(mOldVal != null)
+        if (mOldVal != null)
             numberPicker.value = mOldVal as Int
 
         builder.setPositiveButton("OK") { dialog, which ->
 
-            when(i){
-                3,4 ->{
+            when (i) {
+                3 -> {
                     string = editText.text.toString()
-                    RxBus.publish(RxEvent.PickerEvent(string,nbr))
+                    string = Utils.PriceSpace(string)
+                    RxBus.publish(RxEvent.PickerPriceEvent(string, nbr))
+                }
+                4 -> {
+                    string = editText.text.toString()
+                    RxBus.publish(RxEvent.PickerDescEvent(string, nbr))
                 }
             }
             valueChangeListener.onValueChange(numberPicker,
                     numberPicker.value, numberPicker.value)
-            Utils.snackBarPreset(activity!!.findViewById(android.R.id.content),"Success")
+            Utils.snackBarPreset(activity!!.findViewById(android.R.id.content), "Success")
         }
 
         builder.setNegativeButton("CANCEL") { dialog, which ->
-            Utils.snackBarPreset(activity!!.findViewById(android.R.id.content),"Cancel")
+            Utils.snackBarPreset(activity!!.findViewById(android.R.id.content), "Cancel")
         }
 
 
@@ -160,10 +166,6 @@ class NumberPickerDialog(val i: Int, mOldVal: Int?) : DialogFragment() {
 
     fun getValueChangeListener(): NumberPicker.OnValueChangeListener {
         return valueChangeListener
-    }
-
-    interface OnDialogFinish{
-        fun onString(string: String, nbr:Int) = Unit
     }
 
     fun setValueChangeListener(valueChangeListener: NumberPicker.OnValueChangeListener) {

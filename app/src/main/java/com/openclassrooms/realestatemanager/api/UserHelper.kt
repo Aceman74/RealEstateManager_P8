@@ -5,7 +5,6 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.openclassrooms.realestatemanager.models.User
-import java.util.*
 
 /**
  * Created by Lionel JOFFRAY - on 02/05/2019.
@@ -38,7 +37,7 @@ object UserHelper {
      * @param email      email
      * @return new user
      */
-    fun createUser(uid: String, username: String, urlPicture: String, email: String, date:Date): Task<Void> {
+    fun createUser(uid: String, username: String, urlPicture: String, email: String, date: String): Task<Void> {
         val userToCreate = User(uid, username, urlPicture, email, date)
         return UserHelper.usersCollection.document(uid).set(userToCreate)
     }
