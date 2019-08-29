@@ -1,3 +1,11 @@
+/*
+ * *
+ *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Copyright (c) 2019 . All rights reserved.
+ *  * Last modified 29/08/19 22:26
+ *
+ */
+
 package com.openclassrooms.realestatemanager.activities.addestate
 
 import android.app.Activity
@@ -8,7 +16,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.NumberPicker
+import android.widget.Toast
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
@@ -16,10 +26,16 @@ import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.activities.estate.EstateDetailActivity
 import com.openclassrooms.realestatemanager.activities.login.AddEstateContract
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
+import com.openclassrooms.realestatemanager.activities.viewmodels.EstateViewModel
 import com.openclassrooms.realestatemanager.fragments.numberpicker.NumberPickerDialog
+import com.openclassrooms.realestatemanager.injections.Injection
+import com.openclassrooms.realestatemanager.models.Estate
+import com.openclassrooms.realestatemanager.models.User
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import com.openclassrooms.realestatemanager.utils.rxbus.RxBus
 import com.openclassrooms.realestatemanager.utils.rxbus.RxEvent
+import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
+import com.openclassrooms.realusermanager.activities.viewmodels.UserViewModel
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_add_estate.*
 import kotlinx.android.synthetic.main.fragment_add_images.*
@@ -31,19 +47,30 @@ import java.io.IOException
 class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add_estate) : BaseActivity(), AddEstateContract.AddEstateViewInterface, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, NumberPicker.OnValueChangeListener {
     var mPriceResut: String = ""
     var mDescResult: String = ""
+    var mType = 0
+    var mNeighborhood = 0
+    var mSqft = 0
+    var mRooms = 0
+    var mBathrooms = 0
+    var mBedrooms = 0
+    var mAvailable = 0
     var mIntResult: Int = 0
     var mPickerArray = IntArray(9)
     private lateinit var pickerDisposable: Disposable
+    lateinit var estateViewModel: EstateViewModel
+    lateinit var userViewModel: UserViewModel
+    lateinit var pictureViewModel: PictureViewModel
+
     var PICK_IMAGE_REQUEST = 50
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(findViewById(R.id.add_estate_toolbar))
         configureDrawerLayout(add_estate_drawer_layout, add_estate_toolbar)
-        configureItemListeners()
-        configureEditView()
+        configureListeners()
         desc_date_added_choice_txt.text = Utils.todayDate
         desc_agent_choice_txt.text = currentUser?.displayName.toString()
+        configureViewModel()
 
         pickerDisposable = RxBus.listen(RxEvent.PickerDescEvent::class.java).subscribe {
             mDescResult = it.desc
@@ -53,6 +80,21 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
             mPriceResut = it.price
             mIntResult = it.nbr
         }
+    }
+
+    private fun configureViewModel() {
+        val mViewModelFactory = Injection.provideViewModelFactory(this)
+        this.estateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
+        this.userViewModel = ViewModelProviders.of(this, mViewModelFactory).get(UserViewModel::class.java)
+        this.pictureViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PictureViewModel::class.java)
+    }
+
+    private fun addToDatabase() {
+        var user = User(currentUser!!.uid, currentUser!!.displayName.toString(), currentUser!!.email.toString(), currentUser!!.photoUrl.toString(), "TODAY")
+        this.userViewModel.createUser(user)
+        var estate = Estate(1, currentUser!!.uid, mType, mNeighborhood, mPriceResut, mDescResult, mSqft, mRooms, mBathrooms, mBedrooms, mAvailable)
+        this.estateViewModel.createEstate(estate)
+        onBackPressed()
     }
 
     override fun onClick(v: View?) {
@@ -159,10 +201,12 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
             1 -> {
                 desc_estate_type_txt.text = picker.displayedValues[newVal]
                 mPickerArray[0] = newVal
+                mType = newVal
             }
             2 -> {
                 desc_estate_neighborhood_txt.text = picker.displayedValues[newVal]
                 mPickerArray[1] = newVal
+                mNeighborhood = newVal
             }
             3 -> {
                 desc_estate_price_txt.text = mPriceResut
@@ -173,23 +217,28 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
             5 -> {
                 desc_sqft_choice_txt.text = newVal.toString()
                 mPickerArray[4] = newVal
+                mSqft = newVal
             }
             6 -> {
                 desc_rooms_choice_txt.text = newVal.toString()
                 mPickerArray[5] = newVal
+                mRooms = newVal
             }
             7 -> {
                 desc_bathrooms_choice_txt.text = newVal.toString()
                 mPickerArray[6] = newVal
+                mBathrooms = newVal
             }
             8 -> {
                 desc_bedrooms_choice_txt.text = newVal.toString()
                 mPickerArray[7] = newVal
+                mBedrooms = newVal
             }
 
             9 -> {
                 desc_available_choice_txt.text = picker.displayedValues[newVal]
                 mPickerArray[8] = newVal
+                mAvailable = newVal
                 when (newVal) {
                     0 -> {
                         add_estate_state_txt.text = "For Sale"
@@ -201,8 +250,6 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                         add_estate_state_txt.setTextColor(resources.getColor(R.color.quantum_googred))
                         detail_estate_date_sold.text = Utils.todayDate
                     }
-
-
                 }
             }
 
@@ -215,7 +262,9 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         newFragment.show(supportFragmentManager, "time picker")
     }
 
-    private fun configureEditView() {
+    private fun configureListeners() {
+        add_estate_nav_view.setNavigationItemSelectedListener(this)
+
         desc_estate_type_img.visibility = ImageView.VISIBLE
         desc_neighbourhood_img.visibility = ImageView.VISIBLE
         desc_price_img.visibility = ImageView.VISIBLE
@@ -276,6 +325,27 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
     }
 
     /**
+     * On Toolbar item selected.
+     */
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.add_estate_validate -> {
+            Toast.makeText(this, "Add action", Toast.LENGTH_LONG).show()
+            addToDatabase()
+            true
+        }
+        R.id.add_estate_cancel -> {
+            Toast.makeText(this, "cancel", Toast.LENGTH_LONG).show()
+            onBackPressed()
+            true
+        }
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
+        }
+    }
+
+    /**
      * Override on back pressed when drawer layout is open.
      */
     override fun onBackPressed() {
@@ -291,7 +361,4 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         return super.onCreateOptionsMenu(menu)
     }
 
-    fun configureItemListeners() {
-        add_estate_nav_view.setNavigationItemSelectedListener(this)
-    }
 }

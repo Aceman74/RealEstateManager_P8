@@ -1,7 +1,13 @@
+/*
+ * *
+ *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Copyright (c) 2019 . All rights reserved.
+ *  * Last modified 29/08/19 22:22
+ *
+ */
+
 package com.openclassrooms.realestatemanager
 
-import javax.xml.datatype.DatatypeConstants.SECONDS
-import android.R.attr.countDown
 import androidx.annotation.Nullable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

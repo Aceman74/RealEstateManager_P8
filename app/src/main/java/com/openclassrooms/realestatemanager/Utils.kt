@@ -1,3 +1,11 @@
+/*
+ * *
+ *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Copyright (c) 2019 . All rights reserved.
+ *  * Last modified 29/08/19 22:26
+ *
+ */
+
 package com.openclassrooms.realestatemanager
 
 import android.content.Context
@@ -79,5 +87,37 @@ object Utils {
             i += 4
         }
         return s.toString()
+    }
+
+    class ListOfString {
+
+        companion object {
+            fun listOfType(): Array<String> {
+                return listOf("Apartment", "Castle", "Chalet / Cottage", "Country House", "Hotel",
+                        "House", "Island", "Land", "Loft", "Mansion", "Office", "Penthouse",
+                        "Residential complex", "Townhouse", "Villa").toTypedArray().sortedArray()
+            }
+
+            fun listOfNeighborhood(): Array<String> {
+
+                return listOf("Albany", "Allegany", "Bronx", "Broome", "Cattaraugus", "Cayuga",
+                        "Chautauqua", "Chemung", "Chenango", "Clinton", "Columbia", "Cortland",
+                        "Delaware", "Dutchess", "Erie", "Essex", "Franklin", "Fulton", "Genesee",
+                        "Greene", "Hamilton", "Herkimer", "Jefferson", "Kings (Brooklyn)",
+                        "Lewis", "Livingston", "Madison", "Monroe", "Montgomery", "Nassau",
+                        "New York (Manhattan)", "Niagara", "Oneida", "Onondaga", "Ontario",
+                        "Orange", "Orleans", "Oswego", "Otsego", "Putnam", "Queens", "Rensselaer",
+                        "Richmond (Staten Island)", "Rockland", "Saint Lawrence", "Saratoga",
+                        "Schenectady", "Schoharie", "Schuyler", "Seneca", "Steuben", "Suffolk",
+                        "Sullivan", "Tioga", "Tompkins", "Ulster", "Warren", "Washington",
+                        "Wayne", "Westchester", "Wyoming", "Yates").toTypedArray().sortedArray()
+            }
+
+            fun listOfAvailable(): Array<String> {
+                return listOf("For Sale", "Sold").toTypedArray()
+            }
+
+        }
+
     }
 }

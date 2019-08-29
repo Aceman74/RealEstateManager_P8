@@ -1,4 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /**
+  ~  * Created by Lionel Joffray on 29/08/19 22:26
+  ~  * Copyright (c) 2019 . All rights reserved.
+  ~  * Last modified 29/08/19 22:24
+  ~  */
+  -->
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,15 +16,15 @@
     android:orientation="horizontal"
     android:background="@color/primaryLightColor">
 
-<androidx.appcompat.widget.AppCompatImageView
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:background="@drawable/apartment"
-    android:scaleX="3"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/apartment"
+        android:scaleX="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/login_logo_cardview"
@@ -68,18 +75,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.20">
 
-        <TextView
-            android:id="@+id/login_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/primaryColor"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/real_estate_manager"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="@dimen/login_title" />
+            <TextView
+                android:id="@+id/login_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/primaryColor"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/real_estate_manager"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="@dimen/login_title" />
 
         </androidx.cardview.widget.CardView>
     </LinearLayout>
@@ -109,7 +116,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

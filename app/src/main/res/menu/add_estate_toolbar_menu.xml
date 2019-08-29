@@ -1,9 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /**
+  ~  * Created by Lionel Joffray on 29/08/19 22:26
+  ~  * Copyright (c) 2019 . All rights reserved.
+  ~  * Last modified 29/08/19 22:26
+  ~  */
+  -->
+
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
-
-
+    <item
+        android:id="@+id/add_estate_validate"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="Validate"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/add_estate_cancel"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_delete"
+        android:title="Cancel"
+        app:showAsAction="ifRoom" />
 
 </menu>

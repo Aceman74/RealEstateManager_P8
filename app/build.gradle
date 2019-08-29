@@ -4,7 +4,13 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'jacoco-android'
-apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
+apply plugin: 'com.google.gms.google-services'  /*
+ * *
+ *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Copyright (c) 2019 . All rights reserved.
+ *  * Last modified 29/08/19 22:22
+ *
+ */  // Google Play services Gradle plugin
 apply plugin: 'io.fabric'   //  CrashLytics
 
 android {
@@ -56,6 +62,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.0.0"
 
     // GOOGLE  //
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
@@ -95,6 +102,7 @@ dependencies {
     //ROOM
     implementation 'android.arch.persistence.room:runtime:1.1.1'
     kapt 'android.arch.persistence.room:compiler:1.1.1'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
 }
 repositories {

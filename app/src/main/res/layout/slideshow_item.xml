@@ -1,6 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /**
+  ~  * Created by Lionel Joffray on 29/08/19 22:26
+  ~  * Copyright (c) 2019 . All rights reserved.
+  ~  * Last modified 29/08/19 22:26
+  ~  */
+  -->
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -40,27 +46,26 @@
             android:orientation="vertical">
 
             <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/primaryDarkColor"
-                    android:alpha="0.7">
-                </FrameLayout>
+                    android:alpha="0.7"></FrameLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="HELLO"
-                android:textStyle="bold"
-                android:textSize="@dimen/normal_title_size"
-                android:textColor="@color/quantum_white_text"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="HELLO"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/normal_title_size"
+                    android:textColor="@color/quantum_white_text" />
 
-        </FrameLayout>
+            </FrameLayout>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

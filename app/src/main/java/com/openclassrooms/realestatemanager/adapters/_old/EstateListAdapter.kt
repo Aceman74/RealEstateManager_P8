@@ -1,4 +1,12 @@
-package com.openclassrooms.realestatemanager.adapters
+/*
+ * *
+ *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Copyright (c) 2019 . All rights reserved.
+ *  * Last modified 29/08/19 22:22
+ *  
+ */
+
+package com.openclassrooms.realestatemanager.adapters._old
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.LiveData
 
 import androidx.recyclerview.widget.RecyclerView
 
@@ -21,7 +30,7 @@ import kotlinx.android.synthetic.main.estate_item.view.*
  * History Adapter for the user History list (show user history)
  *
  */
-class EstateListAdapter(var mEstateList: List<Estate>, private val mContext: Context) : RecyclerView.Adapter<EstateListAdapter.MyViewHolder>() {
+class EstateListAdapter(var mEstateList: LiveData<List<Estate>>, private val mContext: Context) : RecyclerView.Adapter<EstateListAdapter.MyViewHolder>() {
     internal var mRed: Int = 0
     internal var mGreen: Int = 0
 
@@ -33,7 +42,7 @@ class EstateListAdapter(var mEstateList: List<Estate>, private val mContext: Con
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        updateWithFreshInfo(mEstateList[position], holder, position)
+        updateWithFreshInfo(mEstateList.value?.get(position)!!, holder, position)
     }
 
     /**
@@ -47,7 +56,7 @@ class EstateListAdapter(var mEstateList: List<Estate>, private val mContext: Con
     }
 
     override fun getItemCount(): Int {
-        return mEstateList.size
+        return mEstateList.value?.size!!
     }
 
 

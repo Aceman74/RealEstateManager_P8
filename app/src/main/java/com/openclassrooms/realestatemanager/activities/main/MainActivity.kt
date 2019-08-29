@@ -1,3 +1,11 @@
+/*
+ * *
+ *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Copyright (c) 2019 . All rights reserved.
+ *  * Last modified 29/08/19 22:26
+ *
+ */
+
 package com.openclassrooms.realestatemanager.activities.main
 
 import android.content.Intent
@@ -14,11 +22,16 @@ import com.openclassrooms.realestatemanager.activities.addestate.AddEstateActivi
 import com.openclassrooms.realestatemanager.activities.estate.EstateDetailActivity
 import com.openclassrooms.realestatemanager.activities.login.MainContract
 import com.openclassrooms.realestatemanager.adapters.MainPagerAdapter
+import com.openclassrooms.realestatemanager.adapters.estatelist.EstateAdapter
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
-class MainActivity(override val activityLayout: Int = R.layout.activity_main) : BaseActivity(), MainContract.MainViewInterface, NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity(override val activityLayout: Int = R.layout.activity_main) : BaseActivity(), MainContract.MainViewInterface, NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener, EstateAdapter.Listener {
+
+    override fun onClickDeleteButton(position: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private lateinit var pager: ViewPager
     private lateinit var mPagerAdapter: MainPagerAdapter

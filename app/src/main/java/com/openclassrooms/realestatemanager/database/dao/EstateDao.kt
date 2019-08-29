@@ -1,3 +1,11 @@
+/*
+ * *
+ *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Copyright (c) 2019 . All rights reserved.
+ *  * Last modified 29/08/19 22:22
+ *
+ */
+
 package com.openclassrooms.realestatemanager.database.dao
 
 import androidx.lifecycle.LiveData
@@ -11,11 +19,14 @@ import com.openclassrooms.realestatemanager.models.Estate
 interface EstateDao {
 
     @Query("SELECT * FROM Estate")
-    fun getAll(): List<Estate>
+    fun getAll(): LiveData<List<Estate>>
 
 
     @Query("SELECT * FROM Estate WHERE EID LIKE :estateId")
-    fun getEstate(estateId: String): LiveData<List<Estate>>
+    fun findEstateByEid(estateId: Int): LiveData<List<Estate>>
+
+    @Query("SELECT * FROM Estate WHERE UID LIKE :estateUid")
+    fun findEstateByUid(estateUid: String): LiveData<List<Estate>>
 
     @Query("SELECT * FROM Estate WHERE TYPE LIKE :type")
     fun findByType(type: Int): Estate

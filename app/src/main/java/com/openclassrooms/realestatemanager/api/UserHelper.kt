@@ -1,3 +1,11 @@
+/*
+ * *
+ *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Copyright (c) 2019 . All rights reserved.
+ *  * Last modified 29/08/19 22:22
+ *  
+ */
+
 package com.openclassrooms.realestatemanager.api
 
 import com.google.android.gms.tasks.Task
@@ -31,7 +39,7 @@ object UserHelper {
     /**
      * Create new user (private).
      *
-     * @param uid        user id
+     * @param uid        user eid
      * @param username   user name
      * @param urlPicture picture url
      * @param email      email
@@ -47,7 +55,7 @@ object UserHelper {
     /**
      * Get actual user details.
      *
-     * @param uid user id
+     * @param uid user eid
      * @return user details
      */
     fun getUser(uid: String): Task<DocumentSnapshot> {
@@ -60,7 +68,7 @@ object UserHelper {
      * Update username.
      *
      * @param username new username
-     * @param uid      user id
+     * @param uid      user eid
      * @return update
      */
     fun updateUsername(username: String, uid: String): Task<Void> {
@@ -71,7 +79,7 @@ object UserHelper {
      * Update Email.
      *
      * @param email new email
-     * @param uid   user id
+     * @param uid   user eid
      * @return update
      */
     fun updateEmail(email: String, uid: String): Task<Void> {
@@ -82,7 +90,7 @@ object UserHelper {
     /**
      * Delete user account.
      *
-     * @param uid user id
+     * @param uid user eid
      * @return delete account
      */
     fun deleteUser(uid: String): Task<Void> {

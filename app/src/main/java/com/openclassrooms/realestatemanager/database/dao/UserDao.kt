@@ -1,10 +1,15 @@
+/*
+ * *
+ *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Copyright (c) 2019 . All rights reserved.
+ *  * Last modified 29/08/19 22:26
+ *
+ */
+
 package com.openclassrooms.realestatemanager.database.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.openclassrooms.realestatemanager.models.User
 
 /**
@@ -14,13 +19,13 @@ import com.openclassrooms.realestatemanager.models.User
 interface UserDao {
 
     @Query("SELECT * FROM User")
-    fun getAll(): List<User>
+    fun getAll(): LiveData<List<User>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun createUser(user: User)
 
     @Query("SELECT * FROM User WHERE uid = :userId")
-    fun getUser(userId: String): LiveData<User>
+    fun findUserById(userId: String): LiveData<List<User>>
 
     @Query("SELECT * FROM User WHERE USERNAME LIKE :username")
     fun findByUsername(username: String): User
@@ -33,4 +38,10 @@ interface UserDao {
 
     @Query("SELECT * FROM User WHERE DATECREATED LIKE :dateCreated")
     fun findByDateCreated(dateCreated: String): User
+
+    @Delete
+    fun deleteUser(user: User)
+
+    @Update
+    fun updateUser(vararg user: User)
 }

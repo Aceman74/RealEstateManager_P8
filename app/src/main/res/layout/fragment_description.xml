@@ -1,4 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /**
+  ~  * Created by Lionel Joffray on 29/08/19 22:26
+  ~  * Copyright (c) 2019 . All rights reserved.
+  ~  * Last modified 29/08/19 22:26
+  ~  */
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -50,8 +57,7 @@
                         android:layout_margin="@dimen/small_margin"
                         android:clickable="true"
                         android:focusable="true"
-                        android:background="?android:attr/selectableItemBackground"
-                        />
+                        android:background="?android:attr/selectableItemBackground" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/desc_estate_type_img"
@@ -71,7 +77,7 @@
                         android:textColor="@color/primaryLightColor"
                         android:textSize="@dimen/normal_text_size"
                         android:layout_below="@+id/desc_estate_type_txt"
-                        android:background="?android:attr/selectableItemBackground"  />
+                        android:background="?android:attr/selectableItemBackground" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/desc_neighbourhood_img"
@@ -173,8 +179,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@drawable/gradient"
-                    >
+                    android:background="@drawable/gradient">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -286,7 +291,7 @@
                             android:text="@string/_0"
                             android:layout_gravity="center"
                             android:textStyle="bold"
-                            android:textColor="@color/secondaryTextColor"/>
+                            android:textColor="@color/secondaryTextColor" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -295,7 +300,7 @@
                             android:text="@string/sqft"
                             android:layout_gravity="center"
                             android:textColor="@color/secondaryTextColor"
-                            android:textStyle="italic"/>
+                            android:textStyle="italic" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/desc_sqft_img"
@@ -317,7 +322,7 @@
                         android:gravity="start"
                         android:layout_marginStart="@dimen/small_margin"
                         android:layout_marginBottom="@dimen/small_margin"
-                        android:background="?android:attr/selectableItemBackground" >
+                        android:background="?android:attr/selectableItemBackground">
 
                         <TextView
                             android:id="@+id/desc_rooms_choice_txt"
@@ -328,7 +333,7 @@
                             android:text="@string/_0"
                             android:layout_gravity="center"
                             android:textStyle="bold"
-                            android:textColor="@color/secondaryTextColor"/>
+                            android:textColor="@color/secondaryTextColor" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -337,7 +342,7 @@
                             android:text="@string/rooms"
                             android:layout_gravity="center"
                             android:textColor="@color/secondaryTextColor"
-                            android:textStyle="italic"/>
+                            android:textStyle="italic" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/desc_rooms_img"
@@ -418,7 +423,7 @@
                         android:gravity="start"
                         android:layout_marginStart="@dimen/small_margin"
                         android:layout_marginBottom="@dimen/small_margin"
-                        android:background="?android:attr/selectableItemBackground" >
+                        android:background="?android:attr/selectableItemBackground">
 
                         <TextView
                             android:id="@+id/desc_bathrooms_choice_txt"
@@ -429,7 +434,7 @@
                             android:gravity="center"
                             android:text="@string/_0"
                             android:textStyle="bold"
-                            android:textColor="@color/secondaryTextColor"/>
+                            android:textColor="@color/secondaryTextColor" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -438,7 +443,7 @@
                             android:text="@string/bathrooms"
                             android:layout_gravity="center"
                             android:textColor="@color/secondaryTextColor"
-                            android:textStyle="italic"/>
+                            android:textStyle="italic" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/desc_bathrooms_img"
@@ -459,7 +464,7 @@
                         android:gravity="start"
                         android:layout_marginStart="@dimen/small_margin"
                         android:layout_marginBottom="@dimen/small_margin"
-                        android:background="?android:attr/selectableItemBackground" >
+                        android:background="?android:attr/selectableItemBackground">
 
 
                         <TextView
@@ -471,7 +476,7 @@
                             android:layout_gravity="center"
                             android:text="@string/_0"
                             android:textStyle="bold"
-                            android:textColor="@color/secondaryTextColor"/>
+                            android:textColor="@color/secondaryTextColor" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -480,7 +485,7 @@
                             android:text="@string/bedrooms"
                             android:layout_gravity="center"
                             android:textColor="@color/secondaryTextColor"
-                            android:textStyle="italic"/>
+                            android:textStyle="italic" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/desc_bedrooms_img"
@@ -582,7 +587,7 @@
                             android:text="@string/agent_name_example"
                             android:layout_gravity="center"
                             android:textStyle="bold"
-                            android:textColor="@color/secondaryTextColor"/>
+                            android:textColor="@color/secondaryTextColor" />
 
 
                     </LinearLayout>
@@ -596,7 +601,7 @@
                         android:gravity="start"
                         android:layout_marginStart="@dimen/small_margin"
                         android:layout_marginBottom="@dimen/small_margin"
-                        android:background="?android:attr/selectableItemBackground" >
+                        android:background="?android:attr/selectableItemBackground">
 
                         <TextView
                             android:id="@+id/desc_available_choice_txt"
@@ -607,7 +612,7 @@
                             android:text="@string/for_sale_sold"
                             android:layout_gravity="center"
                             android:textStyle="bold"
-                            android:textColor="@color/secondaryTextColor"/>
+                            android:textColor="@color/secondaryTextColor" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/desc_available_img"
@@ -691,7 +696,7 @@
                             android:text="@string/date"
                             android:layout_gravity="center"
                             android:textStyle="bold"
-                            android:textColor="@color/secondaryTextColor"/>
+                            android:textColor="@color/secondaryTextColor" />
 
 
                     </LinearLayout>
@@ -714,7 +719,7 @@
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:textStyle="bold"
-                            android:textColor="@color/secondaryTextColor"/>
+                            android:textColor="@color/secondaryTextColor" />
 
 
                     </LinearLayout>

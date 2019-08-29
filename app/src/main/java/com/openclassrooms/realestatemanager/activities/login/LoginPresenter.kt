@@ -1,3 +1,11 @@
+/*
+ * *
+ *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Copyright (c) 2019 . All rights reserved.
+ *  * Last modified 29/08/19 22:22
+ *  
+ */
+
 package com.openclassrooms.realestatemanager.activities.login
 
 
@@ -46,7 +54,7 @@ class LoginPresenter : BasePresenter(), LoginContract.LoginPresenterInterface {
     val email = getCurrentUser()?.email
     val date = DateSetter.formattedDate
 
-    UserHelper.getUser(getCurrentUser().getUid()).addOnSuccessListener(OnSuccessListener<DocumentSnapshot> { documentSnapshot ->
+    UserHelper.findUserById(getCurrentUser().getUid()).addOnSuccessListener(OnSuccessListener<DocumentSnapshot> { documentSnapshot ->
     val currentUser = documentSnapshot.toObject<User>(User::class.java)
     if (currentUser == null) {
     UserHelper.createUser(uid, username, urlPicture, email,date)

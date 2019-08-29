@@ -1,9 +1,17 @@
+/*
+ * *
+ *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Copyright (c) 2019 . All rights reserved.
+ *  * Last modified 29/08/19 22:26
+ *  
+ */
+
 package com.openclassrooms.realestatemanager
 
 
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -17,7 +25,7 @@ class UtilsTest {
     @Test
     fun getTodayDate() {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
-         dateFormat.format(Date())
+        dateFormat.format(Date())
         assertEquals(dateFormat, SimpleDateFormat("dd/MM/yyyy"))
         assertNotEquals(dateFormat,SimpleDateFormat("MM/dd/yyyy"))
         assertNotEquals(dateFormat,SimpleDateFormat("yyyy/MM/dd"))

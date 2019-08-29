@@ -1,5 +1,14 @@
+/*
+ * *
+ *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Copyright (c) 2019 . All rights reserved.
+ *  * Last modified 29/08/19 22:26
+ *
+ */
+
 package com.openclassrooms.realestatemanager
 
+import android.database.sqlite.SQLiteConstraintException
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
@@ -16,6 +25,8 @@ import org.junit.runner.RunWith
 
 
 /**
+ * Test class for all EstateDao Cases.
+ *
  * Created by Lionel JOFFRAY - on 28/08/2019.
  */
 @RunWith(AndroidJUnit4::class)
@@ -31,7 +42,7 @@ class EstateDaoTest {
     private val CASTLE_ESTATE = Estate(3,USER_ID, 12, 28, "13 250 000", "Greate Castle", 950, 12, 4, 7, 0)
 
     @Rule @JvmField
-     var instantTaskExecutorRule = InstantTaskExecutorRule()
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Before
     @Throws(Exception::class)
@@ -53,13 +64,14 @@ class EstateDaoTest {
     fun insertAndGetUser() {
         this.database?.userDao()?.createUser(USER_DEMO)
 
-        val user = LiveDataTestUtil.getValue(this.database?.userDao()?.getUser(USER_ID)!!)
-        assertTrue(user.username.equals(USER_DEMO.username) && user.uid.equals(USER_ID))
+        val user = LiveDataTestUtil.getValue(this.database?.userDao()?.findUserById(USER_ID)!!)
+        assertTrue(user.get(0).username.equals(USER_DEMO.username) && user.get(0).uid.equals(USER_ID))
     }
+
     @Test
     @Throws(InterruptedException::class)
-    fun getEstateWhenNoParamsInserted() {
-        val items = LiveDataTestUtil.getValue(this.database!!.estateDao().getEstate(USER_ID))
+    fun getUserWhenNoParamsInserted() {
+        val items = LiveDataTestUtil.getValue(this.database!!.estateDao().findEstateByUid(USER_ID))
         assertTrue(items.isEmpty())
     }
 
@@ -71,7 +83,7 @@ class EstateDaoTest {
         this.database!!.estateDao().createEstate(HOUSE_ESTATE)
         this.database!!.estateDao().createEstate(CASTLE_ESTATE)
 
-        val items:List<Estate> = LiveDataTestUtil.getValue(this.database!!.estateDao().getEstate(USER_ID))
+        val items: List<Estate> = LiveDataTestUtil.getValue(this.database!!.estateDao().findEstateByUid(USER_ID))
         assertTrue(items.size == 3)
     }
 
@@ -81,11 +93,11 @@ class EstateDaoTest {
         this.database!!.userDao().createUser(USER_DEMO)
         this.database!!.estateDao().createEstate(HOTEL_ESTATE)
 
-        val itemAdded = LiveDataTestUtil.getValue(this.database!!.estateDao().getEstate(USER_ID)).get(0)
+        val itemAdded = LiveDataTestUtil.getValue(this.database!!.estateDao().findEstateByUid(USER_ID)).get(0)
         itemAdded.price = "8 000 000"
         this.database!!.estateDao().updateEstate(itemAdded)
 
-        val items = LiveDataTestUtil.getValue(this.database!!.estateDao().getEstate(USER_ID))
+        val items = LiveDataTestUtil.getValue(this.database!!.estateDao().findEstateByUid(USER_ID))
         assertTrue(items.size == 1 && items.get(0).price.equals("8 000 000"))
     }
 
@@ -95,11 +107,26 @@ class EstateDaoTest {
         this.database!!.userDao().createUser(USER_DEMO)
         this.database!!.estateDao().createEstate(HOTEL_ESTATE)
 
-        val itemAdded = LiveDataTestUtil.getValue(this.database!!.estateDao().getEstate(USER_ID)).get(0)
+        val itemAdded = LiveDataTestUtil.getValue(this.database!!.estateDao().findEstateByUid(USER_ID)).get(0)
         this.database!!.estateDao().deleteEstate(itemAdded)
 
         //TEST
-        val items = LiveDataTestUtil.getValue(this.database!!.estateDao().getEstate(USER_ID))
+        val items = LiveDataTestUtil.getValue(this.database!!.estateDao().findEstateByUid(USER_ID))
         assertTrue(items.isEmpty())
+    }
+
+    /**
+     * Expected an SQL exception, because of missing the User Foreign Key.
+     */
+    @Test(expected = SQLiteConstraintException::class)
+    @Throws(InterruptedException::class)
+    fun insertEstateWithoutUserForeignKey() {
+        //  User removed
+        this.database!!.estateDao().createEstate(HOTEL_ESTATE)
+        this.database!!.estateDao().createEstate(HOUSE_ESTATE)
+        this.database!!.estateDao().createEstate(CASTLE_ESTATE)
+
+        val items: List<Estate> = LiveDataTestUtil.getValue(this.database!!.estateDao().findEstateByUid(USER_ID))
+        assertTrue(items.size == 3)
     }
 }
