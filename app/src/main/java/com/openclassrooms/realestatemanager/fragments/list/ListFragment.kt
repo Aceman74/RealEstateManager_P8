@@ -1,14 +1,15 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:26
+ *  * Last modified 03/09/19 16:31
  *
  */
 
 package com.openclassrooms.realestatemanager.fragments.list
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,10 +20,15 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.activities.viewmodels.EstateViewModel
+import com.openclassrooms.realestatemanager.activities.estate.EstateDetailActivity
 import com.openclassrooms.realestatemanager.adapters.estatelist.EstateAdapter
 import com.openclassrooms.realestatemanager.injections.Injection
+import com.openclassrooms.realestatemanager.models.EstateAndPictures
+import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
+import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
 import kotlinx.android.synthetic.main.fragment_list.*
+import timber.log.Timber
+
 
 /**
  * A simple [Fragment] subclass.
@@ -31,6 +37,8 @@ class ListFragment : Fragment() {
 
     private lateinit var mRecyclerView: RecyclerView
     lateinit var estateViewModel: EstateViewModel
+    lateinit var pictureViewModel: PictureViewModel
+    lateinit var observePicture: List<EstateAndPictures>
 
     companion object {
 
@@ -54,12 +62,23 @@ class ListFragment : Fragment() {
     private fun configureViewModel() {
         val mViewModelFactory = Injection.provideViewModelFactory(requireContext())
         this.estateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
-        mRecyclerView.layoutManager = LinearLayoutManager(context)
-        estateViewModel.allEstate.observe(this, Observer { estate ->
-            // Data bind the recycler view
-            mRecyclerView.adapter = EstateAdapter(estate)
+        this.pictureViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PictureViewModel::class.java)
+        estateViewModel.allEstateWithPitures.observe(this, Observer {
+            observePicture = it
+            mRecyclerView.adapter = EstateAdapter(observePicture) {
+                Timber.tag("RV click").i("$it")
+                lauchDetailActivity(it)
+            }
+            estateViewModel.allEstate.observe(this, Observer { estate ->
+            })
         })
+        mRecyclerView.layoutManager = LinearLayoutManager(context)
     }
 
+    fun lauchDetailActivity(it: Int) {
+        var intent = Intent(context, EstateDetailActivity::class.java)
+        intent.putExtra("estateId", it)
+        startActivity(intent)
+    }
 
 }

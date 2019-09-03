@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:26
+ *  * Last modified 03/09/19 16:31
  *
  */
 
@@ -11,6 +11,7 @@ package com.openclassrooms.realestatemanager.repositories
 import androidx.lifecycle.LiveData
 import com.openclassrooms.realestatemanager.database.dao.EstateDao
 import com.openclassrooms.realestatemanager.models.Estate
+import com.openclassrooms.realestatemanager.models.EstateAndPictures
 
 
 /**
@@ -20,6 +21,7 @@ class EstateDataRepository(val estateDao: EstateDao) {
 
 
     private var mAllData: LiveData<List<Estate>> = estateDao.getAll()
+    var mEstateAndPicture: LiveData<List<EstateAndPictures>> = estateDao.getEstateAndPictures()
 
 
     // --- GET ---
@@ -28,7 +30,7 @@ class EstateDataRepository(val estateDao: EstateDao) {
         return mAllData
     }
 
-    fun finEstateById(estateid: Int): LiveData<List<Estate>> {
+    fun finEstateById(estateid: Long): LiveData<List<Estate>> {
         return estateDao.findEstateByEid(estateid)
     }
 
@@ -72,10 +74,14 @@ class EstateDataRepository(val estateDao: EstateDao) {
         estateDao.findByAvailability(available)
     }
 
+    fun findEstateAndPictures(): LiveData<List<EstateAndPictures>> {
+        return mEstateAndPicture
+    }
+
     // --- CREATE ---
 
-    fun createEstate(estate: Estate) {
-        estateDao.createEstate(estate)
+    fun createEstate(estate: Estate): Long {
+        return estateDao.createEstate(estate)
     }
 
     // --- DELETE ---

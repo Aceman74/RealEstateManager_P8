@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 03/09/19 11:10
  *
  */
 
@@ -46,18 +46,21 @@ class PictureViewModel(application: Application, val executor: Executor) : Andro
     // FOR ITEM
     // -------------
 
-    fun getPictureById(pictureId: Int): LiveData<List<Picture>> {
-        return repository.finPictureById(pictureId)
+    fun getPictureById(pictureId: Long): LiveData<List<Picture>> {
+        return repository.findPictureById(pictureId)
     }
 
-    fun getPictureByEid(pictureEid: Int): LiveData<List<Picture>> {
-        return repository.finPictureByEid(pictureEid)
+    fun getPictureByEid(pictureEid: Long): LiveData<List<Picture>> {
+        return repository.findPictureByEid(pictureEid)
     }
 
-    fun getPictureByte(byte: ByteArray) {
-        executor.execute { repository.finPictureByte(byte) }
+    fun getPictureByName(string: String) {
+        executor.execute { repository.findPictureByName(string) }
     }
 
+    fun getPictureByNPath(path: String) {
+        executor.execute { repository.findPictureByPath(path) }
+    }
 
     fun createPicture(picture: Picture) {
         executor.execute { repository.createPicture(picture) }

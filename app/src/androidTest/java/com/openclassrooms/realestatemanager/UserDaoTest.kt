@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 03/09/19 16:31
  *
  */
 
@@ -38,7 +38,7 @@ class UserDaoTest {
     private val date = Utils.todayDate
     private val USER_DEMO = User(USER_ID, "Jean Paul", "azerty@qwerty.com", "https://ceci_est_un_test.com", date)
     private val USER_DEMO_1 = User(USER_ID_1, "Jean Paul 2", "pape@qwerty.com", "https://ceci_est_un_pape.com", date)
-    private val HOTEL_ESTATE = Estate(1, USER_ID, 3, 5, "5 000 000", "Greate Hostel", 850, 20, 20, 20, 0)
+    private val HOTEL_ESTATE = Estate(1, USER_ID, 3, 5, "5 000 000", "Greate Hostel", 850, 20, 20, 20, 0, "bob", date, null, null, 10.1, 10.1, "New York")
 
     @Rule
     @JvmField
@@ -65,7 +65,7 @@ class UserDaoTest {
         this.database?.userDao()?.createUser(USER_DEMO)
 
         val user = LiveDataTestUtil.getValue(this.database?.userDao()?.findUserById(USER_ID)!!)
-        assertTrue(user.get(0).username.equals(USER_DEMO.username) && user.get(0).uid.equals(USER_ID))
+        assertTrue(user.get(0).username.equals(USER_DEMO.username) && user.get(0).userId.equals(USER_ID))
     }
 
     @Test
@@ -93,7 +93,7 @@ class UserDaoTest {
 
         val items: List<Estate> = LiveDataTestUtil.getValue(this.database!!.estateDao().findEstateByUid(USER_ID))
 
-        assertTrue(items.get(0).uid.equals(USER_ID))
+        assertTrue(items.get(0).userId_fk.equals(USER_ID))
     }
 
     @Test

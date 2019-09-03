@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 02/09/19 19:29
  *
  */
 
@@ -20,8 +20,8 @@ import androidx.room.PrimaryKey
  * Used for multiple class.
  */
 @Entity
-data class User(@PrimaryKey @ColumnInfo(name = "UID") var uid: String,
-                @ColumnInfo(name = "USERNAME") var username: String,
-                @ColumnInfo(name = "EMAIL") var email: String,
-                @ColumnInfo(name = "URLPICTURE") var urlPicture: String?,
-                @ColumnInfo(name = "DATECREATED") var dateCreated: String)
+data class User(@PrimaryKey @ColumnInfo(name = "userId") var userId: String,
+                @ColumnInfo(name = "username") var username: String,
+                @ColumnInfo(name = "email") var email: String,
+                @ColumnInfo(name = "urlPicture") var urlPicture: String?,
+                @ColumnInfo(name = "dateCreated") var dateCreated: String)

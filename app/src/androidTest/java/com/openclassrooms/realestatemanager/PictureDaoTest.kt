@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 03/09/19 16:31
  *
  */
 
@@ -36,15 +36,15 @@ class PictureDaoTest {
     private var database: RealEstateDatabase? = null
     // DATA SET FOR TEST
     private val USER_ID: String = "cacahuete554466"
-    private val ESTATE_ID = 1
-    private val ESTATE_ID_1 = 2
+    private val ESTATE_ID: Long = 1
+    private val ESTATE_ID_1: Long = 2
     private val date = Utils.todayDate
-    private val byteArray = byteArrayOf(20)     //  Simulate Picture
+
 
     private val USER_DEMO = User(USER_ID, "Aceman", "azerty@qwerty.fr", "https://ceci_est_un_test.fr", date)
-    private val HOTEL_ESTATE = Estate(ESTATE_ID, USER_ID, 3, 5, "5 000 000", "Greate Hostel", 850, 20, 20, 20, 0)
-    private val HOUSE_ESTATE = Estate(ESTATE_ID_1, USER_ID, 8, 22, "3 333 000", "Greate House", 550, 10, 2, 4, 1)
-    private val PICTURE_DEMO = Picture(1, ESTATE_ID, "Photo 1", byteArray)
+    private val HOTEL_ESTATE = Estate(ESTATE_ID, USER_ID, 3, 5, "5 000 000", "Greate Hostel", 850, 20, 20, 20, 0, "bob", date, null, null, 10.1, 10.1, "New York")
+    private val HOUSE_ESTATE = Estate(ESTATE_ID_1, USER_ID, 8, 22, "3 333 000", "Greate House", 550, 10, 2, 4, 1, "bob", date, null, null, 10.1, 10.1, "New York")
+    private val PICTURE_DEMO = Picture(1, ESTATE_ID, "Photo 1", "//Device")
 
 
     @Rule
@@ -76,7 +76,7 @@ class PictureDaoTest {
         val user = LiveDataTestUtil.getValue(this.database?.userDao()?.findUserById(USER_ID)!!)
         val picture = LiveDataTestUtil.getValue(this.database?.pictureDao()?.getPictureByEid(ESTATE_ID)!!)
         val estate = LiveDataTestUtil.getValue(this.database?.estateDao()?.findEstateByEid(ESTATE_ID)!!)
-        assertTrue(picture.get(0).eid.equals(estate.get(0).eid) && user.get(0).uid.equals(estate.get(0).uid))
+        assertTrue(picture.get(0).estateId_fk.equals(estate.get(0).estateId) && user.get(0).userId.equals(estate.get(0).userId_fk))
     }
 
     @Test
@@ -94,11 +94,11 @@ class PictureDaoTest {
         this.database?.pictureDao()?.createPicture(PICTURE_DEMO)
 
         val itemAdded = LiveDataTestUtil.getValue(this.database!!.pictureDao().getPictureByEid(ESTATE_ID)).get(0)
-        itemAdded.name = "BAZINGA"
+        itemAdded.pictureName = "BAZINGA"
         this.database!!.pictureDao().updatePicture(itemAdded)
 
         val items = LiveDataTestUtil.getValue(this.database!!.pictureDao().getPictureByEid(ESTATE_ID))
-        assertTrue(items.size == 1 && items.get(0).name.equals("BAZINGA"))
+        assertTrue(items.size == 1 && items.get(0).pictureName.equals("BAZINGA"))
     }
 
     @Test
@@ -129,7 +129,7 @@ class PictureDaoTest {
         val user = LiveDataTestUtil.getValue(this.database?.userDao()?.findUserById(USER_ID)!!)
         val picture = LiveDataTestUtil.getValue(this.database?.pictureDao()?.getPictureByEid(ESTATE_ID)!!)
         val estate = LiveDataTestUtil.getValue(this.database?.estateDao()?.findEstateByEid(ESTATE_ID)!!)
-        assertTrue(picture.get(0).eid.equals(estate.get(0).eid) && user.get(0).uid.equals(estate.get(0).uid))
+        assertTrue(picture.get(0).estateId_fk.equals(estate.get(0).estateId) && user.get(0).userId.equals(estate.get(0).userId_fk))
     }
 
     /**
@@ -145,6 +145,6 @@ class PictureDaoTest {
         val user = LiveDataTestUtil.getValue(this.database?.userDao()?.findUserById(USER_ID)!!)
         val picture = LiveDataTestUtil.getValue(this.database?.pictureDao()?.getPictureByEid(ESTATE_ID)!!)
         val estate = LiveDataTestUtil.getValue(this.database?.estateDao()?.findEstateByEid(ESTATE_ID)!!)
-        assertTrue(picture.get(0).eid.equals(estate.get(0).eid) && user.get(0).uid.equals(estate.get(0).uid))
+        assertTrue(picture.get(0).estateId_fk.equals(estate.get(0).estateId) && user.get(0).userId.equals(estate.get(0).userId_fk))
     }
 }

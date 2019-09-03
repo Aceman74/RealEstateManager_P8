@@ -1,12 +1,12 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:26
+ *  * Last modified 30/08/19 15:00
  *
  */
 
-package com.openclassrooms.realestatemanager.activities.viewmodels
+package com.openclassrooms.realestatemanager.viewmodels
 
 
 import android.app.Application
@@ -29,7 +29,6 @@ class ViewModelFactory(private val executor: Executor) : ViewModelProvider.Facto
                 return UserViewModel(Application(), executor) as T
             modelClass.isAssignableFrom(PictureViewModel::class.java) ->
                 return PictureViewModel(Application(), executor) as T
-
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

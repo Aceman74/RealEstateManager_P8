@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 03/09/19 11:10
  *
  */
 
@@ -28,16 +28,20 @@ class PicturerDataRepository(val pictureDao: PictureDao) {
         return mAllData
     }
 
-    fun finPictureById(pictureId: Int): LiveData<List<Picture>> {
+    fun findPictureById(pictureId: Long): LiveData<List<Picture>> {
         return pictureDao.getPictureById(pictureId)
     }
 
-    fun finPictureByEid(pictureEid: Int): LiveData<List<Picture>> {
-        return pictureDao.getPictureById(pictureEid)
+    fun findPictureByEid(pictureEid: Long): LiveData<List<Picture>> {
+        return pictureDao.getPictureByEid(pictureEid)
     }
 
-    fun finPictureByte(pictureByte: ByteArray) {
-        pictureDao.getOnePictureByByte(pictureByte)
+    fun findPictureByName(name: String) {
+        pictureDao.getOnePictureByName(name)
+    }
+
+    fun findPictureByPath(path: String) {
+        pictureDao.getOnePictureByPath(path)
     }
 
     // --- CREATE ---

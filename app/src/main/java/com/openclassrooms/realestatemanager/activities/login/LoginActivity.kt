@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 02/09/19 10:10
  *  
  */
 
@@ -72,7 +72,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
      */
     private fun checkPermission() {
         if (ContextCompat.checkSelfPermission(applicationContext,
-                        Manifest.permission.ACCESS_FINE_LOCATION) !== PackageManager.PERMISSION_GRANTED) {
+                        Manifest.permission.ACCESS_FINE_LOCATION) !== PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED) {
             askPermission()
         }
     }
@@ -112,7 +112,9 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                         Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.INTERNET,
                         Manifest.permission.ACCESS_NETWORK_STATE,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
                 ).withListener(dialogMultiplePermissionsListener)
                 .check()
     }

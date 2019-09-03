@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:26
+ *  * Last modified 02/09/19 19:33
  *
  */
 
@@ -24,19 +24,19 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun createUser(user: User)
 
-    @Query("SELECT * FROM User WHERE uid = :userId")
+    @Query("SELECT * FROM User WHERE userId LIKE :userId")
     fun findUserById(userId: String): LiveData<List<User>>
 
-    @Query("SELECT * FROM User WHERE USERNAME LIKE :username")
+    @Query("SELECT * FROM User WHERE username LIKE :username")
     fun findByUsername(username: String): User
 
-    @Query("SELECT * FROM User WHERE EMAIL LIKE :email")
+    @Query("SELECT * FROM User WHERE email LIKE :email")
     fun findByEmail(email: String): User
 
-    @Query("SELECT * FROM User WHERE URLPICTURE LIKE :urlPicture")
+    @Query("SELECT * FROM User WHERE urlPicture LIKE :urlPicture")
     fun findByUrlPicture(urlPicture: String): User
 
-    @Query("SELECT * FROM User WHERE DATECREATED LIKE :dateCreated")
+    @Query("SELECT * FROM User WHERE dateCreated LIKE :dateCreated")
     fun findByDateCreated(dateCreated: String): User
 
     @Delete

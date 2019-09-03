@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 02/09/19 19:29
  *  
  */
 
@@ -39,9 +39,9 @@ object UserHelper {
     /**
      * Create new user (private).
      *
-     * @param uid        user eid
-     * @param username   user name
-     * @param urlPicture picture url
+     * @param uid        user estateId_fk
+     * @param username   user pictureName
+     * @param urlPicture picturePath url
      * @param email      email
      * @return new user
      */
@@ -55,7 +55,7 @@ object UserHelper {
     /**
      * Get actual user details.
      *
-     * @param uid user eid
+     * @param uid user estateId_fk
      * @return user details
      */
     fun getUser(uid: String): Task<DocumentSnapshot> {
@@ -68,7 +68,7 @@ object UserHelper {
      * Update username.
      *
      * @param username new username
-     * @param uid      user eid
+     * @param uid      user estateId_fk
      * @return update
      */
     fun updateUsername(username: String, uid: String): Task<Void> {
@@ -79,7 +79,7 @@ object UserHelper {
      * Update Email.
      *
      * @param email new email
-     * @param uid   user eid
+     * @param uid   user estateId_fk
      * @return update
      */
     fun updateEmail(email: String, uid: String): Task<Void> {
@@ -90,7 +90,7 @@ object UserHelper {
     /**
      * Delete user account.
      *
-     * @param uid user eid
+     * @param uid user estateId_fk
      * @return delete account
      */
     fun deleteUser(uid: String): Task<Void> {

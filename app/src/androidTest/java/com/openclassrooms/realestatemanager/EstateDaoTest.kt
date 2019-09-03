@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:26
+ *  * Last modified 03/09/19 16:31
  *
  */
 
@@ -37,9 +37,9 @@ class EstateDaoTest {
     private val USER_ID: String = "54gre92xxdf4a"
     private val date = Utils.todayDate
     private val USER_DEMO = User(USER_ID, "Aceman", "azerty@qwerty.fr", "https://ceci_est_un_test.fr", date)
-    private val HOTEL_ESTATE = Estate(1,USER_ID, 3, 5, "5 000 000", "Greate Hostel", 850, 20, 20, 20, 0)
-    private val HOUSE_ESTATE = Estate(2,USER_ID, 8, 22, "3 333 000", "Greate House", 550, 10, 2, 4, 1)
-    private val CASTLE_ESTATE = Estate(3,USER_ID, 12, 28, "13 250 000", "Greate Castle", 950, 12, 4, 7, 0)
+    private val HOTEL_ESTATE = Estate(1, USER_ID, 3, 5, "5 000 000", "Greate Hostel", 850, 20, 20, 20, 0, "bob", date, null, null, 10.1, 10.1, "New York")
+    private val HOUSE_ESTATE = Estate(2, USER_ID, 8, 22, "3 333 000", "Greate House", 550, 10, 2, 4, 1, "bob", date, null, null, 10.1, 10.1, "New York")
+    private val CASTLE_ESTATE = Estate(3, USER_ID, 12, 28, "13 250 000", "Greate Castle", 950, 12, 4, 7, 0, "bob", date, null, null, 10.1, 10.1, "New York")
 
     @Rule @JvmField
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -65,7 +65,7 @@ class EstateDaoTest {
         this.database?.userDao()?.createUser(USER_DEMO)
 
         val user = LiveDataTestUtil.getValue(this.database?.userDao()?.findUserById(USER_ID)!!)
-        assertTrue(user.get(0).username.equals(USER_DEMO.username) && user.get(0).uid.equals(USER_ID))
+        assertTrue(user.get(0).username.equals(USER_DEMO.username) && user.get(0).userId.equals(USER_ID))
     }
 
     @Test

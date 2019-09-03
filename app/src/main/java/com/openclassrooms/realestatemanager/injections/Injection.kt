@@ -1,17 +1,17 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:26
+ *  * Last modified 02/09/19 19:29
  *
  */
 
 package com.openclassrooms.realestatemanager.injections
 
 import android.content.Context
-import com.openclassrooms.realestatemanager.activities.viewmodels.ViewModelFactory
 import com.openclassrooms.realestatemanager.database.RealEstateDatabase
 import com.openclassrooms.realestatemanager.repositories.EstateDataRepository
+import com.openclassrooms.realestatemanager.viewmodels.ViewModelFactory
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 

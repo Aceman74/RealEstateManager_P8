@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 02/09/19 19:29
  *  
  */
 
@@ -50,14 +50,14 @@ class LoginPresenter : BasePresenter(), LoginContract.LoginPresenterInterface {
 
     val urlPicture = if (getCurrentUser()?.photoUrl != null) getCurrentUser()?.photoUrl!!.toString() else null
     val username = getCurrentUser()?.displayName
-    val uid = getCurrentUser()?.uid
+    val userId_fk = getCurrentUser()?.userId_fk
     val email = getCurrentUser()?.email
     val date = DateSetter.formattedDate
 
-    UserHelper.findUserById(getCurrentUser().getUid()).addOnSuccessListener(OnSuccessListener<DocumentSnapshot> { documentSnapshot ->
+    UserHelper.findUserById(getCurrentUser().getUserId_fk()).addOnSuccessListener(OnSuccessListener<DocumentSnapshot> { documentSnapshot ->
     val currentUser = documentSnapshot.toObject<User>(User::class.java)
     if (currentUser == null) {
-    UserHelper.createUser(uid, username, urlPicture, email,date)
+    UserHelper.createUser(userId_fk, username, urlPicture, email,date)
     }
     })
     }

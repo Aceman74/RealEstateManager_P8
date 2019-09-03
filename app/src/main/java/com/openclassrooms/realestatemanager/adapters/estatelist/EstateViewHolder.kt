@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:26
+ *  * Last modified 03/09/19 16:31
  *
  */
 
@@ -12,10 +12,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.Utils
-import com.openclassrooms.realestatemanager.models.Estate
+import com.openclassrooms.realestatemanager.models.EstateAndPictures
 import kotlinx.android.synthetic.main.estate_item.view.*
-import java.lang.ref.WeakReference
 
 
 /**
@@ -30,21 +30,20 @@ class EstateViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClick
     var picture: ImageView = view.estate_img
 
 
-    // FOR DATA
-    private var callbackWeakRef: WeakReference<EstateAdapter.Listener>? = null
+    fun updateWithItem(estate: EstateAndPictures, position: Int, listener: (Int) -> Unit) {
+        var id: Int
 
-
-    fun updateWithItem(estate: Estate) {
-
-        this.type.text = Utils.ListOfString.listOfType()[estate.type]
-        this.neighborhood.text = Utils.ListOfString.listOfNeighborhood()[estate.neighborhood]
-        this.price.text = "$ " + estate.price
-
-
+        this.type.text = Utils.ListOfString.listOfType()[estate.estate!!.type]
+        this.neighborhood.text = Utils.ListOfString.listOfNeighborhood()[estate.estate!!.neighborhood]
+        this.price.text = "$ " + estate.estate!!.price
+        Glide.with(itemView)
+                .load(estate.pictures[0].picturePath)
+                .into(picture)
+        itemView.setOnClickListener {
+            listener(estate.estate!!.estateId!!.toInt())
+        }
     }
 
     override fun onClick(view: View) {
-        val callback = callbackWeakRef!!.get()
-        callback?.onClickDeleteButton(adapterPosition)
     }
 }

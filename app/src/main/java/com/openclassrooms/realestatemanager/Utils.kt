@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:26
+ *  * Last modified 03/09/19 16:31
  *
  */
 
@@ -79,7 +79,7 @@ object Utils {
         return snack.show()
     }
 
-    fun PriceSpace(string: String): String {
+    fun priceSpace(string: String): String {
         val s: StringBuilder = StringBuilder(string)
         var i = 3
         while (i < s.length) {
@@ -87,6 +87,16 @@ object Utils {
             i += 4
         }
         return s.toString()
+    }
+
+    fun custromTimeStamp(): String {
+        val dateFormat = SimpleDateFormat("ddMM_HH:mm")
+
+        return dateFormat.format(Date()).toString()
+    }
+
+    fun formatAddress(string: String): String {
+        return string.replace(",", "\n")
     }
 
     class ListOfString {

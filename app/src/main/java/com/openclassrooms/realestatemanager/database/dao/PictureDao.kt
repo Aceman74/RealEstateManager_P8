@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:26
+ *  * Last modified 03/09/19 11:09
  *
  */
 
@@ -24,14 +24,17 @@ interface PictureDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun createPicture(picture: Picture)
 
-    @Query("SELECT * FROM Picture WHERE PID = :pictureId")
-    fun getPictureById(pictureId: Int): LiveData<List<Picture>>
+    @Query("SELECT * FROM Picture WHERE pictureId LIKE :pictureId")
+    fun getPictureById(pictureId: Long): LiveData<List<Picture>>
 
-    @Query("SELECT * FROM Picture WHERE EID = :estateId")
-    fun getPictureByEid(estateId: Int): LiveData<List<Picture>>
+    @Query("SELECT * FROM Picture WHERE estateId_fk LIKE :estateId_fk")
+    fun getPictureByEid(estateId_fk: Long): LiveData<List<Picture>>
 
-    @Query("SELECT * FROM Picture WHERE PICTURE LIKE :picture")
-    fun getOnePictureByByte(picture: ByteArray): Picture
+    @Query("SELECT * FROM Picture WHERE pictureName LIKE :pictureName")
+    fun getOnePictureByName(pictureName: String): Picture
+
+    @Query("SELECT * FROM Picture WHERE picturePath LIKE :picturePath")
+    fun getOnePictureByPath(picturePath: String): Picture
 
     @Delete
     fun deletePicture(picture: Picture)

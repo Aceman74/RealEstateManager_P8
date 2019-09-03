@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:26
+ *  * Last modified 03/09/19 15:52
  *
  */
 
@@ -18,33 +18,61 @@ import android.widget.ImageView
 import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import com.esafirm.imagepicker.features.ImagePicker
+import com.esafirm.imagepicker.features.ReturnMode
+import com.esafirm.imagepicker.model.Image
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.TypeFilter
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.navigation.NavigationView
+import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.activities.estate.EstateDetailActivity
 import com.openclassrooms.realestatemanager.activities.login.AddEstateContract
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
-import com.openclassrooms.realestatemanager.activities.viewmodels.EstateViewModel
 import com.openclassrooms.realestatemanager.fragments.numberpicker.NumberPickerDialog
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.models.Estate
+import com.openclassrooms.realestatemanager.models.Picture
 import com.openclassrooms.realestatemanager.models.User
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import com.openclassrooms.realestatemanager.utils.rxbus.RxBus
 import com.openclassrooms.realestatemanager.utils.rxbus.RxEvent
+import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
 import com.openclassrooms.realusermanager.activities.viewmodels.UserViewModel
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_add_estate.*
 import kotlinx.android.synthetic.main.fragment_add_images.*
+import kotlinx.android.synthetic.main.fragment_address_map.*
 import kotlinx.android.synthetic.main.fragment_description.*
 import timber.log.Timber
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.io.IOException
+import java.nio.channels.FileChannel
+import kotlin.math.absoluteValue
 
 
-class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add_estate) : BaseActivity(), AddEstateContract.AddEstateViewInterface, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, NumberPicker.OnValueChangeListener {
+class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add_estate) : BaseActivity(), AddEstateContract.AddEstateViewInterface, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, NumberPicker.OnValueChangeListener, OnMapReadyCallback {
+
+
+    private val AUTOCOMPLETE_REQUEST_CODE = 101
     var mPriceResut: String = ""
     var mDescResult: String = ""
     var mType = 0
@@ -55,11 +83,18 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
     var mBedrooms = 0
     var mAvailable = 0
     var mIntResult: Int = 0
+    var mAddress = ""
     var mPickerArray = IntArray(9)
+    var mPicturePathArray = arrayListOf("", "", "", "", "", "", "", "")
+    private lateinit var mMap: GoogleMap
+    lateinit var marker: Marker
+
     private lateinit var pickerDisposable: Disposable
     lateinit var estateViewModel: EstateViewModel
     lateinit var userViewModel: UserViewModel
     lateinit var pictureViewModel: PictureViewModel
+    lateinit var mEstatePhotosDir: File
+    var eId: Long = 0
 
     var PICK_IMAGE_REQUEST = 50
 
@@ -68,9 +103,16 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         setSupportActionBar(findViewById(R.id.add_estate_toolbar))
         configureDrawerLayout(add_estate_drawer_layout, add_estate_toolbar)
         configureListeners()
+        createPhotosFolder()
         desc_date_added_choice_txt.text = Utils.todayDate
         desc_agent_choice_txt.text = currentUser?.displayName.toString()
         configureViewModel()
+        configureMaps()
+        Places.initialize(applicationContext, BuildConfig.google_maps_key)
+        var placesClient = Places.createClient(this)
+        address_edit_txt.setOnClickListener {
+            autocompleteIntent()
+        }
 
         pickerDisposable = RxBus.listen(RxEvent.PickerDescEvent::class.java).subscribe {
             mDescResult = it.desc
@@ -79,6 +121,51 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         pickerDisposable = RxBus.listen(RxEvent.PickerPriceEvent::class.java).subscribe {
             mPriceResut = it.price
             mIntResult = it.nbr
+        }
+    }
+
+    private fun configureMaps() {
+
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.address_map) as SupportMapFragment?
+        mapFragment?.getMapAsync(this)
+    }
+
+    /**
+     * Called when the map is ready to add all markers and objects to the map.
+     */
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        mMap.uiSettings.isMapToolbarEnabled = false
+        val newYork = LatLng(40.734402, -73.949882)
+        marker = mMap.addMarker(MarkerOptions().position(newYork)
+                .title("Marker in NewYork"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(newYork))
+        mMap.cameraPosition.zoom.absoluteValue
+    }
+
+    /**
+     * The Google Autocomplete intent method.
+     */
+    fun autocompleteIntent() {
+        val fields = listOf(Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS)
+
+        val intent = Autocomplete.IntentBuilder(
+                AutocompleteActivityMode.OVERLAY, fields)
+                .setTypeFilter(TypeFilter.ADDRESS)
+                .setCountry("us")
+                .build(applicationContext)
+        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+
+    }
+
+
+    private fun createPhotosFolder() {
+        mEstatePhotosDir = File(applicationInfo.dataDir + "/files/", "estate_photos")
+
+        if (mEstatePhotosDir.mkdir()) {
+            Timber.tag("Folder FUN").d("Directory created")
+        } else {
+            Timber.tag("Folder FUN").d("Directory is not created")
         }
     }
 
@@ -92,9 +179,12 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
     private fun addToDatabase() {
         var user = User(currentUser!!.uid, currentUser!!.displayName.toString(), currentUser!!.email.toString(), currentUser!!.photoUrl.toString(), "TODAY")
         this.userViewModel.createUser(user)
-        var estate = Estate(1, currentUser!!.uid, mType, mNeighborhood, mPriceResut, mDescResult, mSqft, mRooms, mBathrooms, mBedrooms, mAvailable)
+        var estate = Estate(null, currentUser!!.uid, mType, mNeighborhood, mPriceResut, mDescResult, mSqft, mRooms, mBathrooms, mBedrooms, mAvailable, currentUser!!.displayName!!, Utils.todayDate, null, null, marker.position.latitude, marker.position.longitude, mAddress)
         this.estateViewModel.createEstate(estate)
-        onBackPressed()
+        this.estateViewModel.allEstate.observe(this, Observer {
+            eId = it.lastIndex.toLong() + 1
+            savePictureToCustomPath()
+        })
     }
 
     override fun onClick(v: View?) {
@@ -137,56 +227,131 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
             }
             first_pic -> {
                 PICK_IMAGE_REQUEST = 1
-                openGallery()
+                imagePicker(PICK_IMAGE_REQUEST)
             }
             second_pic -> {
                 PICK_IMAGE_REQUEST = 2
-                openGallery()
-            }
-            third_pic -> {
-                PICK_IMAGE_REQUEST = 3
-                openGallery()
-            }
-            fourth_pic -> {
-                PICK_IMAGE_REQUEST = 4
-                openGallery()
+                imagePicker(PICK_IMAGE_REQUEST)
             }
         }
     }
 
 
-    fun openGallery() {
-        val intent = Intent()
-// Show only images, no videos or anything else
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-// Always show the chooser (if there are multiple options available)
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
+    fun imagePicker(pickImageRequest: Int) {
+        when (pickImageRequest) {
+            1 -> {
+                ImagePicker.create(this)
+                        .returnMode(ReturnMode.ALL)
+                        .single()
+                        .start()
+            }
+            2 -> {
+                ImagePicker.create(this)
+                        .multi()
+                        .limit(7)
+                        .start()
+            }
+        }
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-            lateinit var imageView: ImageView
-            val uri = data.data
-
-            try {
-                Timber.tag("URI $PICK_IMAGE_REQUEST").i("$uri")
-                when (PICK_IMAGE_REQUEST) {
-                    1 -> imageView = first_pic
-                    2 -> imageView = second_pic
-                    3 -> imageView = third_pic
-                    4 -> imageView = fourth_pic
+        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
+            val images: List<Image> = ImagePicker.getImages(data)
+            val image: Image = ImagePicker.getFirstImageOrNull(data)
+            if (resultCode == Activity.RESULT_OK && images[0].path != null) {
+                lateinit var imageView: ImageView
+                try {
+                    Timber.tag("URI $PICK_IMAGE_REQUEST").i(images[0].path)
+                    when (PICK_IMAGE_REQUEST) {
+                        1 -> {
+                            imageView = first_pic
+                            mPicturePathArray[0] = images[0].path
+                        }
+                        2 -> {
+                            var i = 0
+                            if (images.size > 1) {
+                                add_image_fading_lo.visibility = View.VISIBLE
+                                add_image_x_more.text = images.size.toString() + " more"
+                            } else add_image_fading_lo.visibility = View.GONE
+                            imageView = second_pic
+                            while (i < images.size) {
+                                mPicturePathArray[i + 1] = images[i].path
+                                i++
+                            }
+                        }
+                    }
+                    Glide.with(this)
+                            .load(image.path)
+                            .centerCrop()
+                            .into(imageView)
+                } catch (e: IOException) {
+                    e.printStackTrace()
                 }
-                Glide.with(this)
-                        .load(uri)
-                        .centerCrop()
-                        .into(imageView)
-            } catch (e: IOException) {
-                e.printStackTrace()
+            }
+
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                val place = Autocomplete.getPlaceFromIntent(data!!)
+                address_edit_txt.text = place.name
+                address_txt_view.text = Utils.formatAddress(place.address!!)
+                mAddress = place.address!!
+                marker.title = place.name
+                marker.position = place.latLng
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.latLng, 14f))
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // Handle the error.
+                val status = Autocomplete.getStatusFromIntent(data!!)
+                Timber.i(status.statusMessage)
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
             }
         }
+    }
+
+    fun savePictureToCustomPath() {
+        var i = 0
+        lateinit var fileDest: File
+        while (i < mPicturePathArray.size) {
+            val file = File(mPicturePathArray[i])
+            val pictureName = Utils.custromTimeStamp() + "_" + currentUser!!.displayName + "_" + "$i"
+            if (i == 0) {
+                fileDest = File(mEstatePhotosDir.path + "/" + pictureName + "_main.jpg")
+            } else {
+                fileDest = File(mEstatePhotosDir.path + "/" + pictureName + ".jpg")
+            }
+            copyFile(file, fileDest)
+            this.pictureViewModel.createPicture(Picture(null, eId, pictureName, fileDest.toString()))
+            i++
+        }
+    }
+
+    /**
+     * copy contents from source file to mappPath file
+     *
+     * @param sourceFilePath  Source file path address
+     * @param destinationFilePath Destination file path address
+     */
+    private fun copyFile(sourceFilePath: File, destinationFilePath: File) {
+
+        try {
+
+            if (!sourceFilePath.exists()) {
+                return
+            }
+
+            var source: FileChannel = FileInputStream(sourceFilePath).channel
+            var destination: FileChannel = FileOutputStream(destinationFilePath).channel
+            destination.transferFrom(source, 0, source.size())
+            source.close()
+            destination.close()
+
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+
     }
 
     override fun onDestroy() {
@@ -274,6 +439,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         desc_bathrooms_img.visibility = ImageView.VISIBLE
         desc_bedrooms_img.visibility = ImageView.VISIBLE
         desc_available_img.visibility = ImageView.VISIBLE
+        address_edit_img.visibility = ImageView.VISIBLE
 
         desc_estate_type_img.setOnClickListener(this)
         desc_estate_type_txt.setOnClickListener(this)
@@ -295,8 +461,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         desc_available_layout.setOnClickListener(this)
         first_pic.setOnClickListener(this)
         second_pic.setOnClickListener(this)
-        third_pic.setOnClickListener(this)
-        fourth_pic.setOnClickListener(this)
+        address_edit_img.setOnClickListener(this)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

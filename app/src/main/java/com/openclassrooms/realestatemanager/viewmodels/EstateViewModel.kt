@@ -1,12 +1,12 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:26
+ *  * Last modified 03/09/19 16:31
  *
  */
 
-package com.openclassrooms.realestatemanager.activities.viewmodels
+package com.openclassrooms.realestatemanager.viewmodels
 
 import android.app.Application
 import androidx.annotation.Nullable
@@ -14,6 +14,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.openclassrooms.realestatemanager.database.RealEstateDatabase
 import com.openclassrooms.realestatemanager.models.Estate
+import com.openclassrooms.realestatemanager.models.EstateAndPictures
 import com.openclassrooms.realestatemanager.models.User
 import com.openclassrooms.realestatemanager.repositories.EstateDataRepository
 import java.util.concurrent.Executor
@@ -28,11 +29,13 @@ class EstateViewModel(application: Application, val executor: Executor) : Androi
     private var currentUser: LiveData<User>? = null
     private val repository: EstateDataRepository
     val allEstate: LiveData<List<Estate>>
+    val allEstateWithPitures: LiveData<List<EstateAndPictures>>
 
     init {
         val estateDao = RealEstateDatabase.getInstance(application).estateDao()
         repository = EstateDataRepository(estateDao)
         allEstate = repository.findAllEstate()
+        allEstateWithPitures = repository.findEstateAndPictures()
     }
     // -------------
     // FOR USER
@@ -46,7 +49,7 @@ class EstateViewModel(application: Application, val executor: Executor) : Androi
     // FOR ITEM
     // -------------
 
-    fun getEstateById(estateId: Int): LiveData<List<Estate>> {
+    fun getEstateById(estateId: Long): LiveData<List<Estate>> {
         return repository.finEstateById(estateId)
     }
 
@@ -92,6 +95,7 @@ class EstateViewModel(application: Application, val executor: Executor) : Androi
 
     fun createEstate(estate: Estate) {
         executor.execute { repository.createEstate(estate) }
+
     }
 
     fun deleteEstate(estate: Estate) {

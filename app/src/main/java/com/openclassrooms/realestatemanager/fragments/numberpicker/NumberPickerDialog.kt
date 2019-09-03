@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 02/09/19 10:30
  *
  */
 
@@ -129,7 +129,7 @@ class NumberPickerDialog(val i: Int, mOldVal: Int?) : DialogFragment() {
             when (i) {
                 3 -> {
                     string = editText.text.toString()
-                    string = Utils.PriceSpace(string)
+                    string = Utils.priceSpace(string)
                     RxBus.publish(RxEvent.PickerPriceEvent(string, nbr))
                 }
                 4 -> {

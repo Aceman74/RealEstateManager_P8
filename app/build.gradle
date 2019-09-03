@@ -6,9 +6,9 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'jacoco-android'
 apply plugin: 'com.google.gms.google-services'  /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 03/09/19 13:43
  *
  */  // Google Play services Gradle plugin
 apply plugin: 'io.fabric'   //  CrashLytics
@@ -67,6 +67,7 @@ dependencies {
     // GOOGLE  //
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.libraries.places:places:2.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
     //FIREBASE//
     implementation 'com.google.firebase:firebase-core:17.2.0'
     implementation 'com.google.firebase:firebase-auth:19.0.0'
@@ -103,6 +104,9 @@ dependencies {
     implementation 'android.arch.persistence.room:runtime:1.1.1'
     kapt 'android.arch.persistence.room:compiler:1.1.1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    // IMAGEPICKER //
+    implementation 'com.github.esafirm.android-image-picker:imagepicker:2.1.0'
+    implementation 'com.github.esafirm.android-image-picker:rximagepicker:2.1.0'
 
 }
 repositories {

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 03/09/19 16:31
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:26
+ *  * Last modified 03/09/19 16:31
  *
  */
 
@@ -13,49 +13,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.models.Estate
+import com.openclassrooms.realestatemanager.models.EstateAndPictures
 
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
  */
-class EstateAdapter(var estate: List<Estate>) : RecyclerView.Adapter<EstateViewHolder>() {
+class EstateAdapter(var estate: List<EstateAndPictures>, val listener: (Int) -> Unit) : RecyclerView.Adapter<EstateViewHolder>() {
 
-    // CALLBACK
-    interface Listener {
-        fun onClickDeleteButton(position: Int)
 
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EstateViewHolder {
 
-    // FOR DATA
-    private lateinit var callback: Listener
-
-    // CONSTRUCTOR
-    fun EstateAdapter(callback: Listener, estateItem: List<Estate>) {
-        this.estate = estateItem
-        this.callback = callback
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-            : EstateViewHolder {
         val v: View = LayoutInflater.from(parent.context)
                 .inflate(R.layout.estate_item, parent, false)
         return EstateViewHolder(v)
     }
 
-    override fun onBindViewHolder(viewHolder: EstateViewHolder, position: Int) {
-        viewHolder.updateWithItem(this.estate[position])
-    }
-
-    fun getItem(position: Int): Estate {
-        return this.estate[position]
+    override fun onBindViewHolder(holder: EstateViewHolder, position: Int) {
+        holder.updateWithItem(this.estate[position], position, listener)
     }
 
     override fun getItemCount(): Int {
         return this.estate.size
-    }
-
-    fun updateData(estateItem: List<Estate>) {
-        this.estate = estateItem
-        this.notifyDataSetChanged()
     }
 }
