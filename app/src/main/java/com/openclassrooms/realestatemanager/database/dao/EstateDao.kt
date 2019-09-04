@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 03/09/19 16:31
+ *  * Created by Lionel Joffray on 04/09/19 19:35
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 03/09/19 16:31
+ *  * Last modified 04/09/19 19:21
  *
  */
 
@@ -24,7 +24,11 @@ interface EstateDao {
 
     @Transaction
     @Query("SELECT * FROM Estate")
-    fun getEstateAndPictures(): LiveData<List<EstateAndPictures>>
+    fun getAllEstateAndPictures(): LiveData<List<EstateAndPictures>>
+
+    @Transaction
+    @Query("SELECT * FROM Estate WHERE estateId LIKE :estateId")
+    fun findEstatePictures(estateId: Long): LiveData<List<EstateAndPictures>>
 
     @Query("SELECT * FROM Estate WHERE estateId LIKE :estateId")
     fun findEstateByEid(estateId: Long): LiveData<List<Estate>>

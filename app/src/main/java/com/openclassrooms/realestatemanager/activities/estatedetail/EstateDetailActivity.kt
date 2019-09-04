@@ -1,12 +1,12 @@
 /*
  * *
- *  * Created by Lionel Joffray on 03/09/19 16:31
+ *  * Created by Lionel Joffray on 04/09/19 19:35
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 03/09/19 16:31
+ *  * Last modified 04/09/19 19:21
  *
  */
 
-package com.openclassrooms.realestatemanager.activities.estate
+package com.openclassrooms.realestatemanager.activities.estatedetail
 
 import android.content.Intent
 import android.os.Bundle
@@ -34,13 +34,15 @@ import com.openclassrooms.realestatemanager.activities.addestate.AddEstateActivi
 import com.openclassrooms.realestatemanager.activities.login.EstateDetailContract
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
 import com.openclassrooms.realestatemanager.adapters.SlideshowAdapter
+import com.openclassrooms.realestatemanager.adapters.estatelist.EstateDetailAdapter
 import com.openclassrooms.realestatemanager.injections.Injection
+import com.openclassrooms.realestatemanager.models.EstateAndPictures
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
+import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
 import kotlinx.android.synthetic.main.activity_detail_estate.*
 import kotlinx.android.synthetic.main.fragment_address_map.*
 import kotlinx.android.synthetic.main.fragment_description.*
-import kotlinx.android.synthetic.main.slideshow_list.*
 import timber.log.Timber
 import kotlin.math.absoluteValue
 
@@ -51,9 +53,11 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
     lateinit var mRecyclerView: RecyclerView
     lateinit var mAdapter: SlideshowAdapter
     lateinit var estateViewModel: EstateViewModel
+    lateinit var pictureViewModel: PictureViewModel
     var estateId = -1
     private lateinit var mMap: GoogleMap
     lateinit var marker: Marker
+    lateinit var observePicture: List<EstateAndPictures>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,14 +68,14 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
         estateId = intent.getIntExtra("estateId", -1)
         configureDetails()
         configureMaps()
+        configureRecyclerView()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.uiSettings.isMapToolbarEnabled = false
         val newYork = LatLng(40.734402, -73.949882)
-        marker = mMap.addMarker(MarkerOptions().position(newYork)
-                .title("Marker in NewYork"))
+        marker = mMap.addMarker(MarkerOptions().position(newYork))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(newYork))
         mMap.cameraPosition.zoom.absoluteValue
     }
@@ -102,6 +106,7 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
                 address_edit_txt.visibility = View.GONE
                 address_txt_view.text = Utils.formatAddress(it[0].fullAddress)
                 marker.position = LatLng(it[0].latitude!!, it[0].longitude!!)
+                marker.title = "That's Here !"
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.position, 14f))
                 if (it[0].editDate != null)
                     desc_last_mod_date_choice_txt.text = it[0].editDate
@@ -152,6 +157,9 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.toolbar_edit -> {
             Toast.makeText(this, "Edit action", Toast.LENGTH_LONG).show()
+            val intent = Intent(this, AddEstateActivity::class.java)
+            intent.putExtra("estateId", estateId)
+            startActivity(intent)
             true
         }
         android.R.id.home -> {
@@ -179,9 +187,17 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
      */
     fun configureRecyclerView() {
         mRecyclerView = slideshow_recyclerview
-        //   mAdapter = SlideshowAdapter(imageList, this)
-        mRecyclerView.adapter = mAdapter
-        mRecyclerView.layoutManager = LinearLayoutManager(this)
         mRecyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
+        val mViewModelFactory = Injection.provideViewModelFactory(applicationContext)
+        this.estateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
+        this.pictureViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PictureViewModel::class.java)
+        estateViewModel.getEstatePictures(estateId.toLong()).observe(this, Observer {
+            observePicture = it
+            mRecyclerView.adapter = EstateDetailAdapter(observePicture) {
+                Timber.tag("RV click").i("$it")
+                // lauchDetailActivity(it)
+            }
+        })
+        mRecyclerView.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
     }
 }

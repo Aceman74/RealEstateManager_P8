@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 03/09/19 16:31
+  ~  * Created by Lionel Joffray on 04/09/19 19:35
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 03/09/19 16:31
+  ~  * Last modified 04/09/19 19:34
   ~  */
   -->
 
@@ -15,7 +15,7 @@
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp"
     android:orientation="vertical"
-    tools:context=".activities.estate.EstateDetailActivity">
+    tools:context=".activities.estatedetail.EstateDetailActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,9 +45,11 @@
 
                 <ImageView
                     android:id="@+id/first_pic"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@android:drawable/ic_input_add"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/ic_add_photo_24dp"
+                    android:padding="@dimen/login_title"
+                    android:scaleType="centerCrop"
                     android:background="?android:attr/selectableItemBackground" />
             </LinearLayout>
 
@@ -80,9 +82,11 @@
 
                     <ImageView
                         android:id="@+id/second_pic"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:src="@android:drawable/ic_input_add"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:src="@drawable/ic_add_photo_24dp"
+                        android:padding="@dimen/login_title"
+                        android:scaleType="centerCrop"
                         android:background="?android:attr/selectableItemBackground" />
                 </LinearLayout>
 
@@ -110,7 +114,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="x more"
+                            android:text="@string/x_more"
                             android:textStyle="bold"
                             android:textSize="@dimen/small_title_size"
                             android:textColor="@color/quantum_white_text" />

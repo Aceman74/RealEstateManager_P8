@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 03/09/19 16:31
+ *  * Created by Lionel Joffray on 04/09/19 19:35
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 03/09/19 16:31
+ *  * Last modified 04/09/19 19:21
  *
  */
 
@@ -21,7 +21,7 @@ class EstateDataRepository(val estateDao: EstateDao) {
 
 
     private var mAllData: LiveData<List<Estate>> = estateDao.getAll()
-    var mEstateAndPicture: LiveData<List<EstateAndPictures>> = estateDao.getEstateAndPictures()
+    var mAllEstateAndPicture: LiveData<List<EstateAndPictures>> = estateDao.getAllEstateAndPictures()
 
 
     // --- GET ---
@@ -30,52 +30,56 @@ class EstateDataRepository(val estateDao: EstateDao) {
         return mAllData
     }
 
-    fun finEstateById(estateid: Long): LiveData<List<Estate>> {
+    fun findEstatePictures(estateid: Long): LiveData<List<EstateAndPictures>> {
+        return estateDao.findEstatePictures(estateid)
+    }
+
+    fun findEstateById(estateid: Long): LiveData<List<Estate>> {
         return estateDao.findEstateByEid(estateid)
     }
 
-    fun finEstateByUid(estateUid: String): LiveData<List<Estate>> {
+    fun findEstateByUid(estateUid: String): LiveData<List<Estate>> {
         return estateDao.findEstateByUid(estateUid)
     }
 
-    fun finByType(type: Int) {
+    fun findByType(type: Int) {
         estateDao.findByType(type)
     }
 
-    fun finByNeighborhood(neighborhood: Int) {
+    fun findByNeighborhood(neighborhood: Int) {
         estateDao.findByNeighborhood(neighborhood)
     }
 
-    fun finByPrice(price: String) {
+    fun findByPrice(price: String) {
         estateDao.findByPrice(price)
     }
 
-    fun finByDescription(desc: String) {
+    fun findByDescription(desc: String) {
         estateDao.findByDescription(desc)
     }
 
-    fun finBySqft(sqft: Int) {
+    fun findBySqft(sqft: Int) {
         estateDao.findBySqft(sqft)
     }
 
-    fun finByRooms(rooms: Int) {
+    fun findByRooms(rooms: Int) {
         estateDao.findByRooms(rooms)
     }
 
-    fun finByBathrooms(bathrooms: Int) {
+    fun findByBathrooms(bathrooms: Int) {
         estateDao.findByBathrooms(bathrooms)
     }
 
-    fun finByBedrooms(bedrooms: Int) {
+    fun findByBedrooms(bedrooms: Int) {
         estateDao.findByBedrooms(bedrooms)
     }
 
-    fun finByAvailability(available: Int) {
+    fun findByAvailability(available: Int) {
         estateDao.findByAvailability(available)
     }
 
     fun findEstateAndPictures(): LiveData<List<EstateAndPictures>> {
-        return mEstateAndPicture
+        return mAllEstateAndPicture
     }
 
     // --- CREATE ---

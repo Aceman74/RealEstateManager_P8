@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 03/09/19 16:31
+ *  * Created by Lionel Joffray on 04/09/19 19:35
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 03/09/19 16:31
+ *  * Last modified 04/09/19 19:34
  *
  */
 
@@ -20,7 +20,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.activities.estate.EstateDetailActivity
+import com.openclassrooms.realestatemanager.activities.estatedetail.EstateDetailActivity
 import com.openclassrooms.realestatemanager.adapters.estatelist.EstateAdapter
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.models.EstateAndPictures
@@ -69,14 +69,12 @@ class ListFragment : Fragment() {
                 Timber.tag("RV click").i("$it")
                 lauchDetailActivity(it)
             }
-            estateViewModel.allEstate.observe(this, Observer { estate ->
-            })
         })
         mRecyclerView.layoutManager = LinearLayoutManager(context)
     }
 
     fun lauchDetailActivity(it: Int) {
-        var intent = Intent(context, EstateDetailActivity::class.java)
+        val intent = Intent(context, EstateDetailActivity::class.java)
         intent.putExtra("estateId", it)
         startActivity(intent)
     }

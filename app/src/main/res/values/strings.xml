@@ -1,8 +1,8 @@
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 29/08/19 22:26
+  ~  * Created by Lionel Joffray on 04/09/19 19:35
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 29/08/19 22:22
+  ~  * Last modified 04/09/19 19:34
   ~  */
   -->
 
@@ -37,9 +37,18 @@
     <string name="for_sale_sold">For Sale / Sold</string>
     <string name="date">Date</string>
     <string name="_0">0</string>
-    <string name="estate_type">Estate Type</string>
-    <string name="main_picture">Main Picture</string>
+    <string name="estate_type">Estate Type *</string>
+    <string name="main_picture">Main Picture *</string>
     <string name="additional">Additional</string>
-    <string name="neighborhood">Neighborhood</string>
-    <string name="set_price">Set price</string>
+    <string name="neighborhood">Neighborhood *</string>
+    <string name="set_price">Set price *</string>
+    <string name="search_address">Search Address *</string>
+    <string name="required_fields">* = required fields</string>
+    <string name="for_sale">For Sale</string>
+    <string name="sold">Sold</string>
+    <string name="hello">HELLO</string>
+    <string name="address">Address</string>
+    <string name="x_more">x more</string>
+    <string name="dollars_devise">$</string>
+    <string name="euros_devise">€</string>
 </resources>

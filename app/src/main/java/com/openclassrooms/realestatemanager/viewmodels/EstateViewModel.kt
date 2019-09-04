@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 03/09/19 16:31
+ *  * Created by Lionel Joffray on 04/09/19 19:35
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 03/09/19 16:31
+ *  * Last modified 04/09/19 19:21
  *
  */
 
@@ -50,47 +50,50 @@ class EstateViewModel(application: Application, val executor: Executor) : Androi
     // -------------
 
     fun getEstateById(estateId: Long): LiveData<List<Estate>> {
-        return repository.finEstateById(estateId)
+        return repository.findEstateById(estateId)
     }
 
     fun getEstateByUid(estateUid: String): LiveData<List<Estate>> {
-        return repository.finEstateByUid(estateUid)
+        return repository.findEstateByUid(estateUid)
     }
 
+    fun getEstatePictures(estateId: Long): LiveData<List<EstateAndPictures>> {
+        return repository.findEstatePictures(estateId)
+    }
     fun getEstateByType(type: Int) {
-        executor.execute { repository.finByType(type) }
+        executor.execute { repository.findByType(type) }
     }
 
     fun getEstateByNeighborhood(neighborhood: Int) {
-        executor.execute { repository.finByNeighborhood(neighborhood) }
+        executor.execute { repository.findByNeighborhood(neighborhood) }
     }
 
     fun getEstateByPrice(price: String) {
-        executor.execute { repository.finByPrice(price) }
+        executor.execute { repository.findByPrice(price) }
     }
 
     fun getEstateByDescription(desc: String) {
-        executor.execute { repository.finByDescription(desc) }
+        executor.execute { repository.findByDescription(desc) }
     }
 
     fun getEstateBySqft(sqft: Int) {
-        executor.execute { repository.finBySqft(sqft) }
+        executor.execute { repository.findBySqft(sqft) }
     }
 
     fun getEstateByRooms(rooms: Int) {
-        executor.execute { repository.finByRooms(rooms) }
+        executor.execute { repository.findByRooms(rooms) }
     }
 
     fun getEstateByBathrooms(bathrooms: Int) {
-        executor.execute { repository.finByBathrooms(bathrooms) }
+        executor.execute { repository.findByBathrooms(bathrooms) }
     }
 
     fun getEstateByBedrooms(bedrooms: Int) {
-        executor.execute { repository.finByBedrooms(bedrooms) }
+        executor.execute { repository.findByBedrooms(bedrooms) }
     }
 
     fun getEstateByAvailability(available: Int) {
-        executor.execute { repository.finByAvailability(available) }
+        executor.execute { repository.findByAvailability(available) }
     }
 
     fun createEstate(estate: Estate) {

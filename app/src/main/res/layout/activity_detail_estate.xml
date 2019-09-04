@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 03/09/19 16:31
+  ~  * Created by Lionel Joffray on 04/09/19 19:35
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 03/09/19 16:31
+  ~  * Last modified 04/09/19 19:21
   ~  */
   -->
 
@@ -12,7 +12,7 @@
     android:id="@+id/detail_estate_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.estate.EstateDetailActivity">
+    tools:context=".activities.estatedetail.EstateDetailActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,8 +43,9 @@
                 <LinearLayout
                     android:id="@+id/detail_estate_media"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    android:layout_weight="0.2">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
@@ -54,11 +55,11 @@
                         app:cardCornerRadius="2dp"
                         app:cardElevation="2dp">
 
+
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/detail_pic_rv"
+                            android:id="@+id/slideshow_recyclerview"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal" />
+                            android:layout_height="match_parent" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -67,8 +68,9 @@
                 <LinearLayout
                     android:id="@+id/detail_estate_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    android:layout_weight="0.8">
 
                     <include layout="@layout/fragment_description" />
 

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 03/09/19 16:31
+ *  * Created by Lionel Joffray on 04/09/19 19:35
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 03/09/19 16:31
+ *  * Last modified 04/09/19 18:26
  *
  */
 
@@ -17,7 +17,7 @@ import androidx.room.Relation
 class EstateAndPictures {
 
     @Embedded
-    var estate: Estate? = null
+    lateinit var estate: Estate
     @Relation(parentColumn = "estateId",
             entityColumn = "estateId_fk")
 
