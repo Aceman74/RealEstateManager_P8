@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 04/09/19 19:35
+ *  * Created by Lionel Joffray on 05/09/19 19:00
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 04/09/19 10:29
+ *  * Last modified 05/09/19 14:34
  *
  */
 
@@ -18,8 +18,8 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.activities.SearchActivity
 import com.openclassrooms.realestatemanager.activities.addestate.AddEstateActivity
-import com.openclassrooms.realestatemanager.activities.estatedetail.EstateDetailActivity
 import com.openclassrooms.realestatemanager.activities.login.MainContract
 import com.openclassrooms.realestatemanager.adapters.MainPagerAdapter
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
@@ -59,7 +59,7 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
                 Timber.i("Click Main")
             }
             R.id.drawer_third -> {
-                val intent = Intent(baseContext, EstateDetailActivity::class.java)
+                val intent = Intent(baseContext, SearchActivity::class.java)
                 startActivity(intent)
                 Timber.i("Click Detail")
             }
@@ -101,6 +101,8 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
         }
         R.id.toolbar_search -> {
             Toast.makeText(this, "Search action", Toast.LENGTH_LONG).show()
+            intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
             true
         }
         android.R.id.home -> {

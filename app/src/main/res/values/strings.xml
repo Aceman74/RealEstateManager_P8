@@ -1,8 +1,8 @@
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 04/09/19 19:35
+  ~  * Created by Lionel Joffray on 05/09/19 19:00
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 04/09/19 19:34
+  ~  * Last modified 05/09/19 17:38
   ~  */
   -->
 
@@ -51,4 +51,12 @@
     <string name="x_more">x more</string>
     <string name="dollars_devise">$</string>
     <string name="euros_devise">€</string>
+    <string name="surface_search">Surface :</string>
+    <string name="date_added_search">Date added :</string>
+    <string name="date_sold_search">Date sold :</string>
+    <string name="photo_s">Photo(s) :</string>
+    <string name="price">Price :</string>
+    <string name="neighborhood_search">Neighborhood :</string>
+    <string name="any">Any</string>
+    <string name="and">And</string>
 </resources>

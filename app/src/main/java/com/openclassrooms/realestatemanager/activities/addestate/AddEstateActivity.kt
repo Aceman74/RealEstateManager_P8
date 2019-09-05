@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 04/09/19 19:35
+ *  * Created by Lionel Joffray on 05/09/19 19:00
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 04/09/19 19:34
+ *  * Last modified 05/09/19 13:18
  *
  */
 
@@ -269,23 +269,23 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 showNumberPicker(4, mPickerArray[0])
                 Timber.i("Click Description")
             }
-            desc_sqft_img, desc_sqft_layout -> {
+            desc_sqft_img, surface_tv -> {
                 showNumberPicker(5, mPickerArray[4])
                 Timber.i("Click Sqft")
             }
-            desc_rooms_img, desc_rooms_layout -> {
+            desc_rooms_img, rooms_tv -> {
                 showNumberPicker(6, mPickerArray[5])
                 Timber.i("Click Rooms")
             }
-            desc_bathrooms_img, desc_bathrooms_layout -> {
+            desc_bathrooms_img, bathrooms_tv -> {
                 showNumberPicker(7, mPickerArray[6])
                 Timber.i("Click Bathrooms")
             }
-            desc_bedrooms_img, desc_bedrooms_layout -> {
+            desc_bedrooms_img, bedrooms_tv -> {
                 showNumberPicker(8, mPickerArray[7])
                 Timber.i("Click Bedrooms")
             }
-            desc_available_img, desc_available_layout -> {
+            desc_available_img, available_tv -> {
                 showNumberPicker(9, mPickerArray[8])
                 Timber.i("Click Available")
             }
@@ -521,15 +521,15 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         desc_description_img.setOnClickListener(this)
         desc_description_layout.setOnClickListener(this)
         desc_sqft_img.setOnClickListener(this)
-        desc_sqft_layout.setOnClickListener(this)
+        surface_tv.setOnClickListener(this)
         desc_rooms_img.setOnClickListener(this)
-        desc_rooms_layout.setOnClickListener(this)
+        rooms_tv.setOnClickListener(this)
         desc_bathrooms_img.setOnClickListener(this)
-        desc_bathrooms_layout.setOnClickListener(this)
+        bathrooms_tv.setOnClickListener(this)
         desc_bedrooms_img.setOnClickListener(this)
-        desc_bedrooms_layout.setOnClickListener(this)
+        bedrooms_tv.setOnClickListener(this)
         desc_available_img.setOnClickListener(this)
-        desc_available_layout.setOnClickListener(this)
+        available_tv.setOnClickListener(this)
         first_pic.setOnClickListener(this)
         second_pic.setOnClickListener(this)
         address_search_layout.setOnClickListener(this)

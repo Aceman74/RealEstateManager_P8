@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 03/09/19 16:31
+ *  * Created by Lionel Joffray on 05/09/19 19:00
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 03/09/19 16:31
+ *  * Last modified 05/09/19 18:59
  *
  */
 
@@ -80,7 +80,7 @@ object Utils {
     }
 
     fun priceSpace(string: String): String {
-        val s: StringBuilder = StringBuilder(string)
+        val s: StringBuilder = StringBuilder(string.replace(" ", ""))
         var i = 3
         while (i < s.length) {
             s.insert(s.length - i, " ")
