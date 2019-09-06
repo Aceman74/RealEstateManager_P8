@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 05/09/19 19:00
+ *  * Created by Lionel Joffray on 06/09/19 20:07
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 05/09/19 14:34
+ *  * Last modified 06/09/19 19:51
  *
  */
 
@@ -22,11 +22,13 @@ import com.openclassrooms.realestatemanager.activities.SearchActivity
 import com.openclassrooms.realestatemanager.activities.addestate.AddEstateActivity
 import com.openclassrooms.realestatemanager.activities.login.MainContract
 import com.openclassrooms.realestatemanager.adapters.MainPagerAdapter
+import com.openclassrooms.realestatemanager.utils.DepthPageTransformer
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
-class MainActivity(override val activityLayout: Int = R.layout.activity_main) : BaseActivity(), MainContract.MainViewInterface, NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity(override val activityLayout: Int = R.layout.activity_main) : BaseActivity(), MainContract.MainViewInterface, NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
+
 
     private lateinit var pager: ViewPager
     private lateinit var mPagerAdapter: MainPagerAdapter
@@ -76,6 +78,19 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
             }
         }
         return true
+    }
+
+    override fun onPageScrollStateChanged(state: Int) {
+    }
+
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+    }
+
+    override fun onPageSelected(position: Int) {
+        when (position) {
+            0 -> main_activity_bottom_navigation.selectedItemId = R.id.bottom_main_list
+            1 -> main_activity_bottom_navigation.selectedItemId = R.id.bottom_main_map
+        }
     }
 
     /**
@@ -133,5 +148,7 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
     fun configureViewPager() {
         mPagerAdapter = MainPagerAdapter(supportFragmentManager, applicationContext)
         pager.adapter = mPagerAdapter
+        pager.setPageTransformer(true, DepthPageTransformer())
+        pager.addOnPageChangeListener(this)
     }
 }

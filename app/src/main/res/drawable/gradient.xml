@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 29/08/19 22:26
+  ~  * Created by Lionel Joffray on 06/09/19 20:07
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 29/08/19 22:26
+  ~  * Last modified 06/09/19 18:22
   ~  */
   -->
 
@@ -11,8 +11,8 @@
     android:shape="rectangle">
 
     <gradient
-        android:startColor="@color/secondaryColor"
-        android:centerColor="@color/secondaryColor"
+        android:startColor="@color/primaryColor"
+        android:centerColor="@color/primaryColor"
         android:endColor="@android:color/white"
         android:angle="0"
         android:type="linear"/>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 29/08/19 22:26
+  ~  * Created by Lionel Joffray on 06/09/19 20:07
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 29/08/19 22:26
+  ~  * Last modified 06/09/19 19:59
   ~  */
   -->
 
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/secondaryDarkColor"
+            android:background="@color/primaryColor"
             app:itemIconTint="@drawable/bottom_navigation_selector"
             app:itemTextColor="@drawable/bottom_navigation_selector"
             app:menu="@menu/main_bottom_navigation" />
@@ -73,7 +73,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/secondaryDarkColor"
+        app:itemTextColor="@color/primaryTextColor"
+        app:itemIconTint="@color/primaryTextColor"
+        android:background="@color/primaryDarkColor"
         android:fitsSystemWindows="true"
         app:elevation="@dimen/normal_margin"
         app:headerLayout="@layout/navigation_drawer_header"

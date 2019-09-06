@@ -149,7 +149,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_location_on_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_home_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -160,7 +160,7 @@
                         <option name="values">
                           <map>
                             <entry key="opacityPercent" value="97" />
-                            <entry key="outputName" value="ic_location_24dp" />
+                            <entry key="outputName" value="ic_home_black_24dp" />
                             <entry key="sourceFile" value="C:\Users\Aceman" />
                           </map>
                         </option>

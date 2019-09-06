@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 04/09/19 19:35
+ *  * Created by Lionel Joffray on 06/09/19 20:07
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 04/09/19 19:34
+ *  * Last modified 06/09/19 20:07
  *
  */
 
@@ -12,22 +12,27 @@ package com.openclassrooms.realestatemanager.fragments.numberpicker
 import android.app.Dialog
 import android.os.Bundle
 import android.text.InputType
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.NumberPicker
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.Utils
+import com.openclassrooms.realestatemanager.extensions.priceAddSpace
+import com.openclassrooms.realestatemanager.extensions.setMaxLength
 import com.openclassrooms.realestatemanager.utils.rxbus.RxBus
 import com.openclassrooms.realestatemanager.utils.rxbus.RxEvent
 import io.reactivex.disposables.Disposable
+import java.util.*
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class NumberPickerDialog(val i: Int, private var mOldVal: Int?) : DialogFragment() {
+class NumberPickerDialog(val i: Int, private var mOldVal: Int?, val s: String? = null) : DialogFragment() {
     private lateinit var valueChangeListener: NumberPicker.OnValueChangeListener
+    private lateinit var dateChangeListener: DatePicker.OnDateChangedListener
     var string: String = ""
     private lateinit var pickerDisposable: Disposable
 
@@ -35,6 +40,7 @@ class NumberPickerDialog(val i: Int, private var mOldVal: Int?) : DialogFragment
         val numberPicker = NumberPicker(activity)
         val editText = EditText(activity)
         val builder = AlertDialog.Builder(requireContext())
+        val datePicker = DatePicker(activity)
 
         when (i) {
             1 -> {
@@ -61,20 +67,25 @@ class NumberPickerDialog(val i: Int, private var mOldVal: Int?) : DialogFragment
             3 -> {
                 builder.setTitle("Price")
                 builder.setMessage("Set the price :")
+                editText.maxLines = 1
+                editText.setMaxLength(9)
+                editText.setText(s)
+                editText.inputType = InputType.TYPE_CLASS_NUMBER
                 numberPicker.tag = 3
                 editText.tag = 3
-                editText.inputType = InputType.TYPE_CLASS_NUMBER
 
             }
             4 -> {
                 builder.setTitle("Description")
                 builder.setMessage("describe the estate :")
+                editText.maxLines = 4
+                editText.setText(s)
                 numberPicker.tag = 4
                 editText.tag = 4
 
             }
             5 -> {
-                numberPicker.minValue = 5
+                numberPicker.minValue = 0
                 numberPicker.maxValue = 50000
 
                 builder.setTitle("Square Feet")
@@ -115,21 +126,93 @@ class NumberPickerDialog(val i: Int, private var mOldVal: Int?) : DialogFragment
                 builder.setMessage("Choose availability :")
                 numberPicker.tag = 9
             }
+            10 -> {
+                val minDate: Calendar = Calendar.getInstance()
+                minDate.add(Calendar.YEAR, -2)
+                datePicker.minDate = minDate.timeInMillis
+                datePicker.maxDate = Calendar.getInstance().timeInMillis
+                builder.setTitle("Date")
+                builder.setMessage("Added from :")
+                datePicker.tag = 10
+            }
+            11 -> {
+                val minDate: Calendar = Calendar.getInstance()
+                minDate.add(Calendar.YEAR, -2)
+                datePicker.minDate = minDate.timeInMillis
+                datePicker.maxDate = Calendar.getInstance().timeInMillis
+                builder.setTitle("Date")
+                builder.setMessage("Added to :")
+                datePicker.tag = 11
+            }
+            12 -> {
+                val minDate: Calendar = Calendar.getInstance()
+                minDate.add(Calendar.YEAR, -2)
+                datePicker.minDate = minDate.timeInMillis
+                datePicker.maxDate = Calendar.getInstance().timeInMillis
+                builder.setTitle("Date")
+                builder.setMessage("Sold from :")
+                datePicker.tag = 12
+            }
+            13 -> {
+                val minDate: Calendar = Calendar.getInstance()
+                minDate.add(Calendar.YEAR, -2)
+                datePicker.minDate = minDate.timeInMillis
+                datePicker.maxDate = Calendar.getInstance().timeInMillis
+                builder.setTitle("Date")
+                builder.setMessage("Sold to :")
+                datePicker.tag = 13
+            }
+            14 -> {
+                editText.maxLines = 1
+                editText.setMaxLength(9)
+                editText.setText(s)
+                editText.inputType = InputType.TYPE_CLASS_NUMBER
+                builder.setTitle("Price")
+                builder.setMessage("Min price :")
+                numberPicker.tag = 14
+                editText.tag = 14
+            }
+            15 -> {
+                editText.maxLines = 1
+                editText.setMaxLength(9)
+                editText.setText(s)
+                editText.inputType = InputType.TYPE_CLASS_NUMBER
+                builder.setTitle("Price")
+                builder.setMessage("Max price :")
+                numberPicker.tag = 15
+                editText.tag = 15
+            }
+            16 -> {
+                numberPicker.minValue = 0
+                numberPicker.maxValue = 8
+                builder.setTitle("Picture")
+                builder.setMessage("Between :")
+                numberPicker.tag = 16
+            }
+            17 -> {
+                numberPicker.minValue = 0
+                numberPicker.maxValue = 8
+                builder.setTitle("Picture")
+                builder.setMessage("And :")
+                numberPicker.tag = 17
+            }
+            18 -> {
+                numberPicker.minValue = 0
+                numberPicker.maxValue = 50000
+                builder.setTitle("Sqft")
+                builder.setMessage("Min sqft :")
+                numberPicker.tag = 18
+            }
+            19 -> {
+                numberPicker.minValue = 0
+                numberPicker.maxValue = 50000
+                builder.setTitle("Sqft")
+                builder.setMessage("Max sqft :")
+                numberPicker.tag = 19
+            }
 
         }
-        when {
-            id == 3 -> {
-                pickerDisposable = RxBus.listen(RxEvent.PickerPriceEvent::class.java).subscribe {
-                    editText.setText(it.price)
-                }
-            }
-            id == 4 -> {
-                pickerDisposable = RxBus.listen(RxEvent.PickerDescEvent::class.java).subscribe {
-                    editText.setText(it.desc)
-                }
 
-            }
-        }
         if (mOldVal != null)
             numberPicker.value = mOldVal as Int
 
@@ -138,17 +221,31 @@ class NumberPickerDialog(val i: Int, private var mOldVal: Int?) : DialogFragment
             when (i) {
                 3 -> {
                     string = editText.text.toString()
-                    string = Utils.priceSpace(string)
+                    string = String().priceAddSpace(string)
                     RxBus.publish(RxEvent.PickerPriceEvent(string))
                 }
                 4 -> {
                     string = editText.text.toString()
                     RxBus.publish(RxEvent.PickerDescEvent(string))
                 }
+                14 -> {
+                    string = editText.text.toString()
+                    string = String().priceAddSpace(string)
+                    RxBus.publish(RxEvent.PickerPriceEvent(string))
+                }
+                15 -> {
+                    string = editText.text.toString()
+                    string = String().priceAddSpace(string)
+                    RxBus.publish(RxEvent.PickerPriceMaxEvent(string))
+                }
+                10, 11, 12, 13 -> {
+                    dateChangeListener.onDateChanged(datePicker, datePicker.year, datePicker.month, datePicker.dayOfMonth)
+                    Utils.snackBarPreset(activity!!.findViewById(android.R.id.content), "Success")
+                }
             }
+
             valueChangeListener.onValueChange(numberPicker,
-                    numberPicker.value, numberPicker.value)
-            Utils.snackBarPreset(activity!!.findViewById(android.R.id.content), "Success")
+                    mOldVal!!, numberPicker.value)
         }
 
         builder.setNegativeButton("CANCEL") { dialog, which ->
@@ -158,11 +255,14 @@ class NumberPickerDialog(val i: Int, private var mOldVal: Int?) : DialogFragment
 
 
         when (i) {
-            1, 2, 5, 6, 7, 8, 9 -> {
+            1, 2, 5, 6, 7, 8, 9, 16, 17, 18, 19 -> {
                 builder.setView(numberPicker)
             }
-            3, 4 -> {
+            3, 4, 14, 15 -> {
                 builder.setView(editText)
+            }
+            10, 11, 12, 13 -> {
+                builder.setView(datePicker)
             }
         }
         return builder.create()
@@ -174,5 +274,9 @@ class NumberPickerDialog(val i: Int, private var mOldVal: Int?) : DialogFragment
 
     fun setValueChangeListener(valueChangeListener: NumberPicker.OnValueChangeListener) {
         this.valueChangeListener = valueChangeListener
+    }
+
+    fun setDateChangeListener(dateChangeListener: DatePicker.OnDateChangedListener) {
+        this.dateChangeListener = dateChangeListener
     }
 }

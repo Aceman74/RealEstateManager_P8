@@ -6,9 +6,9 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'jacoco-android'
 apply plugin: 'com.google.gms.google-services'  /*
  * *
- *  * Created by Lionel Joffray on 03/09/19 16:31
+ *  * Created by Lionel Joffray on 06/09/19 20:07
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 03/09/19 13:43
+ *  * Last modified 06/09/19 17:40
  *
  */  // Google Play services Gradle plugin
 apply plugin: 'io.fabric'   //  CrashLytics
@@ -107,6 +107,9 @@ dependencies {
     // IMAGEPICKER //
     implementation 'com.github.esafirm.android-image-picker:imagepicker:2.1.0'
     implementation 'com.github.esafirm.android-image-picker:rximagepicker:2.1.0'
+    // EVERNOTE //
+    implementation 'com.evernote:android-state:1.4.1'
+    kapt 'com.evernote:android-state-processor:1.4.1'
 
 }
 repositories {

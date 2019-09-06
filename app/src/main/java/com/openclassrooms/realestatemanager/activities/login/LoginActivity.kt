@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 03/09/19 16:31
+ *  * Created by Lionel Joffray on 06/09/19 20:07
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 02/09/19 10:10
+ *  * Last modified 06/09/19 20:07
  *  
  */
 
@@ -20,13 +20,11 @@ import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsListener
-import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.Utils.isInternetAvailable
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import timber.log.Timber
 
 /**
  * Created by Lionel JOFFRAY - on 06/08/2019.
@@ -41,8 +39,6 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (BuildConfig.DEBUG)
-            Timber.plant(Timber.DebugTree())
 
         mPresenter.attachView(this)
         checkPermission()

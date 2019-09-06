@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 06/09/19 20:07
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 06/09/19 20:07
  *
  */
 
@@ -41,6 +41,14 @@ class MainPagerAdapter(mgr: FragmentManager, private val mContext: Context) : Fr
             -> return ListFragment.newInstance()
             1 //Page number 2
             -> return MapFragment.newInstance()
+            else -> return null
+        }
+    }
+
+    override fun getPageTitle(position: Int): CharSequence? {
+        when (position) {
+            0 -> return "List"
+            1 -> return "Map"
             else -> return null
         }
     }

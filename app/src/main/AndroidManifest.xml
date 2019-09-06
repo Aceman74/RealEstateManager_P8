@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 05/09/19 19:00
+  ~  * Created by Lionel Joffray on 06/09/19 20:07
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 05/09/19 09:03
+  ~  * Last modified 06/09/19 20:07
   ~  */
   -->
 
@@ -11,13 +11,16 @@
     package="com.openclassrooms.realestatemanager">
 
     <application
+        android:name=".utils.RealEsateManager"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.SearchActivity"></activity>
+        <activity
+            android:name=".activities.SearchActivity"
+            android:parentActivityName=".activities.main.MainActivity" />
         <activity android:name=".activities.addestate.AddEstateActivity" />
         <activity android:name=".activities.main.MainActivity" />
         <activity android:name=".activities.estatedetail.EstateDetailActivity" />

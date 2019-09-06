@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 05/09/19 19:00
+ *  * Created by Lionel Joffray on 06/09/19 20:07
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 05/09/19 13:18
+ *  * Last modified 06/09/19 20:07
  *
  */
 
@@ -44,6 +44,7 @@ import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.activities.estatedetail.EstateDetailActivity
 import com.openclassrooms.realestatemanager.activities.login.AddEstateContract
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
+import com.openclassrooms.realestatemanager.extensions.priceRemoveSpace
 import com.openclassrooms.realestatemanager.fragments.numberpicker.NumberPickerDialog
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.models.Estate
@@ -260,13 +261,11 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 Timber.i("Click Neighbourhood")
             }
             desc_price_img, desc_estate_price_txt -> {
-                RxBus.publish(RxEvent.PickerPriceEvent(mPriceResut))
-                showNumberPicker(3, mPickerArray[0])
+                showNumberPicker(3, mPickerArray[0], String().priceRemoveSpace(mPriceResut))
                 Timber.i("Click Price")
             }
-            desc_description_img, desc_description_layout -> {
-                RxBus.publish(RxEvent.PickerDescEvent(mDescResult))
-                showNumberPicker(4, mPickerArray[0])
+            desc_description_img, fragment_desc_desc_txt -> {
+                showNumberPicker(4, mPickerArray[0], mDescResult)
                 Timber.i("Click Description")
             }
             desc_sqft_img, surface_tv -> {
@@ -491,8 +490,8 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         }
     }
 
-    fun showNumberPicker(i: Int, mOldVal: Int?) {
-        val newFragment = NumberPickerDialog(i, mOldVal)
+    fun showNumberPicker(i: Int, mOldVal: Int?, string: String? = null) {
+        val newFragment = NumberPickerDialog(i, mOldVal, string)
         newFragment.setValueChangeListener(this)
         newFragment.show(supportFragmentManager, "time picker")
     }
@@ -519,7 +518,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         desc_price_img.setOnClickListener(this)
         desc_estate_price_txt.setOnClickListener(this)
         desc_description_img.setOnClickListener(this)
-        desc_description_layout.setOnClickListener(this)
+        fragment_desc_desc_txt.setOnClickListener(this)
         desc_sqft_img.setOnClickListener(this)
         surface_tv.setOnClickListener(this)
         desc_rooms_img.setOnClickListener(this)

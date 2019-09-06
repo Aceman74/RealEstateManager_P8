@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 05/09/19 19:00
+ *  * Created by Lionel Joffray on 06/09/19 20:07
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 05/09/19 18:59
+ *  * Last modified 06/09/19 12:41
  *
  */
 
@@ -77,16 +77,6 @@ object Utils {
         txtView.textAlignment = View.TEXT_ALIGNMENT_CENTER
         txtView.setBackgroundResource(R.color.primaryDarkColor)
         return snack.show()
-    }
-
-    fun priceSpace(string: String): String {
-        val s: StringBuilder = StringBuilder(string.replace(" ", ""))
-        var i = 3
-        while (i < s.length) {
-            s.insert(s.length - i, " ")
-            i += 4
-        }
-        return s.toString()
     }
 
     fun custromTimeStamp(): String {

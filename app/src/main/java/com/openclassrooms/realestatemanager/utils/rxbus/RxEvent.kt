@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 04/09/19 19:35
+ *  * Created by Lionel Joffray on 06/09/19 20:07
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 04/09/19 15:22
+ *  * Last modified 06/09/19 17:01
  *
  */
 
@@ -13,7 +13,9 @@ package com.openclassrooms.realestatemanager.utils.rxbus
  */
 class RxEvent {
 
+    data class PickerDescEvent(val desc: String)
+
     data class PickerPriceEvent(val price: String)
 
-    data class PickerDescEvent(val desc: String)
+    data class PickerPriceMaxEvent(val priceMax: String)
 }

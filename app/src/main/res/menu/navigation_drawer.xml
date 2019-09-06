@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 29/08/19 22:26
+  ~  * Created by Lionel Joffray on 06/09/19 20:07
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 29/08/19 22:26
+  ~  * Last modified 06/09/19 20:07
   ~  */
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="">
         <menu>
@@ -16,13 +14,16 @@
             <group android:checkableBehavior="none">
                 <item
                     android:id="@+id/drawer_first"
-                    android:title="test" />
+                    android:title="Home"
+                    android:icon="@drawable/ic_home_black_24dp" />
                 <item
                     android:id="@+id/drawer_second"
-                    android:title="test2" />
+                    android:title="Settings"
+                    android:icon="@drawable/ic_settings_24dp" />
                 <item
                     android:id="@+id/drawer_third"
-                    android:title="test3" />
+                    android:title="Logout"
+                    android:icon="@drawable/ic_logout_24dp" />
             </group>
 
         </menu>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 29/08/19 22:26
+  ~  * Created by Lionel Joffray on 06/09/19 20:07
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 29/08/19 22:26
+  ~  * Last modified 06/09/19 18:24
   ~  */
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_checked="true" android:color="@color/primaryTextColor" />
-    <item android:state_checked="false" android:color="@color/secondaryLightColor" />
+    <item android:state_checked="false" android:color="@color/primaryLightColor" />
     <item android:color="@color/secondaryColor"  />
 </selector>
