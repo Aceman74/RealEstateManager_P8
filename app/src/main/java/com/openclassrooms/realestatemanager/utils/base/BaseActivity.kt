@@ -1,23 +1,30 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 09/09/19 20:10
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 09/09/19 20:10
  *
  */
 
 package com.openclassrooms.realestatemanager.utils.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import com.bumptech.glide.Glide
+import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.activities.login.LoginActivity
+import kotlinx.android.synthetic.main.navigation_drawer_header.view.*
 import timber.log.Timber
 
 /**
@@ -28,6 +35,7 @@ import timber.log.Timber
  *
  */
 abstract class BaseActivity : AppCompatActivity() {
+    val SIGN_OUT_TASK = 12
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +56,14 @@ abstract class BaseActivity : AppCompatActivity() {
         toggle.syncState()
     }
 
+    fun navigationDrawerHeader(navView: NavigationView) {
+        val headerView = navView.getHeaderView(0)
+        Glide.with(applicationContext)
+                .load(currentUser?.photoUrl)
+                .into(headerView.profile_image_nav_header)
+        headerView.name_nav_header.text = currentUser?.displayName
+        headerView.email_nav_header.text = currentUser?.email
+    }
     /**
      * Get current user on Firebase Auth.
      *
@@ -64,7 +80,25 @@ abstract class BaseActivity : AppCompatActivity() {
     protected val isCurrentUserLogged: Boolean?
         get() = this.currentUser != null
 
+    /**
+     * Sign out user from firebase method.
+     */
+    fun signOutUserFromFirebase() {
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(SIGN_OUT_TASK))
+                .addOnFailureListener(onFailureListener())
+        val start = Intent(applicationContext, LoginActivity::class.java)
+        startActivity(start)
+    }
 
+    fun updateUIAfterRESTRequestsCompleted(origin: Int): OnSuccessListener<Void> {
+        return OnSuccessListener {
+            if (origin == SIGN_OUT_TASK) {
+                finish()
+            }
+        }
+    }
     /**
      * On Failure listener for Firebase REST.
      *

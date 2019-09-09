@@ -1,18 +1,21 @@
 /*
  * *
- *  * Created by Lionel Joffray on 04/09/19 19:35
+ *  * Created by Lionel Joffray on 09/09/19 20:10
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 04/09/19 19:21
+ *  * Last modified 09/09/19 20:10
  *
  */
 
 package com.openclassrooms.realestatemanager.fragments.map
 
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -44,6 +47,7 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
     private var API_KEY: String = BuildConfig.google_maps_key
     val ZOOM_LEVEL = 13f
     lateinit var estateViewModel: EstateViewModel
+    val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 100
 
     private lateinit var mMap: GoogleMap
 
@@ -78,6 +82,20 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
         return view
     }
 
+    /**
+     * Get the location btn permission
+     */
+    fun getLocationPermission() {
+
+        if (ContextCompat.checkSelfPermission(requireContext(),
+                        android.Manifest.permission.ACCESS_FINE_LOCATION) === PackageManager.PERMISSION_GRANTED) {
+            mMap.isMyLocationEnabled = true
+        } else {
+            ActivityCompat.requestPermissions(requireActivity(),
+                    arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
+        }
+    }
     override fun getInfoWindow(marker: Marker?): View? {
         return null
     }
@@ -110,6 +128,7 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
         val newYork = LatLng(40.734402, -73.949882)
         mMap.moveCamera(CameraUpdateFactory.newLatLng(newYork))
         mMap.cameraPosition.zoom.absoluteValue
+        getLocationPermission()
     }
 
 

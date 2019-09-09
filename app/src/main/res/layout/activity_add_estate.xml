@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 06/09/19 20:07
+  ~  * Created by Lionel Joffray on 09/09/19 20:10
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 06/09/19 19:54
+  ~  * Last modified 09/09/19 11:44
   ~  */
   -->
 
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="@dimen/normal_margin"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo_black" />
 
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

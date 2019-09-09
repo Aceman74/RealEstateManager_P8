@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 06/09/19 20:07
+ *  * Created by Lionel Joffray on 09/09/19 20:10
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 06/09/19 20:07
+ *  * Last modified 09/09/19 11:50
  *  
  */
 
@@ -123,7 +123,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                         .setAvailableProviders(
                                 listOf(AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.GoogleBuilder().build()))
                         .setIsSmartLockEnabled(false, true)
-                        .setLogo(R.drawable.logo)
+                        .setLogo(R.drawable.logo_black)
                         .build(),
                 RC_SIGN_IN)   // Sign In
     }

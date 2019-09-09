@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 06/09/19 20:07
+ *  * Created by Lionel Joffray on 09/09/19 20:10
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 06/09/19 12:41
+ *  * Last modified 09/09/19 20:10
  *
  */
 
@@ -14,6 +14,7 @@ import android.net.wifi.WifiManager
 import android.view.View
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
+import com.openclassrooms.realestatemanager.extensions.backSlashRemover
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -87,6 +88,29 @@ object Utils {
 
     fun formatAddress(string: String): String {
         return string.replace(",", "\n")
+    }
+
+    fun dateToMillis(year: Int, monthOfYear: Int, dayOfMonth: Int): Long {
+        var cal = Calendar.getInstance()
+        cal.set(Calendar.YEAR, year)
+        cal.set(Calendar.MONTH, monthOfYear)
+        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        return cal.timeInMillis
+    }
+
+    fun millisToDate(millis: Long): String {
+
+        val dateFormat = SimpleDateFormat("ddMMyyyy")
+        val result = Date(millis)
+
+        return dateFormat.format(result)
+    }
+
+    fun dateWithBSToMillis(dateString: String): Long {
+
+        val string = String().backSlashRemover(dateString)
+
+        return dateToMillis(string.substring(4, 8).toInt(), string.substring(2, 4).toInt(), string.substring(0, 2).toInt())
     }
 
     class ListOfString {

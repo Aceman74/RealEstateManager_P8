@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 06/09/19 20:07
+ *  * Created by Lionel Joffray on 09/09/19 20:10
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 06/09/19 19:51
+ *  * Last modified 09/09/19 20:07
  *
  */
 
@@ -18,9 +18,10 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.activities.SearchActivity
+import com.openclassrooms.realestatemanager.activities.SettingsActivity
 import com.openclassrooms.realestatemanager.activities.addestate.AddEstateActivity
 import com.openclassrooms.realestatemanager.activities.login.MainContract
+import com.openclassrooms.realestatemanager.activities.search.SearchActivity
 import com.openclassrooms.realestatemanager.adapters.MainPagerAdapter
 import com.openclassrooms.realestatemanager.utils.DepthPageTransformer
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
@@ -40,6 +41,7 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
         configureDrawerLayout(main_drawer_layout, main_toolbar)
         configureItemListeners()
         configureViewPager()
+        navigationDrawerHeader(main_activity_nav_view)
     }
 
     /**
@@ -51,19 +53,18 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
 
         when (id) {
             R.id.drawer_first -> {
-                val intent = Intent(baseContext, AddEstateActivity::class.java)
-                startActivity(intent)
-                Timber.i("Click Create")
-            }
-            R.id.drawer_second -> {
                 val intent = Intent(baseContext, MainActivity::class.java)
                 startActivity(intent)
                 Timber.i("Click Main")
             }
-            R.id.drawer_third -> {
-                val intent = Intent(baseContext, SearchActivity::class.java)
+            R.id.drawer_second -> {
+                val intent = Intent(baseContext, SettingsActivity::class.java)
                 startActivity(intent)
-                Timber.i("Click Detail")
+                Timber.i("Click Setting")
+            }
+            R.id.drawer_third -> {
+                signOutUserFromFirebase()
+                Timber.i("Logout")
             }
             R.id.bottom_main_list -> {
                 pager.currentItem = 0
@@ -109,19 +110,18 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
      */
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.toolbar_add -> {
-            Toast.makeText(this, "Add action", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Add Estate", Toast.LENGTH_LONG).show()
             intent = Intent(this, AddEstateActivity::class.java)
             startActivity(intent)
             true
         }
         R.id.toolbar_search -> {
-            Toast.makeText(this, "Search action", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Search Estate", Toast.LENGTH_LONG).show()
             intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
             true
         }
         android.R.id.home -> {
-            Toast.makeText(this, "Home action", Toast.LENGTH_LONG).show()
             true
         }
 

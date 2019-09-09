@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 04/09/19 19:35
+ *  * Created by Lionel Joffray on 09/09/19 20:10
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 04/09/19 19:21
+ *  * Last modified 09/09/19 20:07
  *
  */
 
@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.Utils
+import com.openclassrooms.realestatemanager.activities.SettingsActivity
 import com.openclassrooms.realestatemanager.activities.addestate.AddEstateActivity
 import com.openclassrooms.realestatemanager.activities.login.EstateDetailContract
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
@@ -69,6 +70,7 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
         configureDetails()
         configureMaps()
         configureRecyclerView()
+        navigationDrawerHeader(detail_estate_nav_view)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -104,6 +106,13 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
                 desc_agent_choice_txt.text = it[0].agent
                 desc_date_added_choice_txt.text = it[0].addDate
                 address_edit_txt.visibility = View.GONE
+                when (it[0].available) {
+                    1 -> {
+                        add_estate_state_txt.text = getString(R.string.sold)
+                        add_estate_state_txt.setTextColor(resources.getColor(R.color.quantum_googred))
+                        detail_estate_date_sold.text = it[0].soldDate
+                    }
+                }
                 address_txt_view.text = Utils.formatAddress(it[0].fullAddress)
                 marker.position = LatLng(it[0].latitude!!, it[0].longitude!!)
                 marker.title = "That's Here !"
@@ -120,19 +129,18 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
 
         when (id) {
             R.id.drawer_first -> {
-                val intent = Intent(baseContext, AddEstateActivity::class.java)
-                startActivity(intent)
-                Timber.i("Click Create")
-            }
-            R.id.drawer_second -> {
                 val intent = Intent(baseContext, MainActivity::class.java)
                 startActivity(intent)
                 Timber.i("Click Main")
             }
-            R.id.drawer_third -> {
-                val intent = Intent(baseContext, EstateDetailActivity::class.java)
+            R.id.drawer_second -> {
+                val intent = Intent(baseContext, SettingsActivity::class.java)
                 startActivity(intent)
-                Timber.i("Click Detail")
+                Timber.i("Click Setting")
+            }
+            R.id.drawer_third -> {
+                signOutUserFromFirebase()
+                Timber.i("Logout")
             }
             else -> {
             }
@@ -156,14 +164,13 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
      */
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.toolbar_edit -> {
-            Toast.makeText(this, "Edit action", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Edit Estate", Toast.LENGTH_LONG).show()
             val intent = Intent(this, AddEstateActivity::class.java)
             intent.putExtra("estateId", estateId)
             startActivity(intent)
             true
         }
         android.R.id.home -> {
-            Toast.makeText(this, "Home action", Toast.LENGTH_LONG).show()
             true
         }
         else -> {

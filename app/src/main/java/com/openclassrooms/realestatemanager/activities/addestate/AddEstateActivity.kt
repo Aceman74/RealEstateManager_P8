@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 06/09/19 20:07
+ *  * Created by Lionel Joffray on 09/09/19 20:10
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 06/09/19 20:07
+ *  * Last modified 09/09/19 20:10
  *
  */
 
@@ -41,7 +41,7 @@ import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.Utils
-import com.openclassrooms.realestatemanager.activities.estatedetail.EstateDetailActivity
+import com.openclassrooms.realestatemanager.activities.SettingsActivity
 import com.openclassrooms.realestatemanager.activities.login.AddEstateContract
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
 import com.openclassrooms.realestatemanager.extensions.priceRemoveSpace
@@ -67,6 +67,8 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 import java.nio.channels.FileChannel
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 import kotlin.math.absoluteValue
 
 
@@ -113,6 +115,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         desc_agent_choice_txt.text = currentUser?.displayName.toString()
         configureViewModel()
         configureMaps()
+        navigationDrawerHeader(add_estate_nav_view)
         intentEId = intent.getIntExtra("estateId", -1).toLong()
         editIntent()
         address_search_layout.setOnClickListener {
@@ -162,6 +165,12 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 desc_last_mod_date_choice_txt.text = Utils.todayDate
                 address_txt_view.text = Utils.formatAddress(result.estate.fullAddress)
                 mAddress = result.estate.fullAddress
+                mSoldDate = result.estate.soldDate
+                if (mSoldDate != null && result.estate.available == 1) {
+                    detail_estate_date_sold.text = mSoldDate
+                    add_estate_state_txt.text = getString(R.string.sold)
+                    add_estate_state_txt.setTextColor(resources.getColor(R.color.quantum_googred))
+                }
                 marker.position = LatLng(result.estate.latitude!!, result.estate.longitude!!)
                 marker.title = "That's Here !"
                 var i = 0
@@ -539,19 +548,18 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
 
         when (item.itemId) {
             R.id.drawer_first -> {
-                val intent = Intent(baseContext, AddEstateActivity::class.java)
-                startActivity(intent)
-                Timber.i("Click Create")
-            }
-            R.id.drawer_second -> {
                 val intent = Intent(baseContext, MainActivity::class.java)
                 startActivity(intent)
                 Timber.i("Click Main")
             }
-            R.id.drawer_third -> {
-                val intent = Intent(baseContext, EstateDetailActivity::class.java)
+            R.id.drawer_second -> {
+                val intent = Intent(baseContext, SettingsActivity::class.java)
                 startActivity(intent)
-                Timber.i("Click Detail")
+                Timber.i("Click Setting")
+            }
+            R.id.drawer_third -> {
+                signOutUserFromFirebase()
+                Timber.i("Logout")
             }
             else -> {
             }
@@ -568,7 +576,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
             true
         }
         R.id.add_estate_cancel -> {
-            Toast.makeText(this, "cancel", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.cancel), Toast.LENGTH_LONG).show()
             onBackPressed()
             true
         }
@@ -588,7 +596,12 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
             mAddress == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to enter an Address")
             else -> {
                 addToDatabase()
-                Utils.snackBarPreset(findViewById(android.R.id.content), "Estate Saved")
+
+                Utils.snackBarPreset(findViewById(android.R.id.content), getString(R.string.estate_saved))
+                Executors.newSingleThreadScheduledExecutor().schedule({
+                    val intent = Intent(baseContext, MainActivity::class.java)
+                    startActivity(intent)
+                }, 2, TimeUnit.SECONDS)
             }
         }
     }

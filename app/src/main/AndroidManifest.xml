@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 06/09/19 20:07
+  ~  * Created by Lionel Joffray on 09/09/19 20:10
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 06/09/19 20:07
+  ~  * Last modified 09/09/19 20:05
   ~  */
   -->
 
@@ -18,8 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.SettingsActivity"></activity>
         <activity
-            android:name=".activities.SearchActivity"
+            android:name=".activities.search.SearchActivity"
             android:parentActivityName=".activities.main.MainActivity" />
         <activity android:name=".activities.addestate.AddEstateActivity" />
         <activity android:name=".activities.main.MainActivity" />
@@ -41,12 +42,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_api_key" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
 </manifest>
