@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 09/09/19 20:10
+ *  * Created by Lionel Joffray on 10/09/19 20:32
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 09/09/19 11:50
+ *  * Last modified 10/09/19 19:56
  *  
  */
 
@@ -36,8 +36,10 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
     var mPresenter: LoginPresenter = LoginPresenter()
     private val RC_SIGN_IN = 111
     var alertDialog: AlertDialog.Builder? = null
+    var mDevise = "$"
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        loadSharedPref()
         super.onCreate(savedInstanceState)
 
         mPresenter.attachView(this)
@@ -59,6 +61,19 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                 } else {
                     startSignInActivity()
                 }
+            }
+        }
+    }
+
+    private fun loadSharedPref() {
+        val shared = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
+        mDevise = shared.getString("actual_devise", "$")!!
+        when (mDevise) {
+            "$" -> {
+                setTheme(R.style.AppTheme)
+            }
+            "€" -> {
+                setTheme(R.style.AppTheme_2)
             }
         }
     }

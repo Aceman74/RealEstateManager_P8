@@ -1,19 +1,36 @@
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 29/08/19 22:26
+  ~  * Created by Lionel Joffray on 10/09/19 20:32
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 29/08/19 22:22
+  ~  * Last modified 10/09/19 20:09
   ~  */
   -->
 
 <!--?xml version="1.0" encoding="UTF-8"?-->
 <resources>
+    <!-- PRIMARY -->
     <color name="primaryColor">#546e7a</color>
     <color name="primaryLightColor">#819ca9</color>
     <color name="primaryDarkColor">#29434e</color>
+    <color name="primaryTextColor">#ffffff</color>
+
+    <!-- SECONDARY -->
     <color name="secondaryColor">#64b5f6</color>
     <color name="secondaryLightColor">#9be7ff</color>
     <color name="secondaryDarkColor">#2286c3</color>
-    <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#000000</color>
+
+
+    <!-- PRIMARY 2 -->
+
+    <color name="primaryColor_2">#212121</color>
+    <color name="primaryLightColor_2">#484848</color>
+    <color name="primaryDarkColor_2">#000000</color>
+    <color name="primaryTextColor_2">#ffffff</color>
+
+    <!-- SECONDARY 2 -->
+    <color name="secondaryColor_2">#ffd600</color>
+    <color name="secondaryLightColor_2">#ffff52</color>
+    <color name="secondaryDarkColor_2">#c7a500</color>
+    <color name="secondaryTextColor_2">#000000</color>
 </resources>

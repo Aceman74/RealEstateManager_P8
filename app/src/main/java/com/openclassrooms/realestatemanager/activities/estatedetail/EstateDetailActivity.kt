@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 09/09/19 20:10
+ *  * Created by Lionel Joffray on 10/09/19 20:32
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 09/09/19 20:07
+ *  * Last modified 10/09/19 20:31
  *
  */
 
@@ -30,12 +30,14 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.Utils
-import com.openclassrooms.realestatemanager.activities.SettingsActivity
 import com.openclassrooms.realestatemanager.activities.addestate.AddEstateActivity
 import com.openclassrooms.realestatemanager.activities.login.EstateDetailContract
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
+import com.openclassrooms.realestatemanager.activities.settings.SettingsActivity
 import com.openclassrooms.realestatemanager.adapters.SlideshowAdapter
 import com.openclassrooms.realestatemanager.adapters.estatelist.EstateDetailAdapter
+import com.openclassrooms.realestatemanager.extensions.priceAddSpace
+import com.openclassrooms.realestatemanager.extensions.priceRemoveSpace
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.models.EstateAndPictures
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
@@ -56,6 +58,7 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
     lateinit var estateViewModel: EstateViewModel
     lateinit var pictureViewModel: PictureViewModel
     var estateId = -1
+    var mDevise = "$"
     private lateinit var mMap: GoogleMap
     lateinit var marker: Marker
     lateinit var observePicture: List<EstateAndPictures>
@@ -64,6 +67,7 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(findViewById(R.id.detail_estate_toolbar))
+        loadSharedPref()
         configureDrawerLayout(detail_estate_drawer_layout, detail_estate_toolbar)
         configureItemListeners()
         estateId = intent.getIntExtra("estateId", -1)
@@ -73,6 +77,16 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
         navigationDrawerHeader(detail_estate_nav_view)
     }
 
+
+    private fun loadSharedPref() {
+        val shared = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
+        mDevise = shared.getString("actual_devise", "$")!!
+        when (mDevise) {
+            "€" -> {
+                money_icon.text = "€"
+            }
+        }
+    }
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.uiSettings.isMapToolbarEnabled = false
@@ -97,6 +111,9 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
                 desc_estate_type_txt.text = Utils.ListOfString.listOfType()[it[0].type]
                 desc_estate_neighborhood_txt.text = Utils.ListOfString.listOfNeighborhood()[it[0].neighborhood]
                 desc_estate_price_txt.text = it[0].price
+                if (desc_estate_price_txt.text != getString(R.string.set_price) && money_icon.text == "€") {
+                    desc_estate_price_txt.text = String().priceAddSpace(Utils.convertDollarToEuro(String().priceRemoveSpace(it[0].price).toInt()).toString())
+                }
                 fragment_desc_desc_txt.text = it[0].description
                 desc_sqft_choice_txt.text = it[0].sqft.toString()
                 desc_rooms_choice_txt.text = it[0].rooms.toString()
@@ -122,7 +139,6 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
             })
         }
     }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         //  Navigation Drawer item settings
         val id = item.itemId

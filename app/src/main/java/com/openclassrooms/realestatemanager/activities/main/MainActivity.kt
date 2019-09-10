@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 09/09/19 20:10
+ *  * Created by Lionel Joffray on 10/09/19 20:32
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 09/09/19 20:07
+ *  * Last modified 10/09/19 19:52
  *
  */
 
@@ -18,10 +18,10 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.activities.SettingsActivity
 import com.openclassrooms.realestatemanager.activities.addestate.AddEstateActivity
 import com.openclassrooms.realestatemanager.activities.login.MainContract
 import com.openclassrooms.realestatemanager.activities.search.SearchActivity
+import com.openclassrooms.realestatemanager.activities.settings.SettingsActivity
 import com.openclassrooms.realestatemanager.adapters.MainPagerAdapter
 import com.openclassrooms.realestatemanager.utils.DepthPageTransformer
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity

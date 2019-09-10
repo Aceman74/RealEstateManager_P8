@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 04/09/19 19:35
+ *  * Created by Lionel Joffray on 10/09/19 20:32
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 04/09/19 19:34
+ *  * Last modified 10/09/19 19:38
  *
  */
 
@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -39,6 +40,7 @@ class ListFragment : Fragment() {
     lateinit var estateViewModel: EstateViewModel
     lateinit var pictureViewModel: PictureViewModel
     lateinit var observePicture: List<EstateAndPictures>
+    var mDevise = "$"
 
     companion object {
 
@@ -55,8 +57,14 @@ class ListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        loadSharedPref()
         mRecyclerView = estate_recycler_view
         configureViewModel()
+    }
+
+    private fun loadSharedPref() {
+        val shared = activity?.getSharedPreferences(getString(R.string.app_name), AppCompatActivity.MODE_PRIVATE)
+        mDevise = shared?.getString("actual_devise", "$")!!
     }
 
     private fun configureViewModel() {
@@ -65,7 +73,7 @@ class ListFragment : Fragment() {
         this.pictureViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PictureViewModel::class.java)
         estateViewModel.allEstateWithPitures.observe(this, Observer {
             observePicture = it
-            mRecyclerView.adapter = EstateAdapter(observePicture) {
+            mRecyclerView.adapter = EstateAdapter(observePicture, mDevise) {
                 Timber.tag("RV click").i("$it")
                 lauchDetailActivity(it)
             }

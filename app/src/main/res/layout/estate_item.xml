@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 09/09/19 20:10
+  ~  * Created by Lionel Joffray on 10/09/19 20:32
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 09/09/19 11:46
+  ~  * Last modified 10/09/19 19:35
   ~  */
   -->
 
@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin"
-                android:text="$ 5 000 000"
+                android:text="@string/set_price"
                 android:textSize="@dimen/normal_title_size"
                 android:textColor="@color/secondaryDarkColor" />
         </LinearLayout>

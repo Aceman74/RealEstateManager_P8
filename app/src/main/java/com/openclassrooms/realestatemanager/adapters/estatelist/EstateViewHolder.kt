@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 09/09/19 20:10
+ *  * Created by Lionel Joffray on 10/09/19 20:32
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 09/09/19 20:10
+ *  * Last modified 10/09/19 20:31
  *
  */
 
@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.Utils
+import com.openclassrooms.realestatemanager.extensions.priceAddSpace
+import com.openclassrooms.realestatemanager.extensions.priceRemoveSpace
 import com.openclassrooms.realestatemanager.models.EstateAndPictures
 import kotlinx.android.synthetic.main.estate_item.view.*
 
@@ -31,12 +33,15 @@ class EstateViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClick
     var picture: ImageView = view.estate_img
 
 
-    fun updateWithItem(estate: EstateAndPictures, position: Int, listener: (Int) -> Unit) {
+    fun updateWithItem(estate: EstateAndPictures, position: Int, listener: (Int) -> Unit, devise: String) {
         var id: Int
 
         this.type.text = Utils.ListOfString.listOfType()[estate.estate.type]
         this.neighborhood.text = Utils.ListOfString.listOfNeighborhood()[estate.estate.neighborhood]
-        this.price.text = "$ " + estate.estate.price
+
+        if (devise == "€") {
+            price.text = devise + " " + String().priceAddSpace(Utils.convertDollarToEuro(String().priceRemoveSpace(estate.estate.price).toInt()).toString())
+        } else price.text = devise + " " + estate.estate.price
         Glide.with(itemView)
                 .load(estate.pictures[0].picturePath)
                 .into(picture)

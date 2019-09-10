@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 09/09/19 20:10
+  ~  * Created by Lionel Joffray on 10/09/19 20:32
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 09/09/19 20:10
+  ~  * Last modified 10/09/19 19:08
   ~  */
   -->
 
@@ -10,6 +10,113 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SettingsActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activities.settings.SettingsActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/settings_tb"
+        android:layout_width="0dp"
+        app:title="@string/settings"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/primaryTextColor" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="choose a Currency :"
+        android:textColor="@color/secondaryTextColor"
+        android:textSize="@dimen/normal_title_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.132" />
+
+    <Button
+        android:id="@+id/dollars_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$"
+        android:textSize="@dimen/normal_title_size"
+        android:background="@drawable/button_style_round_primary"
+        android:textColor="@color/primaryTextColor"
+        app:layout_constraintBottom_toTopOf="@+id/textView9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:layout_constraintVertical_bias="0.465" />
+
+    <Button
+        android:id="@+id/euros_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="€"
+        android:textSize="@dimen/normal_title_size"
+        android:textColor="@color/primaryTextColor"
+        android:background="@drawable/button_style_round_primary"
+        app:layout_constraintBottom_toTopOf="@+id/textView9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.699"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:layout_constraintVertical_bias="0.465" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="choose a Theme Color :"
+        android:textColor="@color/secondaryTextColor"
+        android:textSize="@dimen/normal_title_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.43" />
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/settings_dl"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/settings_tb"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/settings_activity_nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/primaryDarkColor"
+            android:fitsSystemWindows="true"
+            app:elevation="@dimen/normal_margin"
+            app:headerLayout="@layout/navigation_drawer_header"
+            app:itemIconTint="@color/primaryTextColor"
+            app:itemTextColor="@color/primaryTextColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/settings_dl"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/navigation_drawer">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_margin="@dimen/normal_margin"
+                android:src="@drawable/logo_black" />
+
+        </com.google.android.material.navigation.NavigationView>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

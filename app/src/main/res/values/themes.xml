@@ -1,8 +1,8 @@
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 29/08/19 22:26
+  ~  * Created by Lionel Joffray on 10/09/19 20:32
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 29/08/19 22:22
+  ~  * Last modified 10/09/19 19:56
   ~  */
   -->
 
@@ -13,9 +13,18 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
-        <item name="colorAccent">@color/secondaryColor</item>
+        <item name="colorAccent">@color/secondaryDarkColor</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 
+    <!-- ALTERNATIVE THEME -->
+    <style name="AppTheme_2" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColor_2</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor_2</item>
+        <item name="colorAccent">@color/secondaryDarkColor_2</item>
+        <item name="android:textColor">@color/secondaryTextColor_2</item>
+    </style>
     <!-- LOGIN ACTIVITY -->
     <style name="AppTheme.Login" parent="AppTheme">
         <item name="windowNoTitle">true</item>

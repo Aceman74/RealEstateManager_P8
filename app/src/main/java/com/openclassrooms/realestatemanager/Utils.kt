@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 09/09/19 20:10
+ *  * Created by Lionel Joffray on 10/09/19 20:32
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 09/09/19 20:10
+ *  * Last modified 10/09/19 20:31
  *
  */
 
@@ -18,6 +18,7 @@ import com.openclassrooms.realestatemanager.extensions.backSlashRemover
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
+
 
 /**
  * Created by Philippe on 21/02/2018.

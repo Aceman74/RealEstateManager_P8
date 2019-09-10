@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 03/09/19 16:31
+ *  * Created by Lionel Joffray on 10/09/19 20:32
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 03/09/19 16:31
+ *  * Last modified 10/09/19 20:31
  *
  */
 
@@ -18,7 +18,7 @@ import com.openclassrooms.realestatemanager.models.EstateAndPictures
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
  */
-class EstateAdapter(var estate: List<EstateAndPictures>, val listener: (Int) -> Unit) : RecyclerView.Adapter<EstateViewHolder>() {
+class EstateAdapter(var estate: List<EstateAndPictures>, var devise: String, val listener: (Int) -> Unit) : RecyclerView.Adapter<EstateViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EstateViewHolder {
@@ -29,7 +29,7 @@ class EstateAdapter(var estate: List<EstateAndPictures>, val listener: (Int) -> 
     }
 
     override fun onBindViewHolder(holder: EstateViewHolder, position: Int) {
-        holder.updateWithItem(this.estate[position], position, listener)
+        holder.updateWithItem(this.estate[position], position, listener, devise)
     }
 
     override fun getItemCount(): Int {

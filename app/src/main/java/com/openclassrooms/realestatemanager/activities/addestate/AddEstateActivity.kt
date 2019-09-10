@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 09/09/19 20:10
+ *  * Created by Lionel Joffray on 10/09/19 20:32
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 09/09/19 20:10
+ *  * Last modified 10/09/19 20:31
  *
  */
 
@@ -41,9 +41,10 @@ import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.Utils
-import com.openclassrooms.realestatemanager.activities.SettingsActivity
 import com.openclassrooms.realestatemanager.activities.login.AddEstateContract
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
+import com.openclassrooms.realestatemanager.activities.settings.SettingsActivity
+import com.openclassrooms.realestatemanager.extensions.priceAddSpace
 import com.openclassrooms.realestatemanager.extensions.priceRemoveSpace
 import com.openclassrooms.realestatemanager.fragments.numberpicker.NumberPickerDialog
 import com.openclassrooms.realestatemanager.injections.Injection
@@ -92,6 +93,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
     var mPicturePathArray = arrayListOf("", "", "", "", "", "", "", "")
     private lateinit var mMap: GoogleMap
     lateinit var marker: Marker
+    var mDevise = "$"
 
     private lateinit var pickerDisposable: Disposable
     lateinit var estateViewModel: EstateViewModel
@@ -118,6 +120,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         navigationDrawerHeader(add_estate_nav_view)
         intentEId = intent.getIntExtra("estateId", -1).toLong()
         editIntent()
+        loadSharedPref()
         address_search_layout.setOnClickListener {
             autocompleteIntent()
         }
@@ -127,6 +130,16 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         }
         pickerDisposable = RxBus.listen(RxEvent.PickerPriceEvent::class.java).subscribe {
             mPriceResut = it.price
+        }
+    }
+
+    private fun loadSharedPref() {
+        val shared = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
+        mDevise = shared.getString("actual_devise", "$")!!
+        when (mDevise) {
+            "€" -> {
+                money_icon.text = "€"
+            }
         }
     }
 
@@ -142,6 +155,11 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 mNeighborhood = result.estate.neighborhood
                 desc_estate_price_txt.text = result.estate.price
                 mPriceResut = result.estate.price
+                if (desc_estate_price_txt.text != getString(R.string.set_price) && money_icon.text == "€") {
+                    desc_estate_price_txt.text = String().priceAddSpace(Utils.convertDollarToEuro(String().priceRemoveSpace(mPriceResut).toInt()).toString())
+                    mPriceResut = String().priceAddSpace(Utils.convertDollarToEuro(String().priceRemoveSpace(mPriceResut).toInt()).toString())
+                }
+
                 fragment_desc_desc_txt.text = result.estate.description
                 mDescResult = result.estate.description
                 desc_sqft_choice_txt.text = result.estate.sqft.toString()
