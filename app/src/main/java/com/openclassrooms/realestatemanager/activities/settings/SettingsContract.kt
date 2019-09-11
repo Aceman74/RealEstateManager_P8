@@ -1,12 +1,12 @@
 /*
  * *
- *  * Created by Lionel Joffray on 10/09/19 20:32
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 10/09/19 17:46
+ *  * Last modified 11/09/19 14:00
  *
  */
 
-package com.openclassrooms.realestatemanager.activities.login
+package com.openclassrooms.realestatemanager.activities.settings
 
 
 import com.openclassrooms.realestatemanager.utils.base.BaseView
@@ -21,5 +21,11 @@ interface SettingsContract {
 
     interface SettingsPresenterInterface
 
-    interface SettingsViewInterface : BaseView
+    interface SettingsViewInterface : BaseView {
+
+        fun configureView()
+        fun configureListeners()
+        fun loadSharedPref()
+        fun applyNewTheme()
+    }
 }

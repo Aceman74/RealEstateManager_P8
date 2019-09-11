@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 09/09/19 20:10
+  ~  * Created by Lionel Joffray on 11/09/19 20:37
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 09/09/19 10:47
+  ~  * Last modified 11/09/19 20:37
   ~  */
   -->
 
@@ -13,14 +13,6 @@
     tools:context=".fragments.list.ListFragment"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/estate_list"
-        android:textColor="@color/secondaryTextColor"
-        android:layout_gravity="center"
-        android:textSize="@dimen/large_text_size"
-        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/estate_recycler_view"

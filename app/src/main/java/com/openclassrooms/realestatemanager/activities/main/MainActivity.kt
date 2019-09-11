@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 10/09/19 20:32
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 10/09/19 19:52
+ *  * Last modified 11/09/19 14:23
  *
  */
 
@@ -31,16 +31,22 @@ import timber.log.Timber
 class MainActivity(override val activityLayout: Int = R.layout.activity_main) : BaseActivity(), MainContract.MainViewInterface, NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
 
-    private lateinit var pager: ViewPager
+    private lateinit var mPager: ViewPager
     private lateinit var mPagerAdapter: MainPagerAdapter
+    private val mPresenter = MainPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pager = main_activity_viewpager
-        setSupportActionBar(findViewById(R.id.main_toolbar))
-        configureDrawerLayout(main_drawer_layout, main_toolbar)
+        mPresenter.attachView(this)
+        configureView()
         configureItemListeners()
         configureViewPager()
+    }
+
+    override fun configureView() {
+        setSupportActionBar(findViewById(R.id.main_toolbar))
+        configureDrawerLayout(main_drawer_layout, main_toolbar)
+        mPager = main_activity_viewpager
         navigationDrawerHeader(main_activity_nav_view)
     }
 
@@ -48,7 +54,6 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
      * On navigation drawer or bottom navigation itemSelected.
      */
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        //  Navigation Drawer item settings
         val id = item.itemId
 
         when (id) {
@@ -67,11 +72,11 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
                 Timber.i("Logout")
             }
             R.id.bottom_main_list -> {
-                pager.currentItem = 0
+                mPager.currentItem = 0
                 Timber.i("Click List")
             }
             R.id.bottom_main_map -> {
-                pager.currentItem = 1
+                mPager.currentItem = 1
                 Timber.i("Click Map")
             }
             else -> {
@@ -126,8 +131,6 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
         }
 
         else -> {
-            // If we got here, the user's action was not recognized.
-            // Invoke the superclass to handle it.
             super.onOptionsItemSelected(item)
         }
     }
@@ -140,15 +143,15 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
         return super.onCreateOptionsMenu(menu)
     }
 
-    fun configureItemListeners() {
+    override fun configureItemListeners() {
         main_activity_nav_view.setNavigationItemSelectedListener(this)
         main_activity_bottom_navigation.setOnNavigationItemSelectedListener(this)
     }
 
-    fun configureViewPager() {
+    override fun configureViewPager() {
         mPagerAdapter = MainPagerAdapter(supportFragmentManager, applicationContext)
-        pager.adapter = mPagerAdapter
-        pager.setPageTransformer(true, DepthPageTransformer())
-        pager.addOnPageChangeListener(this)
+        mPager.adapter = mPagerAdapter
+        mPager.setPageTransformer(true, DepthPageTransformer())
+        mPager.addOnPageChangeListener(this)
     }
 }

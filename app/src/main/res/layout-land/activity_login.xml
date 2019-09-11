@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 09/09/19 20:10
+  ~  * Created by Lionel Joffray on 11/09/19 20:37
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 09/09/19 12:09
+  ~  * Last modified 11/09/19 10:59
   ~  */
   -->
 
@@ -25,6 +25,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:alpha="0.95"
         app:layout_constraintVertical_bias="1.0" />
 
     <androidx.cardview.widget.CardView
@@ -46,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/logo_black"
-            android:background="@color/primaryLightColor" />
+            android:background="?isLightTheme" />
 
     </androidx.cardview.widget.CardView>
 
@@ -81,12 +82,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/primaryDarkColor"
+                android:background="?colorPrimaryDark"
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="@string/real_estate_manager"
                 android:textAllCaps="true"
-                android:textColor="@color/primaryTextColor"
+                android:textColor="?textAppearanceHeadline1"
                 android:textSize="@dimen/login_title"
                 android:textStyle="bold" />
 
@@ -112,7 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login"
-            android:textColor="@color/primaryTextColor"
+            android:textColor="?textAppearanceHeadline1"
             android:background="@drawable/button_style"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

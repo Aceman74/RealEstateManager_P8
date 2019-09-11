@@ -1,28 +1,27 @@
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 10/09/19 20:32
+  ~  * Created by Lionel Joffray on 11/09/19 20:37
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 10/09/19 20:09
+  ~  * Last modified 11/09/19 11:22
   ~  */
   -->
 
 <!--?xml version="1.0" encoding="UTF-8"?-->
 <resources>
-    <!-- PRIMARY -->
+    <!-- PRIMARY 1 -->
     <color name="primaryColor">#546e7a</color>
     <color name="primaryLightColor">#819ca9</color>
     <color name="primaryDarkColor">#29434e</color>
     <color name="primaryTextColor">#ffffff</color>
 
-    <!-- SECONDARY -->
+
+    <!-- SECONDARY 1 -->
     <color name="secondaryColor">#64b5f6</color>
     <color name="secondaryLightColor">#9be7ff</color>
     <color name="secondaryDarkColor">#2286c3</color>
     <color name="secondaryTextColor">#000000</color>
 
-
     <!-- PRIMARY 2 -->
-
     <color name="primaryColor_2">#212121</color>
     <color name="primaryLightColor_2">#484848</color>
     <color name="primaryDarkColor_2">#000000</color>
@@ -33,4 +32,28 @@
     <color name="secondaryLightColor_2">#ffff52</color>
     <color name="secondaryDarkColor_2">#c7a500</color>
     <color name="secondaryTextColor_2">#000000</color>
+
+    <!-- PRIMARY 3 -->
+    <color name="primaryColor_3">#1565c0</color>
+    <color name="primaryLightColor_3">#5e92f3</color>
+    <color name="primaryDarkColor_3">#003c8f</color>
+    <color name="primaryTextColor_3">#ffffff</color>
+
+    <!-- SECONDARY 3 -->
+    <color name="secondaryColor_3">#e53935</color>
+    <color name="secondaryLightColor_3">#ff6f60</color>
+    <color name="secondaryDarkColor_3">#ab000d</color>
+    <color name="secondaryTextColor_3">#000000</color>
+
+    <!-- PRIMARY 4 -->
+    <color name="primaryColor_4">#c62828</color>
+    <color name="primaryLightColor_4">#ff5f52</color>
+    <color name="primaryDarkColor_4">#8e0000</color>
+    <color name="primaryTextColor_4">#ffffff</color>
+
+    <!-- SECONDARY 4 -->
+    <color name="secondaryColor_4">#7cb342</color>
+    <color name="secondaryLightColor_4">#aee571</color>
+    <color name="secondaryDarkColor_4">#4b830d</color>
+    <color name="secondaryTextColor_4">#000000</color>
 </resources>

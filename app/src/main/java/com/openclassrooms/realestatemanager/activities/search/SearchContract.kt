@@ -1,14 +1,15 @@
 /*
  * *
- *  * Created by Lionel Joffray on 10/09/19 20:32
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 10/09/19 17:46
+ *  * Last modified 11/09/19 14:00
  *
  */
 
-package com.openclassrooms.realestatemanager.activities.login
+package com.openclassrooms.realestatemanager.activities.search
 
 
+import com.openclassrooms.realestatemanager.models.EstateAndPictures
 import com.openclassrooms.realestatemanager.utils.base.BaseView
 
 /**
@@ -21,5 +22,14 @@ interface SearchContract {
 
     interface SearchPresenterInterface
 
-    interface SearchViewInterface : BaseView
+    interface SearchViewInterface : BaseView {
+
+        fun configureView()
+        fun configureViewModel()
+        fun configureItemListeners()
+        fun lauchDetailActivity(it: Int)
+        fun showNumberPicker(i: Int, mOldVal: Int?, string: String?)
+        fun executeFilteredSearch(observePicture: List<EstateAndPictures>): List<EstateAndPictures>
+        fun onSearchBtnClick()
+    }
 }

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 11/09/19 20:37
  *  
  */
 
@@ -22,5 +22,9 @@ interface ListContract {
 
     interface ListPresenterInterface
 
-    interface ListViewInterface : BaseView
+    interface ListViewInterface : BaseView {
+        fun loadSharedPref()
+        fun configureViewModel()
+        fun launchDetailActivity(it: Int)
+    }
 }

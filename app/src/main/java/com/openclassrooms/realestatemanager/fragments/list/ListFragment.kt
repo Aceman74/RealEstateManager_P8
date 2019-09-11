@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 10/09/19 20:32
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 10/09/19 19:38
+ *  * Last modified 11/09/19 16:38
  *
  */
 
@@ -26,7 +26,6 @@ import com.openclassrooms.realestatemanager.adapters.estatelist.EstateAdapter
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.models.EstateAndPictures
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
-import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
 import kotlinx.android.synthetic.main.fragment_list.*
 import timber.log.Timber
 
@@ -34,11 +33,11 @@ import timber.log.Timber
 /**
  * A simple [Fragment] subclass.
  */
-class ListFragment : Fragment() {
+class ListFragment : Fragment(), ListContract.ListViewInterface {
 
+    private val mPresenter = ListPresenter()
     private lateinit var mRecyclerView: RecyclerView
     lateinit var estateViewModel: EstateViewModel
-    lateinit var pictureViewModel: PictureViewModel
     lateinit var observePicture: List<EstateAndPictures>
     var mDevise = "$"
 
@@ -49,41 +48,39 @@ class ListFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        mPresenter.attachView(this)
         loadSharedPref()
         mRecyclerView = estate_recycler_view
         configureViewModel()
     }
 
-    private fun loadSharedPref() {
+    override fun loadSharedPref() {
         val shared = activity?.getSharedPreferences(getString(R.string.app_name), AppCompatActivity.MODE_PRIVATE)
         mDevise = shared?.getString("actual_devise", "$")!!
     }
 
-    private fun configureViewModel() {
+    override fun configureViewModel() {
         val mViewModelFactory = Injection.provideViewModelFactory(requireContext())
         this.estateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
-        this.pictureViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PictureViewModel::class.java)
-        estateViewModel.allEstateWithPitures.observe(this, Observer {
-            observePicture = it
+        estateViewModel.allEstateWithPitures.observe(this, Observer { list ->
+            observePicture = list
             mRecyclerView.adapter = EstateAdapter(observePicture, mDevise) {
                 Timber.tag("RV click").i("$it")
-                lauchDetailActivity(it)
+                launchDetailActivity(it)
             }
         })
         mRecyclerView.layoutManager = LinearLayoutManager(context)
     }
 
-    fun lauchDetailActivity(it: Int) {
+    override fun launchDetailActivity(it: Int) {
         val intent = Intent(context, EstateDetailActivity::class.java)
-        intent.putExtra("estateId", it)
+        intent.putExtra("mEstateId", it)
         startActivity(intent)
     }
 

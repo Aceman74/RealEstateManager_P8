@@ -1,14 +1,15 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 11/09/19 13:43
  *
  */
 
-package com.openclassrooms.realestatemanager.activities.login
+package com.openclassrooms.realestatemanager.activities.main
 
 
+import com.openclassrooms.realestatemanager.activities.login.MainContract
 import com.openclassrooms.realestatemanager.utils.base.BasePresenter
 
 /**

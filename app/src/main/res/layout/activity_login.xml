@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 09/09/19 20:10
+  ~  * Created by Lionel Joffray on 11/09/19 20:37
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 09/09/19 12:09
+  ~  * Last modified 11/09/19 10:59
   ~  */
   -->
 
@@ -13,13 +13,13 @@
     android:layout_height="match_parent"
     tools:context="com.openclassrooms.realestatemanager.activities.login.LoginActivity"
     android:gravity="center"
-    android:orientation="horizontal"
-    android:background="@color/primaryLightColor">
+    android:orientation="horizontal">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@drawable/apartment"
+        android:alpha="0.95"
         android:scaleX="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -44,8 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/logo_black"
-            android:background="@color/primaryLightColor" />
+            android:src="?android:logo"
+            android:background="?colorPrimary" />
 
     </androidx.cardview.widget.CardView>
 
@@ -79,13 +79,13 @@
                 android:id="@+id/login_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/primaryDarkColor"
+                android:background="?colorPrimaryDark"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/real_estate_manager"
                 android:textAllCaps="true"
                 android:textStyle="bold"
-                android:textColor="@color/primaryTextColor"
+                android:textColor="?textAppearanceHeadline1"
                 android:textSize="@dimen/login_title" />
 
         </androidx.cardview.widget.CardView>
@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:text="@string/login"
             android:textSize="@dimen/normal_text_size"
-            android:textColor="@color/primaryTextColor"
+            android:textColor="?textAppearanceHeadline1"
             android:background="@drawable/button_style"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

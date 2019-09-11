@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 10/09/19 20:32
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 10/09/19 20:31
+ *  * Last modified 11/09/19 16:38
  *
  */
 
@@ -81,26 +81,16 @@ object Utils {
         return snack.show()
     }
 
-    fun custromTimeStamp(): String {
-        val dateFormat = SimpleDateFormat("ddMM_HH:mm")
-
-        return dateFormat.format(Date()).toString()
-    }
-
-    fun formatAddress(string: String): String {
-        return string.replace(",", "\n")
-    }
-
     fun dateToMillis(year: Int, monthOfYear: Int, dayOfMonth: Int): Long {
         var cal = Calendar.getInstance()
         cal.set(Calendar.YEAR, year)
         cal.set(Calendar.MONTH, monthOfYear)
         cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
         return cal.timeInMillis
     }
 
     fun millisToDate(millis: Long): String {
-
         val dateFormat = SimpleDateFormat("ddMMyyyy")
         val result = Date(millis)
 
@@ -108,7 +98,6 @@ object Utils {
     }
 
     fun dateWithBSToMillis(dateString: String): Long {
-
         val string = String().backSlashRemover(dateString)
 
         return dateToMillis(string.substring(4, 8).toInt(), string.substring(2, 4).toInt(), string.substring(0, 2).toInt())

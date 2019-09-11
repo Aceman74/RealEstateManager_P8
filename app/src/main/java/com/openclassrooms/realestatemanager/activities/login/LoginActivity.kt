@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 10/09/19 20:32
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 10/09/19 19:56
+ *  * Last modified 11/09/19 14:42
  *  
  */
 
@@ -33,25 +33,23 @@ import kotlinx.android.synthetic.main.activity_login.*
 @Suppress("DEPRECATED_IDENTITY_EQUALS")
 class LoginActivity(override val activityLayout: Int = R.layout.activity_login) : BaseActivity(), LoginContract.LoginViewInterface {
 
-    var mPresenter: LoginPresenter = LoginPresenter()
+    private val mPresenter: LoginPresenter = LoginPresenter()
     private val RC_SIGN_IN = 111
-    var alertDialog: AlertDialog.Builder? = null
+    private var mAlertDialog: AlertDialog.Builder? = null
     var mDevise = "$"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         loadSharedPref()
         super.onCreate(savedInstanceState)
-
         mPresenter.attachView(this)
         checkPermission()
         isCurrentUserLogged
         isInternetAvailable(applicationContext)
 
-
         login_btn.setOnClickListener {
             if (ContextCompat.checkSelfPermission(applicationContext,
                             Manifest.permission.ACCESS_FINE_LOCATION) !== PackageManager.PERMISSION_GRANTED) run {
-                alertDialog = null
+                mAlertDialog = null
                 askPermission()
             } else {
                 if (isCurrentUserLogged == true) {
@@ -65,7 +63,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
         }
     }
 
-    private fun loadSharedPref() {
+    override fun loadSharedPref() {
         val shared = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
         mDevise = shared.getString("actual_devise", "$")!!
         when (mDevise) {
@@ -73,7 +71,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                 setTheme(R.style.AppTheme)
             }
             "€" -> {
-                setTheme(R.style.AppTheme_2)
+                setTheme(R.style.AppTheme_1)
             }
         }
     }
@@ -81,7 +79,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
     /**
      * Check if user already grant permission
      */
-    private fun checkPermission() {
+    override fun checkPermission() {
         if (ContextCompat.checkSelfPermission(applicationContext,
                         Manifest.permission.ACCESS_FINE_LOCATION) !== PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED) {
             askPermission()
@@ -93,16 +91,16 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
      *
      * @see Dexter
      */
-    fun askPermission() {
-        if (alertDialog == null) {
-            alertDialog = AlertDialog.Builder(this)
-            alertDialog!!.setTitle("NEED TO ASK")
-            alertDialog!!.setMessage("REGULAR BLA BLA")
-            alertDialog!!.setPositiveButton(android.R.string.yes) { dialog, _ ->
+    override fun askPermission() {
+        if (mAlertDialog == null) {
+            mAlertDialog = AlertDialog.Builder(this)
+            mAlertDialog!!.setTitle("NEED TO ASK")
+            mAlertDialog!!.setMessage("REGULAR BLA BLA")
+            mAlertDialog!!.setPositiveButton(android.R.string.yes) { dialog, _ ->
                 dialog.dismiss()
                 dexterInit()
             }
-            alertDialog!!.show()
+            mAlertDialog!!.show()
 
         }
     }
@@ -110,7 +108,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
     /**
      * Dexter library used for permissions.
      */
-    private fun dexterInit() {
+    override fun dexterInit() {
         val dialogMultiplePermissionsListener = DialogOnAnyDeniedMultiplePermissionsListener.Builder
                 .withContext(this)
                 .withTitle("NEED PERM")
@@ -130,7 +128,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                 .check()
     }
 
-    fun startSignInActivity() {
+    override fun startSignInActivity() {
 
         startActivityForResult(
                 AuthUI.getInstance()

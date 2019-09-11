@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 09/09/19 20:10
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 09/09/19 20:10
+ *  * Last modified 11/09/19 20:37
  *
  */
 
@@ -30,7 +30,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.Utils
+import com.openclassrooms.realestatemanager.extensions.formatAddress
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import kotlinx.android.synthetic.main.custom_info_window.view.*
@@ -42,11 +42,10 @@ import kotlin.math.absoluteValue
  */
 class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback, GoogleMap.InfoWindowAdapter {
 
-
+    private val mPresenter = MapPresenter()
     lateinit var mPlaces: PlacesClient
     private var API_KEY: String = BuildConfig.google_maps_key
-    val ZOOM_LEVEL = 13f
-    lateinit var estateViewModel: EstateViewModel
+    lateinit var mEstateViewModel: EstateViewModel
     val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 100
 
     private lateinit var mMap: GoogleMap
@@ -58,15 +57,13 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        mPresenter.attachView(this)
         configureMapMarkers()
     }
 
@@ -79,13 +76,14 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
                 .into(view.custom_pic)
         view.custom_name.text = marker.title
         view.custom_details.text = marker.snippet
+
         return view
     }
 
     /**
      * Get the location btn permission
      */
-    fun getLocationPermission() {
+    override fun getLocationPermission() {
 
         if (ContextCompat.checkSelfPermission(requireContext(),
                         android.Manifest.permission.ACCESS_FINE_LOCATION) === PackageManager.PERMISSION_GRANTED) {
@@ -96,23 +94,28 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
         }
     }
+
     override fun getInfoWindow(marker: Marker?): View? {
         return null
     }
 
-    private fun configureMapMarkers() {
-
+    override fun configureMapMarkers() {
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
         val mViewModelFactory = Injection.provideViewModelFactory(this.requireContext())
-        this.estateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
+        this.mEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
 
-        estateViewModel.allEstateWithPitures.observe(this, Observer { estate ->
+        mEstateViewModel.allEstateWithPitures.observe(this, Observer { estate ->
             var i = 0
             while (i < estate.size) {
                 mMap.addMarker(MarkerOptions()
-                        .snippet(Utils.formatAddress(estate[i].estate.fullAddress))
+                        .snippet(String().formatAddress(estate[i].estate.fullAddress))
                         .position(LatLng(estate[i].estate.latitude!!, estate[i].estate.longitude!!))
                         .title("$ " + estate[i].estate.price))
-                        .tag = estate[i].pictures[0].picturePath
+                        .tag = when (estate[i].pictures.isEmpty()) {
+                    true -> "0"
+                    false -> estate[i].pictures[0].picturePath
+                }
                 i++
             }
         })

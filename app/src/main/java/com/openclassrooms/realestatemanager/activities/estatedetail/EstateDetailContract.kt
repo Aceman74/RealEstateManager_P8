@@ -1,12 +1,12 @@
 /*
  * *
- *  * Created by Lionel Joffray on 04/09/19 19:35
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:26
+ *  * Last modified 11/09/19 14:00
  *
  */
 
-package com.openclassrooms.realestatemanager.activities.login
+package com.openclassrooms.realestatemanager.activities.estatedetail
 
 
 import com.openclassrooms.realestatemanager.utils.base.BaseView
@@ -21,5 +21,11 @@ interface EstateDetailContract {
 
     interface EstateDetailPresenterInterface
 
-    interface EstateViewInterface : BaseView
+    interface EstateViewInterface : BaseView {
+        fun configureView()
+        fun loadSharedPref()
+        fun configureMaps()
+        fun configureDetails()
+        fun configureRecyclerView()
+    }
 }

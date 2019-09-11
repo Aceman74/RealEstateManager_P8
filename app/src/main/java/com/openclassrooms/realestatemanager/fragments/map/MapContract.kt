@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 11/09/19 20:37
  *
  */
 
@@ -22,5 +22,8 @@ interface MapContract {
 
     interface MapPresenterInterface
 
-    interface MapViewInterface : BaseView
+    interface MapViewInterface : BaseView {
+        fun getLocationPermission()
+        fun configureMapMarkers()
+    }
 }

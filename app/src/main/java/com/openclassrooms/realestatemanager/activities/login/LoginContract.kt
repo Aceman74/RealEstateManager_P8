@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 11/09/19 14:00
  *  
  */
 
@@ -21,5 +21,11 @@ interface LoginContract {
 
     interface LoginPresenterInterface
 
-    interface LoginViewInterface : BaseView
+    interface LoginViewInterface : BaseView {
+        fun loadSharedPref()
+        fun checkPermission()
+        fun askPermission()
+        fun dexterInit()
+        fun startSignInActivity()
+    }
 }

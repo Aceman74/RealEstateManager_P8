@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 09/09/19 20:10
+  ~  * Created by Lionel Joffray on 11/09/19 20:37
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 09/09/19 11:50
+  ~  * Last modified 11/09/19 10:42
   ~  */
   -->
 
@@ -23,9 +23,9 @@
             android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            app:titleTextColor="@color/primaryTextColor"
+            android:background="?colorPrimary"
+            android:minHeight="?actionBarSize"
+            app:titleTextColor="?textAppearanceHeadline1"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +61,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/primaryColor"
+            android:background="?colorPrimary"
+            app:titleTextColor="?textAppearanceHeadline1"
             app:itemIconTint="@drawable/bottom_navigation_selector"
             app:itemTextColor="@drawable/bottom_navigation_selector"
             app:menu="@menu/main_bottom_navigation" />
@@ -73,9 +74,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:itemTextColor="@color/primaryTextColor"
-        app:itemIconTint="@color/primaryTextColor"
-        android:background="@color/primaryDarkColor"
+        app:itemTextColor="?textAppearanceHeadline1"
+        app:itemIconTint="?textAppearanceHeadline1"
+        android:background="?colorPrimaryDark"
         android:fitsSystemWindows="true"
         app:elevation="@dimen/normal_margin"
         app:headerLayout="@layout/navigation_drawer_header"
@@ -86,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="@dimen/normal_margin"
-            android:src="@drawable/logo_black" />
+            android:src="?android:logo" />
 
     </com.google.android.material.navigation.NavigationView>
 

@@ -1,8 +1,8 @@
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 10/09/19 20:32
+  ~  * Created by Lionel Joffray on 11/09/19 20:37
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 10/09/19 19:56
+  ~  * Last modified 11/09/19 11:16
   ~  */
   -->
 
@@ -13,17 +13,45 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="isLightTheme">@color/primaryLightColor</item>
         <item name="colorAccent">@color/secondaryDarkColor</item>
-        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="textAppearanceHeadline1">@color/quantum_white_text</item>
+        <item name="textAppearanceHeadline2">@color/quantum_black_text</item>
+        <item name="android:logo">@drawable/logo_black</item>
     </style>
 
     <!-- ALTERNATIVE THEME -->
-    <style name="AppTheme_2" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme_1" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor_2</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor_2</item>
+        <item name="isLightTheme">@color/primaryLightColor_2</item>
         <item name="colorAccent">@color/secondaryDarkColor_2</item>
-        <item name="android:textColor">@color/secondaryTextColor_2</item>
+        <item name="textAppearanceHeadline1">@color/quantum_white_text</item>
+        <item name="textAppearanceHeadline2">@color/quantum_black_text</item>
+        <item name="android:logo">@drawable/logo_white</item>
+    </style>
+
+    <style name="AppTheme_2" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColor_3</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor_3</item>
+        <item name="isLightTheme">@color/primaryLightColor_3</item>
+        <item name="colorAccent">@color/secondaryDarkColor_3</item>
+        <item name="textAppearanceHeadline1">@color/quantum_white_text</item>
+        <item name="textAppearanceHeadline2">@color/quantum_black_text</item>
+        <item name="android:logo">@drawable/logo_black</item>
+    </style>
+
+    <style name="AppTheme_3" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primaryColor_4</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor_4</item>
+        <item name="isLightTheme">@color/primaryLightColor_4</item>
+        <item name="colorAccent">@color/secondaryDarkColor_4</item>
+        <item name="textAppearanceHeadline1">@color/quantum_white_text</item>
+        <item name="textAppearanceHeadline2">@color/quantum_black_text</item>
+        <item name="android:logo">@drawable/logo_black</item>
     </style>
     <!-- LOGIN ACTIVITY -->
     <style name="AppTheme.Login" parent="AppTheme">

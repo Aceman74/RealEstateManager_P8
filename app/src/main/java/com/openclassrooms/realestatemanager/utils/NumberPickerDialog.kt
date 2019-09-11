@@ -1,12 +1,12 @@
 /*
  * *
- *  * Created by Lionel Joffray on 06/09/19 20:07
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 06/09/19 20:07
+ *  * Last modified 11/09/19 16:38
  *
  */
 
-package com.openclassrooms.realestatemanager.fragments.numberpicker
+package com.openclassrooms.realestatemanager.utils
 
 
 import android.app.Dialog
@@ -23,7 +23,6 @@ import com.openclassrooms.realestatemanager.extensions.priceAddSpace
 import com.openclassrooms.realestatemanager.extensions.setMaxLength
 import com.openclassrooms.realestatemanager.utils.rxbus.RxBus
 import com.openclassrooms.realestatemanager.utils.rxbus.RxEvent
-import io.reactivex.disposables.Disposable
 import java.util.*
 
 
@@ -34,7 +33,6 @@ class NumberPickerDialog(val i: Int, private var mOldVal: Int?, val s: String? =
     private lateinit var valueChangeListener: NumberPicker.OnValueChangeListener
     private lateinit var dateChangeListener: DatePicker.OnDateChangedListener
     var string: String = ""
-    private lateinit var pickerDisposable: Disposable
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val numberPicker = NumberPicker(activity)

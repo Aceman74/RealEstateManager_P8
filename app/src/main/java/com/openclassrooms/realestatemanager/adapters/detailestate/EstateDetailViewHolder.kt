@@ -1,18 +1,22 @@
 /*
  * *
- *  * Created by Lionel Joffray on 04/09/19 19:35
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 04/09/19 19:34
+ *  * Last modified 11/09/19 17:49
  *
  */
 
-package com.openclassrooms.realestatemanager.adapters.estatelist
+package com.openclassrooms.realestatemanager.adapters.detailestate
 
+import android.app.Dialog
 import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.models.Picture
 import kotlinx.android.synthetic.main.slideshow_item.view.*
 
@@ -34,9 +38,22 @@ class EstateDetailViewHolder(view: View) : RecyclerView.ViewHolder(view), View.O
                 .into(image)
         itemView.setOnClickListener {
             listener(pictures[position].pictureId!!.toInt())
+
+            val dialog = Dialog(itemView.context)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setContentView(R.layout.image_full_size)
+            val imgView = dialog.findViewById<ImageView>(R.id.dialog_imageview)
+            imgView.isClickable = true
+            Glide.with(itemView.context)
+                    .load(pictures[position].picturePath)
+                    .into(imgView)
+            dialog.window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            dialog.show()
+            imgView.setOnClickListener { dialog.dismiss() }
         }
     }
 
     override fun onClick(view: View) {
+
     }
 }

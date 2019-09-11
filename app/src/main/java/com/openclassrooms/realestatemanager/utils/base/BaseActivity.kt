@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 09/09/19 20:10
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 09/09/19 20:10
+ *  * Last modified 11/09/19 20:37
  *
  */
 
@@ -36,10 +36,23 @@ import timber.log.Timber
  */
 abstract class BaseActivity : AppCompatActivity() {
     val SIGN_OUT_TASK = 12
+    var mTheme = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        loadTheme()
         super.onCreate(savedInstanceState)
         this.setContentView(this.activityLayout)
+    }
+
+    private fun loadTheme() {
+        val shared = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
+        mTheme = shared.getInt("actual_theme", 0)
+        when (mTheme) {
+            0 -> setTheme(R.style.AppTheme)
+            1 -> setTheme(R.style.AppTheme_1)
+            2 -> setTheme(R.style.AppTheme_2)
+            3 -> setTheme(R.style.AppTheme_3)
+        }
     }
 
     /**

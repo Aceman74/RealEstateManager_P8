@@ -1,13 +1,14 @@
 /*
  * *
- *  * Created by Lionel Joffray on 10/09/19 20:32
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 10/09/19 20:31
+ *  * Last modified 11/09/19 14:23
  *
  */
 
 package com.openclassrooms.realestatemanager.activities.settings
 
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -15,27 +16,32 @@ import android.view.View
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.activities.login.LoginActivity
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_settings.*
 import timber.log.Timber
 
-class SettingsActivity(override val activityLayout: Int = R.layout.activity_settings) : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+class SettingsActivity(override val activityLayout: Int = R.layout.activity_settings) : BaseActivity(), SettingsContract.SettingsViewInterface, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     var mDevise: String = "$"
+    private val mPresenter = SettingsPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+        mPresenter.attachView(this)
+        configureView()
+        configureListeners()
+        loadSharedPref()
+    }
+
+    override fun configureView() {
         setSupportActionBar(findViewById(R.id.settings_tb))
         configureDrawerLayout(settings_dl, settings_tb)
         navigationDrawerHeader(settings_activity_nav_view)
-        configureListeners()
-        loadSharedPref()
-
     }
 
-    private fun loadSharedPref() {
+    override fun loadSharedPref() {
         val shared = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
         mDevise = shared.getString("actual_devise", "$")!!
         when (mDevise) {
@@ -97,7 +103,40 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
                 devise.apply()
                 loadSharedPref()
             }
+            theme_0_btn -> {
+                val sharedPref = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
+                val theme = sharedPref.edit()
+                theme.putInt("actual_theme", 0)
+                theme.apply()
+            }
+            theme_1_btn -> {
+                val sharedPref = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
+                val theme = sharedPref.edit()
+                theme.putInt("actual_theme", 1)
+                theme.apply()
+            }
+            theme_2_btn -> {
+                val sharedPref = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
+                val theme = sharedPref.edit()
+                theme.putInt("actual_theme", 2)
+                theme.apply()
+            }
+            theme_3_btn -> {
+                val sharedPref = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
+                val theme = sharedPref.edit()
+                theme.putInt("actual_theme", 3)
+                theme.apply()
+            }
         }
+        applyNewTheme()
+    }
+
+    override fun applyNewTheme() {
+        finish()
+        val intent = Intent.makeMainActivity(ComponentName(
+                this@SettingsActivity, LoginActivity::class.java))
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
     /**
@@ -111,9 +150,13 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
         }
     }
 
-    fun configureListeners() {
+    override fun configureListeners() {
         settings_activity_nav_view.setNavigationItemSelectedListener(this)
         dollars_btn.setOnClickListener(this)
         euros_btn.setOnClickListener(this)
+        theme_0_btn.setOnClickListener(this)
+        theme_1_btn.setOnClickListener(this)
+        theme_2_btn.setOnClickListener(this)
+        theme_3_btn.setOnClickListener(this)
     }
 }

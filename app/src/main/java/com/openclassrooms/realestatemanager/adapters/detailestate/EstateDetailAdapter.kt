@@ -1,12 +1,12 @@
 /*
  * *
- *  * Created by Lionel Joffray on 04/09/19 19:35
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 04/09/19 12:02
+ *  * Last modified 11/09/19 14:23
  *
  */
 
-package com.openclassrooms.realestatemanager.adapters.estatelist
+package com.openclassrooms.realestatemanager.adapters.detailestate
 
 import android.view.LayoutInflater
 import android.view.View

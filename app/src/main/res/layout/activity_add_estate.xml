@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 10/09/19 20:32
+  ~  * Created by Lionel Joffray on 11/09/19 20:37
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 10/09/19 18:03
+  ~  * Last modified 11/09/19 10:45
   ~  */
   -->
 
@@ -60,9 +60,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:itemTextColor="@color/primaryTextColor"
-        app:itemIconTint="@color/primaryTextColor"
-        android:background="@color/primaryDarkColor"
+        app:itemTextColor="?textAppearanceHeadline1"
+        app:itemIconTint="?textAppearanceHeadline1"
+        android:background="?colorPrimaryDark"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/navigation_drawer_header"
         app:menu="@menu/navigation_drawer"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_margin="@dimen/normal_margin"
-            android:src="@drawable/logo_black" />
+            android:src="?android:logo" />
 
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

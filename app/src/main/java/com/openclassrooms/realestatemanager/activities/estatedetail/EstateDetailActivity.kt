@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 10/09/19 20:32
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 10/09/19 20:31
+ *  * Last modified 11/09/19 16:38
  *
  */
 
@@ -31,11 +31,11 @@ import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.activities.addestate.AddEstateActivity
-import com.openclassrooms.realestatemanager.activities.login.EstateDetailContract
+import com.openclassrooms.realestatemanager.activities.login.EstateDetailPresenter
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
 import com.openclassrooms.realestatemanager.activities.settings.SettingsActivity
-import com.openclassrooms.realestatemanager.adapters.SlideshowAdapter
-import com.openclassrooms.realestatemanager.adapters.estatelist.EstateDetailAdapter
+import com.openclassrooms.realestatemanager.adapters.detailestate.EstateDetailAdapter
+import com.openclassrooms.realestatemanager.extensions.formatAddress
 import com.openclassrooms.realestatemanager.extensions.priceAddSpace
 import com.openclassrooms.realestatemanager.extensions.priceRemoveSpace
 import com.openclassrooms.realestatemanager.injections.Injection
@@ -54,31 +54,36 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
 
 
     lateinit var mRecyclerView: RecyclerView
-    lateinit var mAdapter: SlideshowAdapter
-    lateinit var estateViewModel: EstateViewModel
-    lateinit var pictureViewModel: PictureViewModel
-    var estateId = -1
+    lateinit var mEstateViewModel: EstateViewModel
+    lateinit var mPictureViewModel: PictureViewModel
+    private val mPresenter = EstateDetailPresenter()
+    var mEstateId = -1
     var mDevise = "$"
     private lateinit var mMap: GoogleMap
-    lateinit var marker: Marker
-    lateinit var observePicture: List<EstateAndPictures>
+    lateinit var mMarker: Marker
+    lateinit var mObservePicture: List<EstateAndPictures>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSupportActionBar(findViewById(R.id.detail_estate_toolbar))
+        mPresenter.attachView(this)
+        configureView()
         loadSharedPref()
-        configureDrawerLayout(detail_estate_drawer_layout, detail_estate_toolbar)
-        configureItemListeners()
-        estateId = intent.getIntExtra("estateId", -1)
         configureDetails()
         configureMaps()
         configureRecyclerView()
+    }
+
+    override fun configureView() {
+        setSupportActionBar(findViewById(R.id.detail_estate_toolbar))
+        configureDrawerLayout(detail_estate_drawer_layout, detail_estate_toolbar)
         navigationDrawerHeader(detail_estate_nav_view)
+        mEstateId = intent.getIntExtra("mEstateId", -1)
+        detail_estate_nav_view.setNavigationItemSelectedListener(this)
     }
 
 
-    private fun loadSharedPref() {
+    override fun loadSharedPref() {
         val shared = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
         mDevise = shared.getString("actual_devise", "$")!!
         when (mDevise) {
@@ -87,26 +92,26 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
             }
         }
     }
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.uiSettings.isMapToolbarEnabled = false
         val newYork = LatLng(40.734402, -73.949882)
-        marker = mMap.addMarker(MarkerOptions().position(newYork))
+        mMarker = mMap.addMarker(MarkerOptions().position(newYork))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(newYork))
         mMap.cameraPosition.zoom.absoluteValue
     }
 
-    private fun configureMaps() {
-
+    override fun configureMaps() {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.address_map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
 
-    private fun configureDetails() {
-        if (estateId != -1) {
+    override fun configureDetails() {
+        if (mEstateId != -1) {
             val mViewModelFactory = Injection.provideViewModelFactory(this)
-            this.estateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
-            estateViewModel.getEstateById(estateId.toLong()).observe(this, Observer {
+            this.mEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
+            mEstateViewModel.getEstateById(mEstateId.toLong()).observe(this, Observer {
 
                 desc_estate_type_txt.text = Utils.ListOfString.listOfType()[it[0].type]
                 desc_estate_neighborhood_txt.text = Utils.ListOfString.listOfNeighborhood()[it[0].neighborhood]
@@ -130,15 +135,16 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
                         detail_estate_date_sold.text = it[0].soldDate
                     }
                 }
-                address_txt_view.text = Utils.formatAddress(it[0].fullAddress)
-                marker.position = LatLng(it[0].latitude!!, it[0].longitude!!)
-                marker.title = "That's Here !"
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.position, 14f))
+                address_txt_view.text = String().formatAddress(it[0].fullAddress)
+                mMarker.position = LatLng(it[0].latitude!!, it[0].longitude!!)
+                mMarker.title = "That's Here !"
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mMarker.position, 14f))
                 if (it[0].editDate != null)
                     desc_last_mod_date_choice_txt.text = it[0].editDate
             })
         }
     }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         //  Navigation Drawer item settings
         val id = item.itemId
@@ -182,7 +188,7 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
         R.id.toolbar_edit -> {
             Toast.makeText(this, "Edit Estate", Toast.LENGTH_LONG).show()
             val intent = Intent(this, AddEstateActivity::class.java)
-            intent.putExtra("estateId", estateId)
+            intent.putExtra("mEstateId", mEstateId)
             startActivity(intent)
             true
         }
@@ -190,8 +196,6 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
             true
         }
         else -> {
-            // If we got here, the user's action was not recognized.
-            // Invoke the superclass to handle it.
             super.onOptionsItemSelected(item)
         }
     }
@@ -201,24 +205,20 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
         return super.onCreateOptionsMenu(menu)
     }
 
-    fun configureItemListeners() {
-        detail_estate_nav_view.setNavigationItemSelectedListener(this)
-    }
-
     /**
      * Initialize the recyclerview for history.
      */
-    fun configureRecyclerView() {
+    override fun configureRecyclerView() {
         mRecyclerView = slideshow_recyclerview
         mRecyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
         val mViewModelFactory = Injection.provideViewModelFactory(applicationContext)
-        this.estateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
-        this.pictureViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PictureViewModel::class.java)
-        estateViewModel.getEstatePictures(estateId.toLong()).observe(this, Observer {
-            observePicture = it
-            mRecyclerView.adapter = EstateDetailAdapter(observePicture) {
+        this.mEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
+        this.mPictureViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PictureViewModel::class.java)
+        mEstateViewModel.getEstatePictures(mEstateId.toLong()).observe(this, Observer {
+            mObservePicture = it
+            mRecyclerView.adapter = EstateDetailAdapter(mObservePicture) {
                 Timber.tag("RV click").i("$it")
-                // lauchDetailActivity(it)
+                // launchDetailActivity(it)
             }
         })
         mRecyclerView.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)

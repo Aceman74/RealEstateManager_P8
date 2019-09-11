@@ -1,15 +1,18 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 11/09/19 20:26
  *
  */
 
-package com.openclassrooms.realestatemanager.activities.login
+package com.openclassrooms.realestatemanager.activities.addestate
 
 
+import android.content.Context
 import com.openclassrooms.realestatemanager.utils.base.BaseView
+import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
+import java.io.File
 
 /**
  * Created by Lionel JOFFRAY - on 28/05/2019.
@@ -19,7 +22,25 @@ import com.openclassrooms.realestatemanager.utils.base.BaseView
  */
 interface AddEstateContract {
 
-    interface AddEstatePresenterInterface
+    interface AddEstatePresenterInterface {
 
-    interface AddEstateViewInterface : BaseView
+        fun createPhotosFolder(context: Context): File
+        fun copyFile(sourceFilePath: File, destinationFilePath: File)
+        fun savePictureToCustomPath(eid: Long, mPicturePathArray: ArrayList<String>, mEstatePhotosDir: File, displayName: String?, mPictureViewModel: PictureViewModel)
+        fun savePicture(pictureName: String, fileDest: String, eid: Long, mPictureViewModel: PictureViewModel)
+    }
+
+    interface AddEstateViewInterface : BaseView {
+        fun configureView()
+        fun configureListeners()
+        fun configureViewModel()
+        fun configureMaps()
+        fun addToDatabase()
+        fun showNumberPicker(i: Int, mOldVal: Int?, string: String?)
+        fun checkIfNoNull()
+        fun imagePicker(pickImageRequest: Int)
+        fun autocompleteIntent()
+        fun editIntent()
+        fun loadSharedPref()
+    }
 }

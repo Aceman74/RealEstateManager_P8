@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 09/09/19 20:10
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 09/09/19 20:10
+ *  * Last modified 11/09/19 19:10
  *
  */
 
@@ -22,62 +22,65 @@ import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.activities.estatedetail.EstateDetailActivity
 import com.openclassrooms.realestatemanager.adapters.search.SearchAdapter
 import com.openclassrooms.realestatemanager.extensions.priceRemoveSpace
-import com.openclassrooms.realestatemanager.fragments.numberpicker.NumberPickerDialog
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.models.Estate
 import com.openclassrooms.realestatemanager.models.EstateAndPictures
 import com.openclassrooms.realestatemanager.models.Picture
+import com.openclassrooms.realestatemanager.utils.NumberPickerDialog
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import com.openclassrooms.realestatemanager.utils.rxbus.RxBus
 import com.openclassrooms.realestatemanager.utils.rxbus.RxEvent
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
-import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
-import com.openclassrooms.realusermanager.activities.viewmodels.UserViewModel
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_search.*
 
-class SearchActivity(override val activityLayout: Int = R.layout.activity_search) : BaseActivity(), View.OnClickListener, NumberPicker.OnValueChangeListener, DatePicker.OnDateChangedListener {
 
+class SearchActivity(override val activityLayout: Int = R.layout.activity_search) : BaseActivity(), SearchContract.SearchViewInterface, View.OnClickListener, NumberPicker.OnValueChangeListener, DatePicker.OnDateChangedListener {
+
+    private val mPresenter = SearchPresenter()
     var mPickerArray = LongArray(11)
-    lateinit var estateViewModel: EstateViewModel
-    lateinit var userViewModel: UserViewModel
-    lateinit var pictureViewModel: PictureViewModel
-    private lateinit var pickerDisposable: Disposable
+    lateinit var mEstateViewModel: EstateViewModel
+    private lateinit var mPickerDisposable: Disposable
     private var mPriceMin: String = ""
     private var mPriceMax: String = ""
     private lateinit var mRecyclerView: RecyclerView
-    lateinit var observePicture: List<EstateAndPictures>
+    lateinit var mObservePicture: List<EstateAndPictures>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSupportActionBar(findViewById(R.id.search_toolbar))
-        mPickerArray[4] = -1
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        mPresenter.attachView(this)
+        configureView()
         configureViewModel()
         configureItemListeners()
 
-        pickerDisposable = RxBus.listen(RxEvent.PickerPriceEvent::class.java).subscribe {
+        mPickerDisposable = RxBus.listen(RxEvent.PickerPriceEvent::class.java).subscribe {
             mPriceMin = it.price
         }
-        pickerDisposable = RxBus.listen(RxEvent.PickerPriceMaxEvent::class.java).subscribe {
+        mPickerDisposable = RxBus.listen(RxEvent.PickerPriceMaxEvent::class.java).subscribe {
             mPriceMax = it.priceMax
         }
         onSearchBtnClick()
     }
 
-    private fun onSearchBtnClick() {
+    override fun configureView() {
+        setSupportActionBar(findViewById(R.id.search_toolbar))
+        mPickerArray[4] = -1
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+    }
+
+    override fun onSearchBtnClick() {
 
         mRecyclerView = search_recycler_view
         button_search.setOnClickListener {
-            val result = executeFilteredSearch(observePicture)
+            val result = executeFilteredSearch(mObservePicture)
             mRecyclerView.adapter = SearchAdapter(result) { lauchDetailActivity(it) }
             mRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
         }
     }
 
-    private fun executeFilteredSearch(observePicture: List<EstateAndPictures>): List<EstateAndPictures> {
+    override fun executeFilteredSearch(observePicture: List<EstateAndPictures>): List<EstateAndPictures> {
         val filteredList: MutableList<EstateAndPictures> = observePicture as MutableList<EstateAndPictures>
         var i = 0
         lateinit var estate: Estate
@@ -85,13 +88,38 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         while (i < observePicture.size) {
             estate = filteredList[i].estate
             picture = filteredList[i].pictures
-            if (mPickerArray[5] > 0 && String().priceRemoveSpace(estate.price).toLong() < mPickerArray[5]) filteredList.removeAt(i)
-            if (mPickerArray[6] > 0 && String().priceRemoveSpace(estate.price).toLong() > mPickerArray[6]) filteredList.removeAt(i)
-            if (mPickerArray[7] > 0 && picture.size < mPickerArray[7]) filteredList.removeAt(i)
-            if (mPickerArray[8] > 0 && picture.size > mPickerArray[8]) filteredList.removeAt(i)
-            if (mPickerArray[9] > 0 && estate.sqft < mPickerArray[9]) filteredList.removeAt(i)
-            if (mPickerArray[10] > 0 && estate.sqft > mPickerArray[10]) filteredList.removeAt(i)
-            if (mPickerArray[4] > -1 && estate.neighborhood != mPickerArray[4].toInt()) filteredList.removeAt(i)
+            when {
+                mPickerArray[5] > 0 && String().priceRemoveSpace(estate.price).toLong() < mPickerArray[5] -> {
+                    filteredList.removeAt(i)
+                }
+                mPickerArray[6] > 0 && String().priceRemoveSpace(estate.price).toLong() > mPickerArray[6] -> {
+                    filteredList.removeAt(i)
+                }
+                mPickerArray[5] > 0 && String().priceRemoveSpace(estate.price).toLong() < mPickerArray[5] -> {
+                    filteredList.removeAt(i)
+                }
+                mPickerArray[5] > 0 && String().priceRemoveSpace(estate.price).toLong() < mPickerArray[5] -> {
+                    filteredList.removeAt(i)
+                }
+                mPickerArray[6] > 0 && String().priceRemoveSpace(estate.price).toLong() > mPickerArray[6] -> {
+                    filteredList.removeAt(i)
+                }
+                mPickerArray[7] > 0 && picture.size < mPickerArray[7] -> {
+                    filteredList.removeAt(i)
+                }
+                mPickerArray[8] > 0 && picture.size > mPickerArray[8] -> {
+                    filteredList.removeAt(i)
+                }
+                mPickerArray[9] > 0 && estate.sqft < mPickerArray[9] -> {
+                    filteredList.removeAt(i)
+                }
+                mPickerArray[10] > 0 && estate.sqft > mPickerArray[10] -> {
+                    filteredList.removeAt(i)
+                }
+                mPickerArray[4] > -1 && estate.neighborhood != mPickerArray[4].toInt() -> {
+                    filteredList.removeAt(i)
+                }
+            }
             i++
             mRecyclerView.adapter?.notifyDataSetChanged()
         }
@@ -99,12 +127,13 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         return filteredList
     }
 
-    fun lauchDetailActivity(it: Int) {
+    override fun lauchDetailActivity(it: Int) {
         val intent = Intent(applicationContext, EstateDetailActivity::class.java)
-        intent.putExtra("estateId", it)
+        intent.putExtra("mEstateId", it)
         startActivity(intent)
     }
-    fun showNumberPicker(i: Int, mOldVal: Int?, string: String? = null) {
+
+    override fun showNumberPicker(i: Int, mOldVal: Int?, string: String?) {
         val newFragment = NumberPickerDialog(i, mOldVal, string)
         newFragment.setValueChangeListener(this)
         newFragment.setDateChangeListener(this)
@@ -185,36 +214,36 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
                 showNumberPicker(15, mPickerArray[6].toInt(), mPriceMax)
             }
             search_sqft_first -> {
-                showNumberPicker(18, mPickerArray[9].toInt())
+                showNumberPicker(18, mPickerArray[9].toInt(), null)
             }
             search_sqft_second -> {
-                showNumberPicker(19, mPickerArray[10].toInt())
+                showNumberPicker(19, mPickerArray[10].toInt(), null)
             }
             search_photos_first -> {
-                showNumberPicker(16, mPickerArray[7].toInt())
+                showNumberPicker(16, mPickerArray[7].toInt(), null)
             }
             search_photos_second -> {
-                showNumberPicker(17, mPickerArray[8].toInt())
+                showNumberPicker(17, mPickerArray[8].toInt(), null)
             }
             search_data_added_first -> {
-                showNumberPicker(10, mPickerArray[0].toInt())
+                showNumberPicker(10, mPickerArray[0].toInt(), null)
             }
             search_data_added_second -> {
-                showNumberPicker(11, mPickerArray[1].toInt())
+                showNumberPicker(11, mPickerArray[1].toInt(), null)
             }
             search_data_sold_first -> {
-                showNumberPicker(12, mPickerArray[2].toInt())
+                showNumberPicker(12, mPickerArray[2].toInt(), null)
             }
             search_data_sold_second -> {
-                showNumberPicker(13, mPickerArray[3].toInt())
+                showNumberPicker(13, mPickerArray[3].toInt(), null)
             }
             search_neigh_first -> {
-                showNumberPicker(2, mPickerArray[4].toInt())
+                showNumberPicker(2, mPickerArray[4].toInt(), null)
             }
         }
     }
 
-    private fun configureItemListeners() {
+    override fun configureItemListeners() {
         search_price_first.setOnClickListener(this)
         search_price_second.setOnClickListener(this)
         search_sqft_first.setOnClickListener(this)
@@ -228,11 +257,11 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         search_neigh_first.setOnClickListener(this)
     }
 
-    private fun configureViewModel() {
+    override fun configureViewModel() {
         val mViewModelFactory = Injection.provideViewModelFactory(applicationContext)
-        this.estateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
-        estateViewModel.allEstateWithPitures.observe(this, Observer {
-            observePicture = it
+        this.mEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
+        mEstateViewModel.allEstateWithPitures.observe(this, Observer {
+            mObservePicture = it
         })
     }
 }

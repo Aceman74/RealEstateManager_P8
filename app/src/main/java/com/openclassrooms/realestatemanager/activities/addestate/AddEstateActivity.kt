@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 10/09/19 20:32
+ *  * Created by Lionel Joffray on 11/09/19 20:37
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 10/09/19 20:31
+ *  * Last modified 11/09/19 20:26
  *
  */
 
@@ -41,16 +41,15 @@ import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.Utils
-import com.openclassrooms.realestatemanager.activities.login.AddEstateContract
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
 import com.openclassrooms.realestatemanager.activities.settings.SettingsActivity
+import com.openclassrooms.realestatemanager.extensions.formatAddress
 import com.openclassrooms.realestatemanager.extensions.priceAddSpace
 import com.openclassrooms.realestatemanager.extensions.priceRemoveSpace
-import com.openclassrooms.realestatemanager.fragments.numberpicker.NumberPickerDialog
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.models.Estate
-import com.openclassrooms.realestatemanager.models.Picture
 import com.openclassrooms.realestatemanager.models.User
+import com.openclassrooms.realestatemanager.utils.NumberPickerDialog
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import com.openclassrooms.realestatemanager.utils.rxbus.RxBus
 import com.openclassrooms.realestatemanager.utils.rxbus.RxEvent
@@ -64,10 +63,7 @@ import kotlinx.android.synthetic.main.fragment_address_map.*
 import kotlinx.android.synthetic.main.fragment_description.*
 import timber.log.Timber
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.io.IOException
-import java.nio.channels.FileChannel
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import kotlin.math.absoluteValue
@@ -75,9 +71,9 @@ import kotlin.math.absoluteValue
 
 class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add_estate) : BaseActivity(), AddEstateContract.AddEstateViewInterface, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, NumberPicker.OnValueChangeListener, OnMapReadyCallback {
 
-
     private val AUTOCOMPLETE_REQUEST_CODE = 101
-    var mPriceResut: String = ""
+    private val mPresenter = AddEstatePresenter()
+    private var mPriceResult: String = ""
     var mDescResult: String = ""
     var mType = -1
     var mNeighborhood = -1
@@ -86,54 +82,58 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
     var mBathrooms = 0
     var mBedrooms = 0
     var mAvailable = 0
-    var mdateCreate = ""
+    private var mDateCreate = ""
     var mAddress = ""
     var mSoldDate: String? = null
     var mPickerArray = IntArray(9)
     var mPicturePathArray = arrayListOf("", "", "", "", "", "", "", "")
     private lateinit var mMap: GoogleMap
-    lateinit var marker: Marker
+    lateinit var mMarker: Marker
     var mDevise = "$"
 
-    private lateinit var pickerDisposable: Disposable
-    lateinit var estateViewModel: EstateViewModel
-    lateinit var userViewModel: UserViewModel
-    lateinit var pictureViewModel: PictureViewModel
+    private lateinit var mPickerDisposable: Disposable
+    lateinit var mEstateViewModel: EstateViewModel
+    lateinit var mUserViewModel: UserViewModel
+    lateinit var mPictureViewModel: PictureViewModel
     lateinit var mEstatePhotosDir: File
-    var eId: Long = 0
-    var intentEId: Long = -1
+    var mEId: Long = 0
+    var mIntentEId: Long = -1
 
     var PICK_IMAGE_REQUEST = 50
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSupportActionBar(findViewById(R.id.add_estate_toolbar))
-        Places.initialize(applicationContext, BuildConfig.google_maps_key)
-        Places.createClient(this)
-        configureDrawerLayout(add_estate_drawer_layout, add_estate_toolbar)
+        mPresenter.attachView(this)
+        configureView()
         configureListeners()
-        createPhotosFolder()
-        desc_date_added_choice_txt.text = Utils.todayDate
-        desc_agent_choice_txt.text = currentUser?.displayName.toString()
+        mEstatePhotosDir = mPresenter.createPhotosFolder(applicationContext)
         configureViewModel()
         configureMaps()
-        navigationDrawerHeader(add_estate_nav_view)
-        intentEId = intent.getIntExtra("estateId", -1).toLong()
+        mIntentEId = intent.getIntExtra("mEstateId", -1).toLong()
         editIntent()
         loadSharedPref()
         address_search_layout.setOnClickListener {
             autocompleteIntent()
         }
-
-        pickerDisposable = RxBus.listen(RxEvent.PickerDescEvent::class.java).subscribe {
+        mPickerDisposable = RxBus.listen(RxEvent.PickerDescEvent::class.java).subscribe {
             mDescResult = it.desc
         }
-        pickerDisposable = RxBus.listen(RxEvent.PickerPriceEvent::class.java).subscribe {
-            mPriceResut = it.price
+        mPickerDisposable = RxBus.listen(RxEvent.PickerPriceEvent::class.java).subscribe {
+            mPriceResult = it.price
         }
     }
 
-    private fun loadSharedPref() {
+    override fun configureView() {
+        setSupportActionBar(findViewById(R.id.add_estate_toolbar))
+        configureDrawerLayout(add_estate_drawer_layout, add_estate_toolbar)
+        navigationDrawerHeader(add_estate_nav_view)
+        Places.initialize(applicationContext, BuildConfig.google_maps_key)
+        Places.createClient(this)
+        desc_date_added_choice_txt.text = Utils.todayDate
+        desc_agent_choice_txt.text = currentUser?.displayName.toString()
+    }
+
+    override fun loadSharedPref() {
         val shared = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
         mDevise = shared.getString("actual_devise", "$")!!
         when (mDevise) {
@@ -143,9 +143,9 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         }
     }
 
-    private fun editIntent() {
-        if (intentEId.toInt() != -1) {
-            estateViewModel.getEstatePictures(intentEId).observe(this, Observer {
+    override fun editIntent() {
+        if (mIntentEId.toInt() != -1) {
+            mEstateViewModel.getEstatePictures(mIntentEId).observe(this, Observer {
                 val result = it[0]
                 desc_estate_type_txt.text = Utils.ListOfString.listOfType()[result.estate.type]
                 mPickerArray[0] = result.estate.type
@@ -154,12 +154,11 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 mPickerArray[1] = result.estate.neighborhood
                 mNeighborhood = result.estate.neighborhood
                 desc_estate_price_txt.text = result.estate.price
-                mPriceResut = result.estate.price
+                mPriceResult = result.estate.price
                 if (desc_estate_price_txt.text != getString(R.string.set_price) && money_icon.text == "€") {
-                    desc_estate_price_txt.text = String().priceAddSpace(Utils.convertDollarToEuro(String().priceRemoveSpace(mPriceResut).toInt()).toString())
-                    mPriceResut = String().priceAddSpace(Utils.convertDollarToEuro(String().priceRemoveSpace(mPriceResut).toInt()).toString())
+                    desc_estate_price_txt.text = String().priceAddSpace(Utils.convertDollarToEuro(String().priceRemoveSpace(mPriceResult).toInt()).toString())
+                    mPriceResult = String().priceAddSpace(Utils.convertDollarToEuro(String().priceRemoveSpace(mPriceResult).toInt()).toString())
                 }
-
                 fragment_desc_desc_txt.text = result.estate.description
                 mDescResult = result.estate.description
                 desc_sqft_choice_txt.text = result.estate.sqft.toString()
@@ -168,20 +167,20 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 desc_rooms_choice_txt.text = result.estate.rooms.toString()
                 mPickerArray[5] = result.estate.rooms
                 mRooms = result.estate.rooms
-                desc_bedrooms_choice_txt.text = result.estate.bedrooms.toString()
-                mPickerArray[6] = result.estate.bedrooms
-                mBedrooms = result.estate.bedrooms
                 desc_bathrooms_choice_txt.text = result.estate.bathrooms.toString()
-                mPickerArray[7] = result.estate.bathrooms
+                mPickerArray[6] = result.estate.bathrooms
                 mBathrooms = result.estate.bathrooms
+                desc_bedrooms_choice_txt.text = result.estate.bedrooms.toString()
+                mPickerArray[7] = result.estate.bedrooms
+                mBedrooms = result.estate.bedrooms
                 desc_agent_choice_txt.text = result.estate.agent
                 desc_available_choice_txt.text = Utils.ListOfString.listOfAvailable()[result.estate.available]
                 mPickerArray[8] = result.estate.available
                 mAvailable = result.estate.available
                 desc_date_added_choice_txt.text = result.estate.addDate
-                mdateCreate = result.estate.addDate
+                mDateCreate = result.estate.addDate
                 desc_last_mod_date_choice_txt.text = Utils.todayDate
-                address_txt_view.text = Utils.formatAddress(result.estate.fullAddress)
+                address_txt_view.text = String().formatAddress(result.estate.fullAddress)
                 mAddress = result.estate.fullAddress
                 mSoldDate = result.estate.soldDate
                 if (mSoldDate != null && result.estate.available == 1) {
@@ -189,8 +188,8 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                     add_estate_state_txt.text = getString(R.string.sold)
                     add_estate_state_txt.setTextColor(resources.getColor(R.color.quantum_googred))
                 }
-                marker.position = LatLng(result.estate.latitude!!, result.estate.longitude!!)
-                marker.title = "That's Here !"
+                mMarker.position = LatLng(result.estate.latitude!!, result.estate.longitude!!)
+                mMarker.title = "That's Here !"
                 var i = 0
                 while (i < result.pictures.size) {
                     mPicturePathArray[i] = result.pictures[i].picturePath
@@ -208,7 +207,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         }
     }
 
-    private fun configureMaps() {
+    override fun configureMaps() {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.address_map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
@@ -220,7 +219,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         mMap = googleMap
         mMap.uiSettings.isMapToolbarEnabled = false
         val newYork = LatLng(40.734402, -73.949882)
-        marker = mMap.addMarker(MarkerOptions().position(newYork)
+        mMarker = mMap.addMarker(MarkerOptions().position(newYork)
                 .title("Marker in NewYork"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(newYork))
         mMap.cameraPosition.zoom.absoluteValue
@@ -229,7 +228,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
     /**
      * The Google Autocomplete intent method.
      */
-    fun autocompleteIntent() {
+    override fun autocompleteIntent() {
         val fields = listOf(Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS)
 
         val intent = Autocomplete.IntentBuilder(
@@ -238,41 +237,29 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 .setCountry("us")
                 .build(applicationContext)
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
-
     }
 
-
-    private fun createPhotosFolder() {
-        mEstatePhotosDir = File(applicationInfo.dataDir + "/files/", "estate_photos")
-
-        if (mEstatePhotosDir.mkdir()) {
-            Timber.tag("Folder FUN").d("Directory created")
-        } else {
-            Timber.tag("Folder FUN").d("Directory is not created")
-        }
-    }
-
-    private fun configureViewModel() {
+    override fun configureViewModel() {
         val mViewModelFactory = Injection.provideViewModelFactory(this)
-        this.estateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
-        this.userViewModel = ViewModelProviders.of(this, mViewModelFactory).get(UserViewModel::class.java)
-        this.pictureViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PictureViewModel::class.java)
+        this.mEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
+        this.mUserViewModel = ViewModelProviders.of(this, mViewModelFactory).get(UserViewModel::class.java)
+        this.mPictureViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PictureViewModel::class.java)
     }
 
-    private fun addToDatabase() {
-        if (intentEId.toInt() == -1) {
+    override fun addToDatabase() {
+        if (mIntentEId.toInt() == -1) {
             val user = User(currentUser!!.uid, currentUser!!.displayName.toString(), currentUser!!.email.toString(), currentUser!!.photoUrl.toString(), "TODAY")
-            this.userViewModel.createUser(user)
-            val estate = Estate(null, currentUser!!.uid, mType, mNeighborhood, mPriceResut, mDescResult, mSqft, mRooms, mBathrooms, mBedrooms, mAvailable, currentUser!!.displayName!!, Utils.todayDate, null, mSoldDate, marker.position.latitude, marker.position.longitude, mAddress)
-            this.estateViewModel.createEstate(estate)
-            this.estateViewModel.allEstate.observe(this, Observer {
-                eId = it.lastIndex.toLong() + 1
-                savePictureToCustomPath(eId)
+            this.mUserViewModel.createUser(user)
+            val estate = Estate(null, currentUser!!.uid, mType, mNeighborhood, mPriceResult, mDescResult, mSqft, mRooms, mBathrooms, mBedrooms, mAvailable, currentUser!!.displayName!!, Utils.todayDate, null, mSoldDate, mMarker.position.latitude, mMarker.position.longitude, mAddress)
+            this.mEstateViewModel.createEstate(estate)
+            this.mEstateViewModel.allEstate.observe(this, Observer {
+                mEId = it.lastIndex.toLong() + 1
+                mPresenter.savePictureToCustomPath(mEId, mPicturePathArray, mEstatePhotosDir, currentUser!!.displayName, mPictureViewModel)
             })
         } else {
-            val estate = Estate(intentEId, currentUser!!.uid, mType, mNeighborhood, mPriceResut, mDescResult, mSqft, mRooms, mBathrooms, mBedrooms, mAvailable, currentUser!!.displayName!!, mdateCreate, Utils.todayDate, mSoldDate, marker.position.latitude, marker.position.longitude, mAddress)
-            this.estateViewModel.createEstate(estate)
-            savePictureToCustomPath(intentEId)
+            val estate = Estate(mIntentEId, currentUser!!.uid, mType, mNeighborhood, mPriceResult, mDescResult, mSqft, mRooms, mBathrooms, mBedrooms, mAvailable, currentUser!!.displayName!!, mDateCreate, Utils.todayDate, mSoldDate, mMarker.position.latitude, mMarker.position.longitude, mAddress)
+            this.mEstateViewModel.createEstate(estate)
+            mPresenter.savePictureToCustomPath(mIntentEId, mPicturePathArray, mEstatePhotosDir, currentUser!!.displayName, mPictureViewModel)
         }
 
     }
@@ -280,15 +267,15 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
     override fun onClick(v: View?) {
         when (v) {
             desc_estate_type_img, desc_estate_type_txt -> {
-                showNumberPicker(1, mPickerArray[0])
+                showNumberPicker(1, mPickerArray[0], null)
                 Timber.i("Click Type")
             }
             desc_neighbourhood_img, desc_estate_neighborhood_txt -> {
-                showNumberPicker(2, mPickerArray[1])
+                showNumberPicker(2, mPickerArray[1], null)
                 Timber.i("Click Neighbourhood")
             }
             desc_price_img, desc_estate_price_txt -> {
-                showNumberPicker(3, mPickerArray[0], String().priceRemoveSpace(mPriceResut))
+                showNumberPicker(3, mPickerArray[0], String().priceRemoveSpace(mPriceResult))
                 Timber.i("Click Price")
             }
             desc_description_img, fragment_desc_desc_txt -> {
@@ -296,23 +283,23 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 Timber.i("Click Description")
             }
             desc_sqft_img, surface_tv -> {
-                showNumberPicker(5, mPickerArray[4])
+                showNumberPicker(5, mPickerArray[4], null)
                 Timber.i("Click Sqft")
             }
             desc_rooms_img, rooms_tv -> {
-                showNumberPicker(6, mPickerArray[5])
+                showNumberPicker(6, mPickerArray[5], null)
                 Timber.i("Click Rooms")
             }
             desc_bathrooms_img, bathrooms_tv -> {
-                showNumberPicker(7, mPickerArray[6])
+                showNumberPicker(7, mPickerArray[6], null)
                 Timber.i("Click Bathrooms")
             }
             desc_bedrooms_img, bedrooms_tv -> {
-                showNumberPicker(8, mPickerArray[7])
+                showNumberPicker(8, mPickerArray[7], null)
                 Timber.i("Click Bedrooms")
             }
             desc_available_img, available_tv -> {
-                showNumberPicker(9, mPickerArray[8])
+                showNumberPicker(9, mPickerArray[8], null)
                 Timber.i("Click Available")
             }
             first_pic -> {
@@ -326,8 +313,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         }
     }
 
-
-    fun imagePicker(pickImageRequest: Int) {
+    override fun imagePicker(pickImageRequest: Int) {
         when (pickImageRequest) {
             1 -> {
                 ImagePicker.create(this)
@@ -388,10 +374,10 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
             if (resultCode == RESULT_OK) {
                 val place = Autocomplete.getPlaceFromIntent(data!!)
                 address_edit_txt.text = place.name
-                address_txt_view.text = Utils.formatAddress(place.address!!)
+                address_txt_view.text = String().formatAddress(place.address!!)
                 mAddress = place.address!!
-                marker.title = place.name
-                marker.position = place.latLng
+                mMarker.title = place.name
+                mMarker.position = place.latLng
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.latLng, 14f))
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // Handle the error.
@@ -403,55 +389,9 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         }
     }
 
-    fun savePictureToCustomPath(eId: Long) {
-        var i = 0
-        lateinit var fileDest: File
-        while (i < mPicturePathArray.size) {
-            if (mPicturePathArray[i] != "") {
-                val file = File(mPicturePathArray[i])
-                val pictureName = Utils.custromTimeStamp() + "_" + currentUser!!.displayName + "_" + "$i"
-                if (i == 0) {
-                    fileDest = File(mEstatePhotosDir.path + "/" + pictureName + "_main.jpg")
-                } else {
-                    fileDest = File(mEstatePhotosDir.path + "/" + pictureName + ".jpg")
-                }
-                copyFile(file, fileDest)
-                this.pictureViewModel.createPicture(Picture(null, eId, pictureName, fileDest.toString()))
-
-            }
-            i++
-        }
-    }
-
-    /**
-     * copy contents from source file to mappPath file
-     *
-     * @param sourceFilePath  Source file path address
-     * @param destinationFilePath Destination file path address
-     */
-    private fun copyFile(sourceFilePath: File, destinationFilePath: File) {
-
-        try {
-
-            if (!sourceFilePath.exists()) {
-                return
-            }
-
-            val source: FileChannel = FileInputStream(sourceFilePath).channel
-            val destination: FileChannel = FileOutputStream(destinationFilePath).channel
-            destination.transferFrom(source, 0, source.size())
-            source.close()
-            destination.close()
-
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-        }
-
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        if (!pickerDisposable.isDisposed) pickerDisposable.dispose()
+        if (!mPickerDisposable.isDisposed) mPickerDisposable.dispose()
     }
 
     override fun onValueChange(picker: NumberPicker?, oldVal: Int, newVal: Int) {
@@ -469,7 +409,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 mNeighborhood = newVal
             }
             3 -> {
-                desc_estate_price_txt.text = mPriceResut
+                desc_estate_price_txt.text = mPriceResult
             }
             4 -> {
                 fragment_desc_desc_txt.text = mDescResult
@@ -517,13 +457,13 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         }
     }
 
-    fun showNumberPicker(i: Int, mOldVal: Int?, string: String? = null) {
+    override fun showNumberPicker(i: Int, mOldVal: Int?, string: String?) {
         val newFragment = NumberPickerDialog(i, mOldVal, string)
         newFragment.setValueChangeListener(this)
         newFragment.show(supportFragmentManager, "time picker")
     }
 
-    private fun configureListeners() {
+    override fun configureListeners() {
         add_estate_nav_view.setNavigationItemSelectedListener(this)
 
         desc_estate_type_img.visibility = ImageView.VISIBLE
@@ -599,18 +539,16 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
             true
         }
         else -> {
-            // If we got here, the user's action was not recognized.
-            // Invoke the superclass to handle it.
             super.onOptionsItemSelected(item)
         }
     }
 
-    private fun checkIfNoNull() {
+    override fun checkIfNoNull() {
         when {
             mPicturePathArray[0] == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to select a Main Picture")
             mType == -1 -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to select a Type")
             mNeighborhood == -1 -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to select a Neighborhood ")
-            mPriceResut == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to set a Price")
+            mPriceResult == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to set a Price")
             mAddress == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to enter an Address")
             else -> {
                 addToDatabase()

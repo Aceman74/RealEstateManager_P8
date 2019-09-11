@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 10/09/19 20:32
+  ~  * Created by Lionel Joffray on 11/09/19 20:37
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 10/09/19 19:08
+  ~  * Last modified 11/09/19 11:38
   ~  */
   -->
 
@@ -13,25 +13,97 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.settings.SettingsActivity">
 
+    <Button
+        android:theme="@style/AppTheme"
+        android:id="@+id/theme_0_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_style_round_primary"
+        android:text="accent"
+        android:padding="@dimen/large_margin"
+        android:textAllCaps="false"
+        android:textColor="?colorAccent"
+        android:textSize="@dimen/normal_title_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.241"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintVertical_bias="0.233" />
+
+    <Button
+        android:theme="@style/AppTheme_2"
+        android:id="@+id/theme_2_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_style_round_primary"
+        android:text="accent"
+        android:padding="@dimen/large_margin"
+        android:textAllCaps="false"
+        android:textColor="?colorAccent"
+        android:textSize="@dimen/normal_title_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.241"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintVertical_bias="0.527" />
+
+    <Button
+        android:theme="@style/AppTheme_3"
+        android:id="@+id/theme_3_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_style_round_primary"
+        android:text="accent"
+        android:padding="@dimen/large_margin"
+        android:textAllCaps="false"
+        android:textColor="?colorAccent"
+        android:textSize="@dimen/normal_title_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.699"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintVertical_bias="0.527" />
+
+    <Button
+        android:theme="@style/AppTheme_1"
+        android:id="@+id/theme_1_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_style_round_primary"
+        android:text="accent"
+        android:padding="@dimen/large_margin"
+        android:textAllCaps="false"
+        android:textColor="?colorAccent"
+        android:textSize="@dimen/normal_title_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.699"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintVertical_bias="0.233" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/settings_tb"
         android:layout_width="0dp"
         app:title="@string/settings"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
+        android:background="?colorPrimary"
+        android:minHeight="?actionBarSize"
+        app:titleTextColor="?textAppearanceHeadline1"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/primaryTextColor" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="choose a Currency :"
-        android:textColor="@color/secondaryTextColor"
+        android:textColor="?textAppearanceHeadline2"
         android:textSize="@dimen/normal_title_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +119,7 @@
         android:text="$"
         android:textSize="@dimen/normal_title_size"
         android:background="@drawable/button_style_round_primary"
-        android:textColor="@color/primaryTextColor"
+        android:textColor="?textAppearanceHeadline1"
         app:layout_constraintBottom_toTopOf="@+id/textView9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.3"
@@ -61,7 +133,7 @@
         android:layout_height="wrap_content"
         android:text="€"
         android:textSize="@dimen/normal_title_size"
-        android:textColor="@color/primaryTextColor"
+        android:textColor="?textAppearanceHeadline1"
         android:background="@drawable/button_style_round_primary"
         app:layout_constraintBottom_toTopOf="@+id/textView9"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +147,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="choose a Theme Color :"
-        android:textColor="@color/secondaryTextColor"
+        android:textColor="?textAppearanceHeadline2"
         android:textSize="@dimen/normal_title_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
