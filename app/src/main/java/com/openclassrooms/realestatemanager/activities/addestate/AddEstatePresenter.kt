@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 12/09/19 20:50
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 20:37
+ *  * Last modified 12/09/19 20:50
  *
  */
 
@@ -10,9 +10,13 @@ package com.openclassrooms.realestatemanager.activities.addestate
 
 
 import android.content.Context
+import android.util.Log
+import com.openclassrooms.realestatemanager.api.PlacesApi
 import com.openclassrooms.realestatemanager.models.Picture
+import com.openclassrooms.realestatemanager.models.places.nearby_search.Nearby
 import com.openclassrooms.realestatemanager.utils.base.BasePresenter
 import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
+import io.reactivex.observers.DisposableObserver
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
@@ -89,5 +93,26 @@ class AddEstatePresenter : BasePresenter(), AddEstateContract.AddEstatePresenter
         }
 
     }
+
+    override fun nearbyRequest(mLocation: String, mType: String, mKeyWord: String, mRadius: Int) {
+
+        val newDisposable = PlacesApi.instance.getLocationInfo(mLocation, mType, mKeyWord, mRadius).subscribeWith(object : DisposableObserver<Nearby>() {
+            override fun onNext(details: Nearby) {
+                Timber.tag("NEARBY_Next").i("On Next")
+                Timber.tag("NEARBY_OBSERVABLE").i("from: $mLocation type: $mType")
+                (getView() as AddEstateContract.AddEstateViewInterface).updateNearby(details)
+            }
+
+            override fun onError(e: Throwable) {
+                Timber.tag("NEARBY_Error").e("On Error%s", Log.getStackTraceString(e))
+            }
+
+            override fun onComplete() {
+                Timber.tag("NEARBY_Complete").i("On Complete !!")
+
+            }
+        })
+    }
+
 }
 

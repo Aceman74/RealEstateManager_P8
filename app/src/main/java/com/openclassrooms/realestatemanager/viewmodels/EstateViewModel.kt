@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 04/09/19 19:35
+ *  * Created by Lionel Joffray on 12/09/19 20:50
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 04/09/19 19:21
+ *  * Last modified 12/09/19 20:50
  *
  */
 
@@ -15,6 +15,7 @@ import androidx.lifecycle.LiveData
 import com.openclassrooms.realestatemanager.database.RealEstateDatabase
 import com.openclassrooms.realestatemanager.models.Estate
 import com.openclassrooms.realestatemanager.models.EstateAndPictures
+import com.openclassrooms.realestatemanager.models.Nearby
 import com.openclassrooms.realestatemanager.models.User
 import com.openclassrooms.realestatemanager.repositories.EstateDataRepository
 import java.util.concurrent.Executor
@@ -98,9 +99,11 @@ class EstateViewModel(application: Application, val executor: Executor) : Androi
 
     fun createEstate(estate: Estate) {
         executor.execute { repository.createEstate(estate) }
-
     }
 
+    fun createNearby(nearby: Nearby) {
+        executor.execute { repository.createNearby(nearby) }
+    }
     fun deleteEstate(estate: Estate) {
         executor.execute { repository.deleteEstate(estate) }
     }

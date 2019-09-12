@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 12/09/19 20:50
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 20:26
+ *  * Last modified 12/09/19 14:50
  *
  */
 
@@ -10,6 +10,7 @@ package com.openclassrooms.realestatemanager.activities.addestate
 
 
 import android.content.Context
+import com.openclassrooms.realestatemanager.models.places.nearby_search.Nearby
 import com.openclassrooms.realestatemanager.utils.base.BaseView
 import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
 import java.io.File
@@ -28,6 +29,7 @@ interface AddEstateContract {
         fun copyFile(sourceFilePath: File, destinationFilePath: File)
         fun savePictureToCustomPath(eid: Long, mPicturePathArray: ArrayList<String>, mEstatePhotosDir: File, displayName: String?, mPictureViewModel: PictureViewModel)
         fun savePicture(pictureName: String, fileDest: String, eid: Long, mPictureViewModel: PictureViewModel)
+        fun nearbyRequest(mLocation: String, mType: String, mKeyWord: String, mRadius: Int)
     }
 
     interface AddEstateViewInterface : BaseView {
@@ -42,5 +44,6 @@ interface AddEstateContract {
         fun autocompleteIntent()
         fun editIntent()
         fun loadSharedPref()
+        fun updateNearby(details: Nearby)
     }
 }

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 12/09/19 20:50
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 20:26
+ *  * Last modified 12/09/19 20:50
  *
  */
 
@@ -49,6 +49,7 @@ import com.openclassrooms.realestatemanager.extensions.priceRemoveSpace
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.models.Estate
 import com.openclassrooms.realestatemanager.models.User
+import com.openclassrooms.realestatemanager.models.places.nearby_search.Nearby
 import com.openclassrooms.realestatemanager.utils.NumberPickerDialog
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import com.openclassrooms.realestatemanager.utils.rxbus.RxBus
@@ -225,20 +226,6 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         mMap.cameraPosition.zoom.absoluteValue
     }
 
-    /**
-     * The Google Autocomplete intent method.
-     */
-    override fun autocompleteIntent() {
-        val fields = listOf(Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS)
-
-        val intent = Autocomplete.IntentBuilder(
-                AutocompleteActivityMode.OVERLAY, fields)
-                .setTypeFilter(TypeFilter.ADDRESS)
-                .setCountry("us")
-                .build(applicationContext)
-        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
-    }
-
     override fun configureViewModel() {
         val mViewModelFactory = Injection.provideViewModelFactory(this)
         this.mEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
@@ -262,6 +249,10 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
             mPresenter.savePictureToCustomPath(mIntentEId, mPicturePathArray, mEstatePhotosDir, currentUser!!.displayName, mPictureViewModel)
         }
 
+    }
+
+    override fun updateNearby(details: Nearby) {
+        Timber.tag("List").i("""${details.results?.size}""")
     }
 
     override fun onClick(v: View?) {
@@ -378,7 +369,10 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 mAddress = place.address!!
                 mMarker.title = place.name
                 mMarker.position = place.latLng
+                val locat = place.latLng?.latitude.toString() + "," + place.latLng?.longitude.toString()
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.latLng, 14f))
+                mPresenter.nearbyRequest(locat, "school", "school", 1000)
+
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // Handle the error.
                 val status = Autocomplete.getStatusFromIntent(data!!)
@@ -389,6 +383,19 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         }
     }
 
+    /**
+     * The Google Autocomplete intent method.
+     */
+    override fun autocompleteIntent() {
+        val fields = listOf(Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.ID)
+
+        val intent = Autocomplete.IntentBuilder(
+                AutocompleteActivityMode.OVERLAY, fields)
+                .setTypeFilter(TypeFilter.ADDRESS)
+                .setCountry("us")
+                .build(applicationContext)
+        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+    }
     override fun onDestroy() {
         super.onDestroy()
         if (!mPickerDisposable.isDisposed) mPickerDisposable.dispose()

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 12/09/19 20:50
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 19:10
+ *  * Last modified 12/09/19 20:50
  *
  */
 
@@ -46,7 +46,6 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
     private lateinit var mRecyclerView: RecyclerView
     lateinit var mObservePicture: List<EstateAndPictures>
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mPresenter.attachView(this)
@@ -63,6 +62,7 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         onSearchBtnClick()
     }
 
+
     override fun configureView() {
         setSupportActionBar(findViewById(R.id.search_toolbar))
         mPickerArray[4] = -1
@@ -71,7 +71,6 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
     }
 
     override fun onSearchBtnClick() {
-
         mRecyclerView = search_recycler_view
         button_search.setOnClickListener {
             val result = executeFilteredSearch(mObservePicture)
@@ -80,44 +79,57 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         }
     }
 
+    override fun configureViewModel() {
+        val mViewModelFactory = Injection.provideViewModelFactory(applicationContext)
+        this.mEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
+        mEstateViewModel.allEstateWithPitures.observe(this, Observer {
+            mObservePicture = it
+        })
+    }
+
     override fun executeFilteredSearch(observePicture: List<EstateAndPictures>): List<EstateAndPictures> {
-        val filteredList: MutableList<EstateAndPictures> = observePicture as MutableList<EstateAndPictures>
+        val filteredList: MutableList<EstateAndPictures> = ArrayList()
+        filteredList.addAll(mObservePicture)
         var i = 0
         lateinit var estate: Estate
         lateinit var picture: List<Picture>
         while (i < observePicture.size) {
-            estate = filteredList[i].estate
-            picture = filteredList[i].pictures
+            estate = observePicture[i].estate
+            picture = observePicture[i].pictures
             when {
-                mPickerArray[5] > 0 && String().priceRemoveSpace(estate.price).toLong() < mPickerArray[5] -> {
-                    filteredList.removeAt(i)
+
+                mPickerArray[0] > 0 && Utils.dateWithBSToMillis(estate.addDate) < mPickerArray[0] -> {
+                    removeEstateFromList(filteredList, observePicture, i)
                 }
-                mPickerArray[6] > 0 && String().priceRemoveSpace(estate.price).toLong() > mPickerArray[6] -> {
-                    filteredList.removeAt(i)
+                mPickerArray[1] > 0 && Utils.dateWithBSToMillis(estate.addDate) > mPickerArray[1] -> {
+                    removeEstateFromList(filteredList, observePicture, i)
                 }
-                mPickerArray[5] > 0 && String().priceRemoveSpace(estate.price).toLong() < mPickerArray[5] -> {
-                    filteredList.removeAt(i)
+                mPickerArray[2] > 0 && estate.soldDate == null || mPickerArray[2] > 0 && estate.soldDate != null && Utils.dateWithBSToMillis(estate.soldDate!!) < mPickerArray[2] -> {
+                    removeEstateFromList(filteredList, observePicture, i)
                 }
-                mPickerArray[5] > 0 && String().priceRemoveSpace(estate.price).toLong() < mPickerArray[5] -> {
-                    filteredList.removeAt(i)
-                }
-                mPickerArray[6] > 0 && String().priceRemoveSpace(estate.price).toLong() > mPickerArray[6] -> {
-                    filteredList.removeAt(i)
-                }
-                mPickerArray[7] > 0 && picture.size < mPickerArray[7] -> {
-                    filteredList.removeAt(i)
-                }
-                mPickerArray[8] > 0 && picture.size > mPickerArray[8] -> {
-                    filteredList.removeAt(i)
-                }
-                mPickerArray[9] > 0 && estate.sqft < mPickerArray[9] -> {
-                    filteredList.removeAt(i)
-                }
-                mPickerArray[10] > 0 && estate.sqft > mPickerArray[10] -> {
-                    filteredList.removeAt(i)
+                mPickerArray[3] > 0 && estate.soldDate == null || mPickerArray[3] > 0 && estate.soldDate != null && Utils.dateWithBSToMillis(estate.soldDate!!) > mPickerArray[3] -> {
+                    removeEstateFromList(filteredList, observePicture, i)
                 }
                 mPickerArray[4] > -1 && estate.neighborhood != mPickerArray[4].toInt() -> {
-                    filteredList.removeAt(i)
+                    removeEstateFromList(filteredList, observePicture, i)
+                }
+                mPickerArray[5] > 0 && String().priceRemoveSpace(estate.price).toLong() < mPickerArray[5] -> {
+                    removeEstateFromList(filteredList, observePicture, i)
+                }
+                mPickerArray[6] > 0 && String().priceRemoveSpace(estate.price).toLong() > mPickerArray[6] -> {
+                    removeEstateFromList(filteredList, observePicture, i)
+                }
+                mPickerArray[7] > 0 && picture.size < mPickerArray[7] -> {
+                    removeEstateFromList(filteredList, observePicture, i)
+                }
+                mPickerArray[8] > 0 && picture.size > mPickerArray[8] -> {
+                    removeEstateFromList(filteredList, observePicture, i)
+                }
+                mPickerArray[9] > 0 && estate.sqft < mPickerArray[9] -> {
+                    removeEstateFromList(filteredList, observePicture, i)
+                }
+                mPickerArray[10] > 0 && estate.sqft > mPickerArray[10] -> {
+                    removeEstateFromList(filteredList, observePicture, i)
                 }
             }
             i++
@@ -125,6 +137,11 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         }
 
         return filteredList
+    }
+
+    private fun removeEstateFromList(filteredList: MutableList<EstateAndPictures>, observePicture: List<EstateAndPictures>, i: Int) {
+        if (filteredList.contains(observePicture[i]))
+            filteredList.remove(observePicture[i])
     }
 
     override fun lauchDetailActivity(it: Int) {
@@ -182,23 +199,22 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
 
         if (datePicker?.tag != null) {
             val i: Int = datePicker.tag as Int
-
             when (i) {
                 10 -> {
                     search_data_added_first.text = ("$dayOfMonth/" + (monthOfYear + 1) + "/$year")
-                    mPickerArray[0] = Utils.dateToMillis(year, monthOfYear, dayOfMonth)
+                    mPickerArray[0] = Utils.dateToMillis(year, monthOfYear + 1, dayOfMonth)
                 }
                 11 -> {
                     search_data_added_second.text = ("$dayOfMonth/" + (monthOfYear + 1) + "/$year")
-                    mPickerArray[1] = Utils.dateToMillis(year, monthOfYear, dayOfMonth)
+                    mPickerArray[1] = Utils.dateToMillis(year, monthOfYear + 1, dayOfMonth)
                 }
                 12 -> {
                     search_data_sold_first.text = ("$dayOfMonth/" + (monthOfYear + 1) + "/$year")
-                    mPickerArray[2] = Utils.dateToMillis(year, monthOfYear, dayOfMonth)
+                    mPickerArray[2] = Utils.dateToMillis(year, monthOfYear + 1, dayOfMonth)
                 }
                 13 -> {
                     search_data_sold_second.text = ("$dayOfMonth/" + (monthOfYear + 1) + "/$year")
-                    mPickerArray[3] = Utils.dateToMillis(year, monthOfYear, dayOfMonth)
+                    mPickerArray[3] = Utils.dateToMillis(year, monthOfYear + 1, dayOfMonth)
                 }
             }
         }
@@ -255,13 +271,5 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         search_data_sold_first.setOnClickListener(this)
         search_data_sold_second.setOnClickListener(this)
         search_neigh_first.setOnClickListener(this)
-    }
-
-    override fun configureViewModel() {
-        val mViewModelFactory = Injection.provideViewModelFactory(applicationContext)
-        this.mEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
-        mEstateViewModel.allEstateWithPitures.observe(this, Observer {
-            mObservePicture = it
-        })
     }
 }

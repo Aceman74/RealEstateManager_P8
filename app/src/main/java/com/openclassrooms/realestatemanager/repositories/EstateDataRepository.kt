@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 04/09/19 19:35
+ *  * Created by Lionel Joffray on 12/09/19 20:50
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 04/09/19 19:21
+ *  * Last modified 12/09/19 14:18
  *
  */
 
@@ -12,6 +12,7 @@ import androidx.lifecycle.LiveData
 import com.openclassrooms.realestatemanager.database.dao.EstateDao
 import com.openclassrooms.realestatemanager.models.Estate
 import com.openclassrooms.realestatemanager.models.EstateAndPictures
+import com.openclassrooms.realestatemanager.models.Nearby
 
 
 /**
@@ -86,6 +87,10 @@ class EstateDataRepository(val estateDao: EstateDao) {
 
     fun createEstate(estate: Estate): Long {
         return estateDao.createEstate(estate)
+    }
+
+    fun createNearby(nearby: Nearby): Long {
+        return estateDao.createNearby(nearby)
     }
 
     // --- DELETE ---

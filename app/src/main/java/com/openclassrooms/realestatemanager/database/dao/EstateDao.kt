@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 12/09/19 20:50
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 14:33
+ *  * Last modified 12/09/19 14:18
  *
  */
 
@@ -12,6 +12,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.openclassrooms.realestatemanager.models.Estate
 import com.openclassrooms.realestatemanager.models.EstateAndPictures
+import com.openclassrooms.realestatemanager.models.Nearby
 
 /**
  * Created by Lionel JOFFRAY - on 26/08/2019.
@@ -65,6 +66,9 @@ interface EstateDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun createEstate(estate: Estate): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun createNearby(nearby: Nearby): Long
 
     @Delete
     fun deleteEstate(estate: Estate)

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 12/09/19 20:50
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 14:26
+ *  * Last modified 12/09/19 15:01
  *
  */
 
@@ -20,6 +20,8 @@ class EstateAndPictures {
     lateinit var estate: Estate
     @Relation(parentColumn = "estateId",
             entityColumn = "estateId_fk")
-
     var pictures: List<Picture> = ArrayList()
+    @Relation(parentColumn = "estateId",
+            entityColumn = "estateId_fk")
+    var nearby: List<Nearby> = ArrayList()
 }
