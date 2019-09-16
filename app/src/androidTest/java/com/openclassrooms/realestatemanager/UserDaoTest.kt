@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 03/09/19 16:31
+ *  * Created by Lionel Joffray on 16/09/19 21:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 03/09/19 16:31
+ *  * Last modified 16/09/19 16:07
  *
  */
 
@@ -15,6 +15,7 @@ import androidx.test.runner.AndroidJUnit4
 import com.openclassrooms.realestatemanager.database.RealEstateDatabase
 import com.openclassrooms.realestatemanager.models.Estate
 import com.openclassrooms.realestatemanager.models.User
+import com.openclassrooms.realestatemanager.utils.Utils
 import junit.framework.Assert.assertTrue
 import org.junit.After
 import org.junit.Before

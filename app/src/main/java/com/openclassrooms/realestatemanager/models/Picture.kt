@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 16/09/19 21:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 14:25
+ *  * Last modified 13/09/19 11:33
  *
  */
 
@@ -18,7 +18,7 @@ import androidx.room.PrimaryKey
  */
 
 @Entity(foreignKeys = [ForeignKey(entity = Estate::class, parentColumns = arrayOf("estateId"), childColumns = arrayOf("estateId_fk"), onDelete = ForeignKey.CASCADE)])
-data class Picture(@PrimaryKey(autoGenerate = true) @ColumnInfo(name = "pictureId") var pictureId: Long? = 0,
+data class Picture(@PrimaryKey(autoGenerate = true) @ColumnInfo(name = "pictureId") var pictureId: Long? = null,
                    @ColumnInfo(name = "estateId_fk") var estateId_fk: Long,
                    @ColumnInfo(name = "pictureName") var pictureName: String,
                    @ColumnInfo(name = "picturePath") var picturePath: String)

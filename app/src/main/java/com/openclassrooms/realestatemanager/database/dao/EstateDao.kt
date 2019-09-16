@@ -1,13 +1,14 @@
 /*
  * *
- *  * Created by Lionel Joffray on 12/09/19 20:50
+ *  * Created by Lionel Joffray on 16/09/19 21:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 12/09/19 14:18
+ *  * Last modified 16/09/19 21:09
  *
  */
 
 package com.openclassrooms.realestatemanager.database.dao
 
+import android.database.Cursor
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.openclassrooms.realestatemanager.models.Estate
@@ -73,6 +74,18 @@ interface EstateDao {
     @Delete
     fun deleteEstate(estate: Estate)
 
-    @Update
-    fun updateEstate(vararg estate: Estate)
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun updateEstate(estate: Estate): Int
+
+    // CONTENT PROVIDER //
+
+    @Query("SELECT * FROM Estate")
+    fun selectAll(): Cursor
+
+    @Query("SELECT * FROM Estate WHERE estateId LIKE :estateId")
+    fun selectEstateByEid(estateId: Long): Cursor
+
+    @Query("SELECT * FROM Estate WHERE estateId LIKE :estateId")
+    fun deleteById(estateId: Long): Int
+
 }

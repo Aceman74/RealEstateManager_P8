@@ -1,13 +1,14 @@
 /*
  * *
- *  * Created by Lionel Joffray on 12/09/19 20:50
+ *  * Created by Lionel Joffray on 16/09/19 21:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 12/09/19 14:18
+ *  * Last modified 16/09/19 21:09
  *
  */
 
 package com.openclassrooms.realestatemanager.repositories
 
+import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import com.openclassrooms.realestatemanager.database.dao.EstateDao
 import com.openclassrooms.realestatemanager.models.Estate
@@ -23,6 +24,7 @@ class EstateDataRepository(val estateDao: EstateDao) {
 
     private var mAllData: LiveData<List<Estate>> = estateDao.getAll()
     var mAllEstateAndPicture: LiveData<List<EstateAndPictures>> = estateDao.getAllEstateAndPictures()
+    var long: Long = 0
 
 
     // --- GET ---
@@ -86,7 +88,8 @@ class EstateDataRepository(val estateDao: EstateDao) {
     // --- CREATE ---
 
     fun createEstate(estate: Estate): Long {
-        return estateDao.createEstate(estate)
+        long = estateDao.createEstate(estate)
+        return long
     }
 
     fun createNearby(nearby: Nearby): Long {
@@ -101,5 +104,16 @@ class EstateDataRepository(val estateDao: EstateDao) {
     // --- UPDATE ---
     fun updateEstate(estate: Estate) {
         estateDao.updateEstate(estate)
+    }
+
+    fun insert(estate: Estate) {
+        InsertAsyncTask(estateDao).execute(estate)
+    }
+
+    private class InsertAsyncTask internal constructor(private val estateDao: EstateDao) : AsyncTask<Estate, Void, Long>() {
+
+        override fun doInBackground(vararg params: Estate): Long? {
+            return estateDao.createEstate(params[0])
+        }
     }
 }

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 16/09/19 21:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 14:42
+ *  * Last modified 16/09/19 21:09
  *  
  */
 
@@ -21,8 +21,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsListener
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.Utils.isInternetAvailable
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
+import com.openclassrooms.realestatemanager.utils.Utils.isInternetAvailable
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_login.*
 

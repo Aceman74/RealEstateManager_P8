@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 16/09/19 21:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 14:23
+ *  * Last modified 16/09/19 21:09
  *
  */
 
@@ -18,9 +18,12 @@ import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.activities.login.LoginActivity
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
+import com.openclassrooms.realestatemanager.extensions.hideKeyboard
+import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_settings.*
 import timber.log.Timber
+import kotlin.math.roundToInt
 
 class SettingsActivity(override val activityLayout: Int = R.layout.activity_settings) : BaseActivity(), SettingsContract.SettingsViewInterface, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -33,6 +36,7 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
         configureView()
         configureListeners()
         loadSharedPref()
+        loanSimulation()
     }
 
     override fun configureView() {
@@ -48,10 +52,16 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
             "$" -> {
                 dollars_btn.setBackgroundResource(R.drawable.button_style_round)
                 euros_btn.setBackgroundResource(R.drawable.button_style_round_primary)
+                amount_money_tv.text = "$"
+                interest_money_tv.text = "$"
+                monthly_money_tv.text = "$"
             }
             "€" -> {
                 euros_btn.setBackgroundResource(R.drawable.button_style_round)
                 dollars_btn.setBackgroundResource(R.drawable.button_style_round_primary)
+                amount_money_tv.text = "€"
+                interest_money_tv.text = "€"
+                monthly_money_tv.text = "€"
             }
         }
     }
@@ -85,6 +95,33 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
         return true
     }
 
+
+    private fun loanSimulation() {
+        button_loans.setOnClickListener {
+            when {
+                loan_amount_it.text.toString() == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to set an amount")
+                loan_rate_it.text.toString() == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to set a rate")
+                loan_years_it.text.toString() == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to set the years")
+                else -> {
+                    val mAmount: Int = loan_amount_it.text.toString().toInt()
+                    val mRate: Double = loan_rate_it.text.toString().toDouble()
+                    val mYears: Int = loan_years_it.text.toString().toInt()
+                    var mIntArray = DoubleArray(3)
+                    mPresenter.calculateLoan(mIntArray, mAmount, mRate, mYears)
+                    loan_monthly_tv.text = mIntArray[0].toString()
+                    loan_duration_tv.text = mIntArray[1].roundToInt().toString()
+                    loan_interest_tv.text = mIntArray[2].toString()
+                    loan_rate_tv.text = mRate.toString()
+                    cardview_result.visibility = View.VISIBLE
+                    loan_duration_tv.visibility = View.VISIBLE
+                    loan_monthly_tv.visibility = View.VISIBLE
+                    loan_interest_tv.visibility = View.VISIBLE
+                    loan_rate_tv.visibility = View.VISIBLE
+                }
+            }
+
+        }
+    }
     override fun onClick(v: View?) {
         when (v) {
             dollars_btn -> {
@@ -158,5 +195,9 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
         theme_1_btn.setOnClickListener(this)
         theme_2_btn.setOnClickListener(this)
         theme_3_btn.setOnClickListener(this)
+        button_loans.setOnClickListener(this)
+        settings_activity_layout.setOnClickListener {
+            it.hideKeyboard()
+        }
     }
 }

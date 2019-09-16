@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /**
+  ~  * Created by Lionel Joffray on 16/09/19 21:09
+  ~  * Copyright (c) 2019 . All rights reserved.
+  ~  * Last modified 13/04/19 20:56
+  ~  */
+  -->
+
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <alpha
+        android:duration="200"
+        android:fromAlpha="0"
+        android:toAlpha="1" />
+</set>

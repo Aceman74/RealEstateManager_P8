@@ -1,12 +1,12 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 16/09/19 21:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 16:38
+ *  * Last modified 16/09/19 21:09
  *
  */
 
-package com.openclassrooms.realestatemanager
+package com.openclassrooms.realestatemanager.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -14,7 +14,14 @@ import android.net.wifi.WifiManager
 import android.view.View
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
+import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.extensions.backSlashRemover
+import com.openclassrooms.realestatemanager.models.Picture
+import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.nio.channels.FileChannel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -101,6 +108,57 @@ object Utils {
         val string = String().backSlashRemover(dateString)
 
         return dateToMillis(string.substring(4, 8).toInt(), string.substring(2, 4).toInt(), string.substring(0, 2).toInt())
+    }
+
+    /**
+     * copy contents from source file to mappPath file
+     *
+     * @param sourceFilePath  Source file path address
+     * @param destinationFilePath Destination file path address
+     */
+    fun copyFile(sourceFilePath: File, destinationFilePath: File) {
+
+        try {
+
+            if (!sourceFilePath.exists()) {
+                return
+            }
+
+            val source: FileChannel = FileInputStream(sourceFilePath).channel
+            val destination: FileChannel = FileOutputStream(destinationFilePath).channel
+            destination.transferFrom(source, 0, source.size())
+            source.close()
+            destination.close()
+
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+    }
+
+    fun savePictureToCustomPath(eid: Long, mPicturePathArray: ArrayList<String>, mEstatePhotosDir: File, displayName: String?, mPictureViewModel: PictureViewModel) {
+
+        var i = 0
+        lateinit var fileDest: File
+        while (i < mPicturePathArray.size) {
+            if (mPicturePathArray[i] != "") {
+                val file = File(mPicturePathArray[i])
+                val pictureName = eid.toString() + "_" + displayName + "_" + "$i"
+                if (i == 0) {
+                    fileDest = File(mEstatePhotosDir.path + "/" + pictureName + "_main.jpg")
+                } else {
+                    fileDest = File(mEstatePhotosDir.path + "/" + pictureName + ".jpg")
+                }
+                if (!fileDest.exists()) {
+                    copyFile(file, fileDest)
+                }
+                savePicture(pictureName, fileDest.toString(), eid, mPictureViewModel)
+            }
+            i++
+        }
+    }
+
+    fun savePicture(pictureName: String, fileDest: String, eid: Long, mPictureViewModel: PictureViewModel) {
+        mPictureViewModel.createPicture(Picture(null, eid, pictureName, fileDest))
     }
 
     class ListOfString {

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 16/09/19 21:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 14:00
+ *  * Last modified 16/09/19 21:09
  *
  */
 
@@ -19,7 +19,9 @@ import com.openclassrooms.realestatemanager.utils.base.BaseView
  */
 interface SettingsContract {
 
-    interface SettingsPresenterInterface
+    interface SettingsPresenterInterface {
+        fun calculateLoan(mIntArray: DoubleArray, mAmount: Int, mRate: Double, mYears: Int): DoubleArray
+    }
 
     interface SettingsViewInterface : BaseView {
 

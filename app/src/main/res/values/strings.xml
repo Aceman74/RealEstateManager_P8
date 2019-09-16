@@ -1,8 +1,8 @@
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 10/09/19 20:32
+  ~  * Created by Lionel Joffray on 16/09/19 21:09
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 10/09/19 18:03
+  ~  * Last modified 16/09/19 16:45
   ~  */
   -->
 
@@ -63,4 +63,14 @@
     <string name="estate_saved">Estate Saved</string>
     <string name="cancel">Cancel</string>
     <string name="settings">Settings</string>
+    <string name="real_estate_loans">Real estate loans :</string>
+    <string name="loan_amount">Loan amount :</string>
+    <string name="interest_rate">Interest Rate :</string>
+    <string name="loan_term">Loan Term :</string>
+    <string name="years">Years</string>
+    <string name="loan_duration">Loan duration :</string>
+    <string name="monthly_payment">Monthly Payment :</string>
+    <string name="total_interest_paid">Total Interest Paid :</string>
+    <string name="rate">Rate :</string>
+    <string name="months">Months</string>
 </resources>

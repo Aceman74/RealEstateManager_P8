@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 12/09/19 20:50
+ *  * Created by Lionel Joffray on 16/09/19 21:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 12/09/19 20:50
+ *  * Last modified 16/09/19 21:09
  *
  */
 
@@ -40,7 +40,6 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
 import com.openclassrooms.realestatemanager.activities.settings.SettingsActivity
 import com.openclassrooms.realestatemanager.extensions.formatAddress
@@ -51,6 +50,7 @@ import com.openclassrooms.realestatemanager.models.Estate
 import com.openclassrooms.realestatemanager.models.User
 import com.openclassrooms.realestatemanager.models.places.nearby_search.Nearby
 import com.openclassrooms.realestatemanager.utils.NumberPickerDialog
+import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import com.openclassrooms.realestatemanager.utils.rxbus.RxBus
 import com.openclassrooms.realestatemanager.utils.rxbus.RxEvent
@@ -238,17 +238,11 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
             val user = User(currentUser!!.uid, currentUser!!.displayName.toString(), currentUser!!.email.toString(), currentUser!!.photoUrl.toString(), "TODAY")
             this.mUserViewModel.createUser(user)
             val estate = Estate(null, currentUser!!.uid, mType, mNeighborhood, mPriceResult, mDescResult, mSqft, mRooms, mBathrooms, mBedrooms, mAvailable, currentUser!!.displayName!!, Utils.todayDate, null, mSoldDate, mMarker.position.latitude, mMarker.position.longitude, mAddress)
-            this.mEstateViewModel.createEstate(estate)
-            this.mEstateViewModel.allEstate.observe(this, Observer {
-                mEId = it.lastIndex.toLong() + 1
-                mPresenter.savePictureToCustomPath(mEId, mPicturePathArray, mEstatePhotosDir, currentUser!!.displayName, mPictureViewModel)
-            })
+            mEstateViewModel.createEstate(estate, mPicturePathArray, mEstatePhotosDir, currentUser!!.displayName, mPictureViewModel)
         } else {
             val estate = Estate(mIntentEId, currentUser!!.uid, mType, mNeighborhood, mPriceResult, mDescResult, mSqft, mRooms, mBathrooms, mBedrooms, mAvailable, currentUser!!.displayName!!, mDateCreate, Utils.todayDate, mSoldDate, mMarker.position.latitude, mMarker.position.longitude, mAddress)
-            this.mEstateViewModel.createEstate(estate)
-            mPresenter.savePictureToCustomPath(mIntentEId, mPicturePathArray, mEstatePhotosDir, currentUser!!.displayName, mPictureViewModel)
+            this.mEstateViewModel.updateEstate(estate, mIntentEId, mPicturePathArray, mEstatePhotosDir, currentUser!!.displayName, mPictureViewModel)
         }
-
     }
 
     override fun updateNearby(details: Nearby) {
@@ -371,7 +365,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 mMarker.position = place.latLng
                 val locat = place.latLng?.latitude.toString() + "," + place.latLng?.longitude.toString()
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.latLng, 14f))
-                mPresenter.nearbyRequest(locat, "school", "school", 1000)
+                mPresenter.nearbyRequest(locat, "school", "school", 500)
 
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // Handle the error.

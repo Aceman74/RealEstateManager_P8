@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 12/09/19 20:50
+ *  * Created by Lionel Joffray on 16/09/19 21:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 12/09/19 20:50
+ *  * Last modified 16/09/19 21:09
  *
  */
 
@@ -18,7 +18,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.activities.estatedetail.EstateDetailActivity
 import com.openclassrooms.realestatemanager.adapters.search.SearchAdapter
 import com.openclassrooms.realestatemanager.extensions.priceRemoveSpace
@@ -27,6 +26,7 @@ import com.openclassrooms.realestatemanager.models.Estate
 import com.openclassrooms.realestatemanager.models.EstateAndPictures
 import com.openclassrooms.realestatemanager.models.Picture
 import com.openclassrooms.realestatemanager.utils.NumberPickerDialog
+import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import com.openclassrooms.realestatemanager.utils.rxbus.RxBus
 import com.openclassrooms.realestatemanager.utils.rxbus.RxEvent
@@ -168,27 +168,35 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
                 }
                 14 -> {
                     search_price_first.text = mPriceMin
-                    mPickerArray[5] = String().priceRemoveSpace(mPriceMin).toLong()
+                    if (mPriceMin != "")
+                        mPickerArray[5] = String().priceRemoveSpace(mPriceMin).toLong()
+                    else mPickerArray[5] = 0
                 }
                 15 -> {
                     search_price_second.text = mPriceMax
-                    mPickerArray[6] = String().priceRemoveSpace(mPriceMax).toLong()
+                    if (mPriceMax != "")
+                        mPickerArray[6] = String().priceRemoveSpace(mPriceMax).toLong()
+                    else mPickerArray[6] = 0
                 }
                 16 -> {
                     search_photos_first.text = newVal.toString()
                     mPickerArray[7] = newVal.toLong()
+                    if (newVal == 0) search_photos_first.text = null
                 }
                 17 -> {
                     search_photos_second.text = newVal.toString()
                     mPickerArray[8] = newVal.toLong()
+                    if (newVal == 0) search_photos_second.text = null
                 }
                 18 -> {
                     search_sqft_first.text = newVal.toString()
                     mPickerArray[9] = newVal.toLong()
+                    if (newVal == 0) search_sqft_first.text = null
                 }
                 19 -> {
                     search_sqft_second.text = newVal.toString()
                     mPickerArray[10] = newVal.toLong()
+                    if (newVal == 0) search_sqft_second.text = null
                 }
             }
         }
@@ -201,20 +209,40 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
             val i: Int = datePicker.tag as Int
             when (i) {
                 10 -> {
-                    search_data_added_first.text = ("$dayOfMonth/" + (monthOfYear + 1) + "/$year")
-                    mPickerArray[0] = Utils.dateToMillis(year, monthOfYear + 1, dayOfMonth)
+                    if (datePicker.year != 2) {
+                        search_data_added_first.text = ("$dayOfMonth/" + (monthOfYear + 1) + "/$year")
+                        mPickerArray[0] = Utils.dateToMillis(year, monthOfYear + 1, dayOfMonth)
+                    } else {
+                        search_data_added_first.text = null
+                        mPickerArray[0] = 0
+                    }
                 }
                 11 -> {
-                    search_data_added_second.text = ("$dayOfMonth/" + (monthOfYear + 1) + "/$year")
-                    mPickerArray[1] = Utils.dateToMillis(year, monthOfYear + 1, dayOfMonth)
+                    if (datePicker.year != 2) {
+                        search_data_added_second.text = ("$dayOfMonth/" + (monthOfYear + 1) + "/$year")
+                        mPickerArray[1] = Utils.dateToMillis(year, monthOfYear + 1, dayOfMonth)
+                    } else {
+                        search_data_added_second.text = null
+                        mPickerArray[1] = 0
+                    }
                 }
                 12 -> {
-                    search_data_sold_first.text = ("$dayOfMonth/" + (monthOfYear + 1) + "/$year")
-                    mPickerArray[2] = Utils.dateToMillis(year, monthOfYear + 1, dayOfMonth)
+                    if (datePicker.year != 2) {
+                        search_data_sold_first.text = ("$dayOfMonth/" + (monthOfYear + 1) + "/$year")
+                        mPickerArray[2] = Utils.dateToMillis(year, monthOfYear + 1, dayOfMonth)
+                    } else {
+                        search_data_sold_first.text = null
+                        mPickerArray[2] = 0
+                    }
                 }
                 13 -> {
-                    search_data_sold_second.text = ("$dayOfMonth/" + (monthOfYear + 1) + "/$year")
-                    mPickerArray[3] = Utils.dateToMillis(year, monthOfYear + 1, dayOfMonth)
+                    if (datePicker.year != 2) {
+                        search_data_sold_second.text = ("$dayOfMonth/" + (monthOfYear + 1) + "/$year")
+                        mPickerArray[3] = Utils.dateToMillis(year, monthOfYear + 1, dayOfMonth)
+                    } else {
+                        search_data_sold_second.text = null
+                        mPickerArray[3] = 0
+                    }
                 }
             }
         }

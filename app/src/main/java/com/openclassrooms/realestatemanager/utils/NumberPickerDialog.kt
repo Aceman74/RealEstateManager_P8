@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 16/09/19 21:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 16:38
+ *  * Last modified 16/09/19 21:09
  *
  */
 
@@ -18,7 +18,6 @@ import android.widget.NumberPicker
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import com.openclassrooms.realestatemanager.Utils
 import com.openclassrooms.realestatemanager.extensions.priceAddSpace
 import com.openclassrooms.realestatemanager.extensions.setMaxLength
 import com.openclassrooms.realestatemanager.utils.rxbus.RxBus
@@ -238,18 +237,48 @@ class NumberPickerDialog(val i: Int, private var mOldVal: Int?, val s: String? =
                 }
                 10, 11, 12, 13 -> {
                     dateChangeListener.onDateChanged(datePicker, datePicker.year, datePicker.month, datePicker.dayOfMonth)
-                    Utils.snackBarPreset(activity!!.findViewById(android.R.id.content), "Success")
                 }
             }
 
             valueChangeListener.onValueChange(numberPicker,
                     mOldVal!!, numberPicker.value)
+
+            Utils.snackBarPreset(activity!!.findViewById(android.R.id.content), "Success")
         }
 
         builder.setNegativeButton("CANCEL") { dialog, which ->
             Utils.snackBarPreset(activity!!.findViewById(android.R.id.content), "Cancel")
         }
 
+        builder.setNeutralButton("RESET") { dialog, which ->
+
+            when (i) {
+                3 -> {
+                    string = ""
+                    RxBus.publish(RxEvent.PickerPriceEvent(string))
+                }
+                4 -> {
+                    string = ""
+                    RxBus.publish(RxEvent.PickerDescEvent(string))
+                }
+                14 -> {
+                    string = ""
+                    RxBus.publish(RxEvent.PickerPriceEvent(string))
+                }
+                15 -> {
+                    string = ""
+                    RxBus.publish(RxEvent.PickerPriceMaxEvent(string))
+                }
+                10, 11, 12, 13 -> {
+                    datePicker.updateDate(2, 11, 31)
+                    dateChangeListener.onDateChanged(datePicker, datePicker.year, datePicker.month, datePicker.dayOfMonth)
+                    Utils.snackBarPreset(activity!!.findViewById(android.R.id.content), "Reset")
+                }
+            }
+
+            valueChangeListener.onValueChange(numberPicker,
+                    mOldVal!!, 0)
+        }
 
 
         when (i) {

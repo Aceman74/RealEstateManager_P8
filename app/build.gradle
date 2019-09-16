@@ -6,9 +6,9 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'jacoco-android'
 apply plugin: 'com.google.gms.google-services'  /*
  * *
- *  * Created by Lionel Joffray on 06/09/19 20:07
+ *  * Created by Lionel Joffray on 16/09/19 21:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 06/09/19 17:40
+ *  * Last modified 14/09/19 20:27
  *
  */  // Google Play services Gradle plugin
 apply plugin: 'io.fabric'   //  CrashLytics
@@ -86,7 +86,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
     //GLIDE//
     implementation 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    kapt 'com.github.bumptech.glide:compiler:4.9.0'
     //EventBus//
     implementation 'org.greenrobot:eventbus:3.1.1'
     //Dexter//
@@ -110,6 +110,8 @@ dependencies {
     // EVERNOTE //
     implementation 'com.evernote:android-state:1.4.1'
     kapt 'com.evernote:android-state-processor:1.4.1'
+
+    implementation "org.jetbrains.anko:anko-commons:0.10.4"
 
 }
 repositories {

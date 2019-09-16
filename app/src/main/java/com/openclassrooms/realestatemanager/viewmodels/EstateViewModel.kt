@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 12/09/19 20:50
+ *  * Created by Lionel Joffray on 16/09/19 21:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 12/09/19 20:50
+ *  * Last modified 16/09/19 21:09
  *
  */
 
@@ -18,6 +18,9 @@ import com.openclassrooms.realestatemanager.models.EstateAndPictures
 import com.openclassrooms.realestatemanager.models.Nearby
 import com.openclassrooms.realestatemanager.models.User
 import com.openclassrooms.realestatemanager.repositories.EstateDataRepository
+import com.openclassrooms.realestatemanager.utils.Utils
+import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
+import java.io.File
 import java.util.concurrent.Executor
 
 /**
@@ -30,6 +33,7 @@ class EstateViewModel(application: Application, val executor: Executor) : Androi
     private var currentUser: LiveData<User>? = null
     private val repository: EstateDataRepository
     val allEstate: LiveData<List<Estate>>
+    var long: Long = 0
     val allEstateWithPitures: LiveData<List<EstateAndPictures>>
 
     init {
@@ -61,6 +65,7 @@ class EstateViewModel(application: Application, val executor: Executor) : Androi
     fun getEstatePictures(estateId: Long): LiveData<List<EstateAndPictures>> {
         return repository.findEstatePictures(estateId)
     }
+
     fun getEstateByType(type: Int) {
         executor.execute { repository.findByType(type) }
     }
@@ -97,18 +102,31 @@ class EstateViewModel(application: Application, val executor: Executor) : Androi
         executor.execute { repository.findByAvailability(available) }
     }
 
-    fun createEstate(estate: Estate) {
-        executor.execute { repository.createEstate(estate) }
+    fun createEstate(estate: Estate, mPath: ArrayList<String>, mDir: File, mName: String?, mViewModel: PictureViewModel) {
+        executor.execute {
+            val eid: Long = repository.createEstate(estate)
+            Utils.savePictureToCustomPath(eid, mPath, mDir, mName, mViewModel)
+        }
+    }
+
+    fun insterEstate(estate: Estate): Long? {
+        repository.insert(estate)
+        return estate.estateId
     }
 
     fun createNearby(nearby: Nearby) {
         executor.execute { repository.createNearby(nearby) }
     }
+
     fun deleteEstate(estate: Estate) {
         executor.execute { repository.deleteEstate(estate) }
     }
 
-    fun updateEstate(estate: Estate) {
-        executor.execute { repository.updateEstate(estate) }
+    fun updateEstate(estate: Estate, eid: Long, mPath: ArrayList<String>, mDir: File, mName: String?, mViewModel: PictureViewModel) {
+        executor.execute {
+            repository.createEstate(estate)
+            Utils.savePictureToCustomPath(eid, mPath, mDir, mName, mViewModel)
+        }
     }
+
 }

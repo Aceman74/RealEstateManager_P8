@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 12/09/19 20:50
+ *  * Created by Lionel Joffray on 16/09/19 21:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 12/09/19 14:50
+ *  * Last modified 14/09/19 22:17
  *
  */
 
@@ -12,7 +12,6 @@ package com.openclassrooms.realestatemanager.activities.addestate
 import android.content.Context
 import com.openclassrooms.realestatemanager.models.places.nearby_search.Nearby
 import com.openclassrooms.realestatemanager.utils.base.BaseView
-import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
 import java.io.File
 
 /**
@@ -26,9 +25,6 @@ interface AddEstateContract {
     interface AddEstatePresenterInterface {
 
         fun createPhotosFolder(context: Context): File
-        fun copyFile(sourceFilePath: File, destinationFilePath: File)
-        fun savePictureToCustomPath(eid: Long, mPicturePathArray: ArrayList<String>, mEstatePhotosDir: File, displayName: String?, mPictureViewModel: PictureViewModel)
-        fun savePicture(pictureName: String, fileDest: String, eid: Long, mPictureViewModel: PictureViewModel)
         fun nearbyRequest(mLocation: String, mType: String, mKeyWord: String, mRadius: Int)
     }
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 10/09/19 20:32
+  ~  * Created by Lionel Joffray on 16/09/19 21:09
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 10/09/19 19:50
+  ~  * Last modified 16/09/19 21:09
   ~  */
   -->
 
@@ -41,6 +41,12 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_api_key" />
+
+        <provider
+            android:name=".provider.EstateProvider"
+            android:authorities="com.openclassrooms.realestatemanager.provider"
+            android:exported="true"
+            android:permission="com.openclassrooms.realestatemanager.provider.READ_WRITE" />
     </application>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
