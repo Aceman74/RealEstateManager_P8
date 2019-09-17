@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 12/09/19 20:50
+ *  * Created by Lionel Joffray on 17/09/19 23:02
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 12/09/19 14:30
+ *  * Last modified 17/09/19 23:01
  *
  */
 
@@ -58,9 +58,9 @@ private constructor() {
      *
      * @return List of places
      */
-    fun getLocationInfo(location: String, type: String, keyword: String, radius: Int): Observable<Nearby> {
+    fun getLocationInfo(location: String, type: String, radius: Int): Observable<Nearby> {
         val callInfo = mRetrofit.create(PlacesCall::class.java)
-        return callInfo.getLocationInfo(location, type, keyword, radius)
+        return callInfo.getLocationInfo(location, type, radius)
                 .delay(500, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())   //  Run call on another thread
                 .observeOn(AndroidSchedulers.mainThread())  //  Observe on the Main thread

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 17/09/19 23:02
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 16:38
+ *  * Last modified 17/09/19 16:21
  *
  */
 
@@ -68,6 +68,7 @@ class ListFragment : Fragment(), ListContract.ListViewInterface {
     override fun configureViewModel() {
         val mViewModelFactory = Injection.provideViewModelFactory(requireContext())
         this.estateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
+        mRecyclerView.layoutManager = LinearLayoutManager(context)
         estateViewModel.allEstateWithPitures.observe(this, Observer { list ->
             observePicture = list
             mRecyclerView.adapter = EstateAdapter(observePicture, mDevise) {
@@ -75,7 +76,6 @@ class ListFragment : Fragment(), ListContract.ListViewInterface {
                 launchDetailActivity(it)
             }
         })
-        mRecyclerView.layoutManager = LinearLayoutManager(context)
     }
 
     override fun launchDetailActivity(it: Int) {

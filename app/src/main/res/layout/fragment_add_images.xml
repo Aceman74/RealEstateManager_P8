@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 11/09/19 20:37
+  ~  * Created by Lionel Joffray on 17/09/19 23:02
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 11/09/19 10:31
+  ~  * Last modified 17/09/19 20:05
   ~  */
   -->
 
@@ -34,6 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/main_picture"
+                android:textSize="@dimen/small_text_size"
                 android:textColor="?textAppearanceHeadline2" />
 
             <LinearLayout
@@ -66,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/additional"
+                android:textSize="@dimen/small_text_size"
                 android:textColor="?textAppearanceHeadline2" />
 
             <LinearLayout

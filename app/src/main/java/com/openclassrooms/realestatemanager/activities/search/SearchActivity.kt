@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 17/09/19 23:02
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 16/09/19 21:09
+ *  * Last modified 17/09/19 23:01
  *
  */
 
@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.activities.estatedetail.EstateDetailActivity
-import com.openclassrooms.realestatemanager.adapters.search.SearchAdapter
+import com.openclassrooms.realestatemanager.adapters.estatelist.EstateAdapter
 import com.openclassrooms.realestatemanager.extensions.priceRemoveSpace
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.models.Estate
@@ -45,6 +45,7 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
     private var mPriceMax: String = ""
     private lateinit var mRecyclerView: RecyclerView
     lateinit var mObservePicture: List<EstateAndPictures>
+    var mDevise = "$"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +53,7 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         configureView()
         configureViewModel()
         configureItemListeners()
+        loadSharedPref()
 
         mPickerDisposable = RxBus.listen(RxEvent.PickerPriceEvent::class.java).subscribe {
             mPriceMin = it.price
@@ -62,6 +64,10 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         onSearchBtnClick()
     }
 
+    override fun loadSharedPref() {
+        val shared = applicationContext.getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
+        mDevise = shared?.getString("actual_devise", "$")!!
+    }
 
     override fun configureView() {
         setSupportActionBar(findViewById(R.id.search_toolbar))
@@ -74,7 +80,7 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         mRecyclerView = search_recycler_view
         button_search.setOnClickListener {
             val result = executeFilteredSearch(mObservePicture)
-            mRecyclerView.adapter = SearchAdapter(result) { lauchDetailActivity(it) }
+            mRecyclerView.adapter = EstateAdapter(result, mDevise) { lauchDetailActivity(it) }
             mRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
         }
     }

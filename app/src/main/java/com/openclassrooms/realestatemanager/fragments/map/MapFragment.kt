@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 17/09/19 23:02
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 20:37
+ *  * Last modified 17/09/19 23:01
  *
  */
 
@@ -27,8 +27,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.libraries.places.api.net.PlacesClient
-import com.openclassrooms.realestatemanager.BuildConfig
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.extensions.formatAddress
 import com.openclassrooms.realestatemanager.injections.Injection
@@ -43,11 +41,8 @@ import kotlin.math.absoluteValue
 class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback, GoogleMap.InfoWindowAdapter {
 
     private val mPresenter = MapPresenter()
-    lateinit var mPlaces: PlacesClient
-    private var API_KEY: String = BuildConfig.google_maps_key
     lateinit var mEstateViewModel: EstateViewModel
     val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 100
-
     private lateinit var mMap: GoogleMap
 
     companion object {
@@ -63,14 +58,19 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initMap()
         mPresenter.attachView(this)
-        configureMapMarkers()
+    }
+
+    fun initMap() {
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
     }
 
     override fun getInfoContents(marker: Marker): View {
         val view = (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).layoutInflater
                 .inflate(R.layout.custom_info_window, null)
-        Glide.with(this.requireContext())
+        Glide.with(view)
                 .load(marker.tag)
                 .centerCrop()
                 .into(view.custom_pic)
@@ -100,8 +100,6 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
     }
 
     override fun configureMapMarkers() {
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
         val mViewModelFactory = Injection.provideViewModelFactory(this.requireContext())
         this.mEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
 
@@ -132,7 +130,8 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLng(newYork))
         mMap.cameraPosition.zoom.absoluteValue
         getLocationPermission()
-    }
+        configureMapMarkers()
 
+    }
 
 }

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 17/09/19 23:02
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 16/09/19 21:09
+ *  * Last modified 17/09/19 17:36
  *
  */
 
@@ -12,11 +12,14 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.extensions.backSlashRemover
 import com.openclassrooms.realestatemanager.models.Picture
+import com.openclassrooms.realestatemanager.models.places.nearby_search.Result
+import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
 import java.io.File
 import java.io.FileInputStream
@@ -84,7 +87,6 @@ object Utils {
         val txtView = snackView.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
         snackView.setPadding(0, 0, 0, 0)
         txtView.textAlignment = View.TEXT_ALIGNMENT_CENTER
-        txtView.setBackgroundResource(R.color.primaryDarkColor)
         return snack.show()
     }
 
@@ -161,6 +163,39 @@ object Utils {
         mPictureViewModel.createPicture(Picture(null, eid, pictureName, fileDest))
     }
 
+    fun createNearby(eid: Long, mSchool: ArrayList<String>, mPolice: List<Result>?, mHospital: List<Result>?, mEstateViewModel: EstateViewModel) {
+        when {
+            mSchool.size > 0 -> {
+                var i = 0
+                while (i < mSchool.size) {
+                    val nearby = com.openclassrooms.realestatemanager.models.Nearby(null, eid, "School", mSchool[i])
+                    mEstateViewModel.createNearby(nearby)
+                    i++
+                }
+            }
+            mPolice!!.isNotEmpty() -> {
+                var i = 0
+                while (i < mPolice.size) {
+                    val nearby = com.openclassrooms.realestatemanager.models.Nearby(null, eid, "Police Station", mPolice[i].name!!)
+                    mEstateViewModel.createNearby(nearby)
+                    i++
+                }
+            }
+            mHospital!!.isNotEmpty() -> {
+                var i = 0
+                while (i < mHospital.size) {
+                    val nearby = com.openclassrooms.realestatemanager.models.Nearby(null, eid, "Hospital", mHospital[i].name!!)
+                    mEstateViewModel.createNearby(nearby)
+                    i++
+                }
+            }
+        }
+    }
+
+    fun setFadeAnimation(view: View, context: Context) {
+        val anim = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+        view.startAnimation(anim)
+    }
     class ListOfString {
 
         companion object {

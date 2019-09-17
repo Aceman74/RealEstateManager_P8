@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 17/09/19 23:02
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 14/09/19 22:17
+ *  * Last modified 17/09/19 11:38
  *
  */
 
@@ -25,7 +25,9 @@ interface AddEstateContract {
     interface AddEstatePresenterInterface {
 
         fun createPhotosFolder(context: Context): File
-        fun nearbyRequest(mLocation: String, mType: String, mKeyWord: String, mRadius: Int)
+        fun nearbySchool(mLocation: String, mType: String, mRadius: Int)
+        fun nearbyPolice(mLocation: String, mType: String, mRadius: Int)
+        fun nearbyHospital(mLocation: String, mType: String, mRadius: Int)
     }
 
     interface AddEstateViewInterface : BaseView {
@@ -40,6 +42,8 @@ interface AddEstateContract {
         fun autocompleteIntent()
         fun editIntent()
         fun loadSharedPref()
-        fun updateNearby(details: Nearby)
+        fun updateNearbySchool(details: Nearby)
+        fun updateNearbyPolice(details: Nearby)
+        fun updateNearbyHospital(details: Nearby)
     }
 }

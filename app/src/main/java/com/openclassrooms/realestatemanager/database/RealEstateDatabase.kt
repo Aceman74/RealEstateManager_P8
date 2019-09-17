@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 12/09/19 20:50
+ *  * Created by Lionel Joffray on 17/09/19 23:02
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 12/09/19 14:53
+ *  * Last modified 17/09/19 16:04
  *
  */
 
@@ -19,6 +19,7 @@ import com.openclassrooms.realestatemanager.models.Estate
 import com.openclassrooms.realestatemanager.models.Nearby
 import com.openclassrooms.realestatemanager.models.Picture
 import com.openclassrooms.realestatemanager.models.User
+import com.openclassrooms.realestatemanager.utils.DatabasePopulate
 
 /**
  * Created by Lionel JOFFRAY - on 26/08/2019.
@@ -42,6 +43,8 @@ abstract class RealEstateDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context) =
                 Room.databaseBuilder(context.applicationContext,
                         RealEstateDatabase::class.java, "EstateDatabase.db")
+                        .addCallback(DatabasePopulate.populate())
                         .build()
     }
+
 }

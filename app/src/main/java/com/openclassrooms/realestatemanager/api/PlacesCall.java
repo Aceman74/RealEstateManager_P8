@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 12/09/19 20:50
+ *  * Created by Lionel Joffray on 17/09/19 23:02
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 12/09/19 14:30
+ *  * Last modified 17/09/19 11:17
  *
  */
 
@@ -25,6 +25,6 @@ public interface PlacesCall {
     String API_KEY = BuildConfig.google_maps_key;
 
     @GET("nearbysearch/json?&key=" + API_KEY)
-    Observable<Nearby> getLocationInfo(@Query("location") String location, @Query("type") String type, @Query("keyword") String keyword, @Query("radius") int radius);
+    Observable<Nearby> getLocationInfo(@Query("location") String location, @Query("type") String type, @Query("radius") int radius);
 }
 

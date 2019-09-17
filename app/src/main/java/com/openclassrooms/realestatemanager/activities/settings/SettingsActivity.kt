@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 17/09/19 23:02
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 16/09/19 21:09
+ *  * Last modified 17/09/19 23:01
  *
  */
 
@@ -113,6 +113,7 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
                     loan_interest_tv.text = mIntArray[2].toString()
                     loan_rate_tv.text = mRate.toString()
                     cardview_result.visibility = View.VISIBLE
+                    Utils.setFadeAnimation(cardview_result, this)
                     loan_duration_tv.visibility = View.VISIBLE
                     loan_monthly_tv.visibility = View.VISIBLE
                     loan_interest_tv.visibility = View.VISIBLE
@@ -196,8 +197,6 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
         theme_2_btn.setOnClickListener(this)
         theme_3_btn.setOnClickListener(this)
         button_loans.setOnClickListener(this)
-        settings_activity_layout.setOnClickListener {
-            it.hideKeyboard()
-        }
+        settings_activity_layout.setOnClickListener { it.hideKeyboard() }
     }
 }

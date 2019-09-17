@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 10/09/19 20:32
+ *  * Created by Lionel Joffray on 17/09/19 23:02
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 10/09/19 20:31
+ *  * Last modified 17/09/19 23:01
  *
  */
 
@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.models.EstateAndPictures
+import com.openclassrooms.realestatemanager.utils.Utils
 
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
@@ -30,6 +31,7 @@ class EstateAdapter(var estate: List<EstateAndPictures>, var devise: String, val
 
     override fun onBindViewHolder(holder: EstateViewHolder, position: Int) {
         holder.updateWithItem(this.estate[position], position, listener, devise)
+        Utils.setFadeAnimation(holder.itemView, holder.itemView.context)
     }
 
     override fun getItemCount(): Int {

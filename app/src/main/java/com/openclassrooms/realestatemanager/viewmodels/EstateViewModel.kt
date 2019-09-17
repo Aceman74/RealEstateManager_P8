@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 17/09/19 23:02
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 16/09/19 21:09
+ *  * Last modified 17/09/19 12:14
  *
  */
 
@@ -17,6 +17,7 @@ import com.openclassrooms.realestatemanager.models.Estate
 import com.openclassrooms.realestatemanager.models.EstateAndPictures
 import com.openclassrooms.realestatemanager.models.Nearby
 import com.openclassrooms.realestatemanager.models.User
+import com.openclassrooms.realestatemanager.models.places.nearby_search.Result
 import com.openclassrooms.realestatemanager.repositories.EstateDataRepository
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
@@ -102,10 +103,11 @@ class EstateViewModel(application: Application, val executor: Executor) : Androi
         executor.execute { repository.findByAvailability(available) }
     }
 
-    fun createEstate(estate: Estate, mPath: ArrayList<String>, mDir: File, mName: String?, mViewModel: PictureViewModel) {
+    fun createEstate(estate: Estate, mPath: ArrayList<String>, mDir: File, mName: String?, mViewModel: PictureViewModel, mEstateViewModel: EstateViewModel, mSchool: java.util.ArrayList<String>, mPolice: List<Result>?, mHospital: List<Result>?) {
         executor.execute {
             val eid: Long = repository.createEstate(estate)
             Utils.savePictureToCustomPath(eid, mPath, mDir, mName, mViewModel)
+            Utils.createNearby(eid, mSchool, mPolice, mHospital, mEstateViewModel)
         }
     }
 

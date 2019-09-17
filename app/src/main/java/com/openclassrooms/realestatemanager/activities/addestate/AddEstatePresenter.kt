@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 17/09/19 23:02
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 14/09/19 22:17
+ *  * Last modified 17/09/19 23:01
  *
  */
 
@@ -38,26 +38,63 @@ class AddEstatePresenter : BasePresenter(), AddEstateContract.AddEstatePresenter
     }
 
 
+    override fun nearbySchool(mLocation: String, mType: String, mRadius: Int) {
 
-    override fun nearbyRequest(mLocation: String, mType: String, mKeyWord: String, mRadius: Int) {
-
-        val newDisposable = PlacesApi.instance.getLocationInfo(mLocation, mType, mKeyWord, mRadius).subscribeWith(object : DisposableObserver<Nearby>() {
+        val newDisposable = PlacesApi.instance.getLocationInfo(mLocation, mType, mRadius).subscribeWith(object : DisposableObserver<Nearby>() {
             override fun onNext(details: Nearby) {
-                Timber.tag("NEARBY_Next").i("On Next")
-                Timber.tag("NEARBY_OBSERVABLE").i("from: $mLocation type: $mType")
-                (getView() as AddEstateContract.AddEstateViewInterface).updateNearby(details)
+                Timber.tag("SCHOOL_Next").i("On Next")
+                Timber.tag("SCHOOL_OBSERVABLE").i("from: $mLocation type: $mType")
+                (getView() as AddEstateContract.AddEstateViewInterface).updateNearbySchool(details)
             }
 
             override fun onError(e: Throwable) {
-                Timber.tag("NEARBY_Error").e("On Error%s", Log.getStackTraceString(e))
+                Timber.tag("SCHOOL_Error").e("On Error%s", Log.getStackTraceString(e))
             }
 
             override fun onComplete() {
-                Timber.tag("NEARBY_Complete").i("On Complete !!")
+                Timber.tag("SCHOOL_Complete").i("On Complete !!")
+            }
+        })
+    }
+
+    override fun nearbyPolice(mLocation: String, mType: String, mRadius: Int) {
+
+        val newDisposable = PlacesApi.instance.getLocationInfo(mLocation, mType, mRadius).subscribeWith(object : DisposableObserver<Nearby>() {
+            override fun onNext(details: Nearby) {
+                Timber.tag("POLICE_Next").i("On Next")
+                Timber.tag("POLICE_OBSERVABLE").i("from: $mLocation type: $mType")
+                (getView() as AddEstateContract.AddEstateViewInterface).updateNearbyPolice(details)
+            }
+
+            override fun onError(e: Throwable) {
+                Timber.tag("POLICE_Error").e("On Error%s", Log.getStackTraceString(e))
+            }
+
+            override fun onComplete() {
+                Timber.tag("POLICE_Complete").i("On Complete !!")
 
             }
         })
     }
 
+    override fun nearbyHospital(mLocation: String, mType: String, mRadius: Int) {
+
+        val newDisposable = PlacesApi.instance.getLocationInfo(mLocation, mType, mRadius).subscribeWith(object : DisposableObserver<Nearby>() {
+            override fun onNext(details: Nearby) {
+                Timber.tag("HOSPITAL_Next").i("On Next")
+                Timber.tag("HOSPITAL_OBSERVABLE").i("from: $mLocation type: $mType")
+                (getView() as AddEstateContract.AddEstateViewInterface).updateNearbyHospital(details)
+            }
+
+            override fun onError(e: Throwable) {
+                Timber.tag("HOSPITAL_Error").e("On Error%s", Log.getStackTraceString(e))
+            }
+
+            override fun onComplete() {
+                Timber.tag("HOSPITAL_Complete").i("On Complete !!")
+
+            }
+        })
+    }
 }
 

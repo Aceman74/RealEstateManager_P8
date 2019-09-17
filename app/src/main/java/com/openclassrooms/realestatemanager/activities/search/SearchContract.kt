@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 17/09/19 23:02
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 14:00
+ *  * Last modified 17/09/19 15:51
  *
  */
 
@@ -31,5 +31,6 @@ interface SearchContract {
         fun showNumberPicker(i: Int, mOldVal: Int?, string: String?)
         fun executeFilteredSearch(observePicture: List<EstateAndPictures>): List<EstateAndPictures>
         fun onSearchBtnClick()
+        fun loadSharedPref()
     }
 }

@@ -1,8 +1,8 @@
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 16/09/19 21:09
+  ~  * Created by Lionel Joffray on 17/09/19 23:02
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 16/09/19 16:45
+  ~  * Last modified 17/09/19 21:49
   ~  */
   -->
 
@@ -73,4 +73,13 @@
     <string name="total_interest_paid">Total Interest Paid :</string>
     <string name="rate">Rate :</string>
     <string name="months">Months</string>
+    <string name="simulate">Simulate</string>
+    <string name="choose_a_currency">choose a Currency :</string>
+    <string name="choose_a_theme_color">choose a Theme Color :</string>
+    <string name="result">Result :</string>
+    <string name="_0_50000">0 – 50000</string>
+    <string name="any_pick_one">Any / Pick one</string>
+    <string name="_0_8">0–8</string>
+    <string name="_0_999m">0 – 999M</string>
+    <string name="search">Search</string>
 </resources>

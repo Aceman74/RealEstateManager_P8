@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 17/09/19 23:02
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 16/09/19 21:09
+ *  * Last modified 17/09/19 16:21
  *
  */
 
@@ -214,13 +214,47 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
         val mViewModelFactory = Injection.provideViewModelFactory(applicationContext)
         this.mEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
         this.mPictureViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PictureViewModel::class.java)
+        mRecyclerView.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
         mEstateViewModel.getEstatePictures(mEstateId.toLong()).observe(this, Observer {
             mObservePicture = it
             mRecyclerView.adapter = EstateDetailAdapter(mObservePicture) {
                 Timber.tag("RV click").i("$it")
                 // launchDetailActivity(it)
             }
+            showNearby(it)
         })
-        mRecyclerView.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    private fun showNearby(it: List<EstateAndPictures>?) {
+        if (it!![0].nearby.isNotEmpty()) {
+            var i = 0
+            var school = 0
+            var police = 0
+            var hospital = 0
+            while (i < it[0].nearby.size) {
+
+                when {
+                    it[0].nearby[i].type == "School" -> {
+                        school_nbr_ly.visibility = View.VISIBLE
+                        title_nearby.visibility = View.VISIBLE
+                        school++
+                        address_school_nbr.text = school.toString()
+                    }
+                    it[0].nearby[i].type == "Police Station" -> {
+                        police_station_nbr_ly.visibility = View.VISIBLE
+                        title_nearby.visibility = View.VISIBLE
+                        police++
+                        address_police_nbr.text = school.toString()
+                    }
+                    it[0].nearby[i].type == "Hospital" -> {
+                        hospital_nbr_ly.visibility = View.VISIBLE
+                        address_title.visibility = View.VISIBLE
+                        hospital++
+                        address_hospital_nbr.text = school.toString()
+                    }
+                }
+                i++
+            }
+        }
     }
 }
