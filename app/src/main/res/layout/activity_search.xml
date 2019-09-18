@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 17/09/19 23:02
+  ~  * Created by Lionel Joffray on 18/09/19 12:36
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 17/09/19 23:01
+  ~  * Last modified 18/09/19 11:35
   ~  */
   -->
 
@@ -122,21 +122,14 @@
         android:id="@+id/search_date_sold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/background_alpha"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_date_added"
-        app:layout_constraintVertical_bias="0.0"
-        android:background="@drawable/background_alpha">
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/search_data_sold_first"
@@ -200,6 +193,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -519,22 +519,21 @@
         android:textSize="@dimen/large_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toBottomOf="@+id/search_date_sold"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.059" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+        android:id="@+id/cardView2"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         app:cardCornerRadius="2dp"
         app:cardElevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_search"
-        app:layout_constraintVertical_bias="0.0"
         app:layout_goneMarginTop="@dimen/normal_text_size">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -546,4 +545,56 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_search" />
     </androidx.cardview.widget.CardView>
+
+    <CheckBox
+        android:id="@+id/hospital_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hospital"
+        app:layout_constraintBottom_toBottomOf="@+id/school_cb"
+        app:layout_constraintStart_toEndOf="@+id/school_cb"
+        app:layout_constraintTop_toTopOf="@+id/school_cb"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <CheckBox
+        android:id="@+id/police_station_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/police_station"
+        app:layout_constraintBottom_toBottomOf="@+id/hospital_cb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/hospital_cb"
+        app:layout_constraintTop_toTopOf="@+id/hospital_cb"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <CheckBox
+        android:id="@+id/school_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/school"
+        app:layout_constraintBottom_toBottomOf="@+id/search_date_sold_tv2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.211"
+        app:layout_constraintStart_toEndOf="@+id/search_date_sold_tv2"
+        app:layout_constraintTop_toTopOf="@+id/search_date_sold_tv2" />
+
+    <TextView
+        android:id="@+id/search_date_sold_tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_margin"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="31dp"
+        android:text="@string/nearby"
+        android:textColor="?textAppearanceHeadline2"
+        android:textSize="@dimen/large_text_size"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/cardView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_date_sold"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

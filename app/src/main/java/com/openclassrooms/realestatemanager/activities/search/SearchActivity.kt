@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 17/09/19 23:02
+ *  * Created by Lionel Joffray on 18/09/19 12:36
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 17/09/19 23:01
+ *  * Last modified 18/09/19 12:23
  *
  */
 
@@ -24,6 +24,7 @@ import com.openclassrooms.realestatemanager.extensions.priceRemoveSpace
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.models.Estate
 import com.openclassrooms.realestatemanager.models.EstateAndPictures
+import com.openclassrooms.realestatemanager.models.Nearby
 import com.openclassrooms.realestatemanager.models.Picture
 import com.openclassrooms.realestatemanager.utils.NumberPickerDialog
 import com.openclassrooms.realestatemanager.utils.Utils
@@ -99,9 +100,15 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         var i = 0
         lateinit var estate: Estate
         lateinit var picture: List<Picture>
+        lateinit var nearby: List<Nearby>
+        val hospital = "Hospital"
+        val police = "Police Station"
+        val school = "School"
         while (i < observePicture.size) {
             estate = observePicture[i].estate
             picture = observePicture[i].pictures
+            nearby = observePicture[i].nearby
+
             when {
 
                 mPickerArray[0] > 0 && Utils.dateWithBSToMillis(estate.addDate) < mPickerArray[0] -> {
@@ -137,6 +144,43 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
                 mPickerArray[10] > 0 && estate.sqft > mPickerArray[10] -> {
                     removeEstateFromList(filteredList, observePicture, i)
                 }
+            }
+
+            if (school_cb.isChecked && nearby.isNotEmpty()) {
+                var j = 0
+                var k = 0
+                while (j < nearby.size) {
+                    when (nearby[j].type == school && nearby[j].estateId_fk == estate.estateId) {
+                        true -> k++
+                    }
+                    j++
+                }
+                if (k == 0)
+                    removeEstateFromList(filteredList, observePicture, i)
+            }
+            if (hospital_cb.isChecked && nearby.isNotEmpty()) {
+                var j = 0
+                var k = 0
+                while (j < nearby.size) {
+                    when (nearby[j].type == hospital && nearby[j].estateId_fk == estate.estateId) {
+                        true -> k++
+                    }
+                    j++
+                }
+                if (k == 0)
+                    removeEstateFromList(filteredList, observePicture, i)
+            }
+            if (police_station_cb.isChecked && nearby.isNotEmpty()) {
+                var j = 0
+                var k = 0
+                while (j < nearby.size) {
+                    when (nearby[j].type == police && nearby[j].estateId_fk == estate.estateId) {
+                        true -> k++
+                    }
+                    j++
+                }
+                if (k == 0)
+                    removeEstateFromList(filteredList, observePicture, i)
             }
             i++
             mRecyclerView.adapter?.notifyDataSetChanged()

@@ -6,9 +6,9 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'jacoco-android'
 apply plugin: 'com.google.gms.google-services'  /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 18/09/19 12:36
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 14/09/19 20:27
+ *  * Last modified 18/09/19 11:04
  *
  */  // Google Play services Gradle plugin
 apply plugin: 'io.fabric'   //  CrashLytics
@@ -87,6 +87,8 @@ dependencies {
     //GLIDE//
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
+    //PICASSO//
+    implementation 'com.squareup.picasso:picasso:2.71828'
     //EventBus//
     implementation 'org.greenrobot:eventbus:3.1.1'
     //Dexter//

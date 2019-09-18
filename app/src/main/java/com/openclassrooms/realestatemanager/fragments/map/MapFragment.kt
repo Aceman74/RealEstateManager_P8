@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 17/09/19 23:02
+ *  * Created by Lionel Joffray on 18/09/19 12:36
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 17/09/19 23:01
+ *  * Last modified 18/09/19 12:25
  *
  */
 
@@ -19,7 +19,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -31,7 +30,10 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.extensions.formatAddress
 import com.openclassrooms.realestatemanager.injections.Injection
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.custom_info_window.view.*
+import timber.log.Timber
 import kotlin.math.absoluteValue
 
 
@@ -70,13 +72,13 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
     override fun getInfoContents(marker: Marker): View {
         val view = (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).layoutInflater
                 .inflate(R.layout.custom_info_window, null)
-        Glide.with(view)
-                .load(marker.tag)
+        Picasso.get()
+                .load(marker.tag.toString())
+                .resize(100, 100)
                 .centerCrop()
-                .into(view.custom_pic)
+                .into(view.custom_pic, MarkerCallback(marker))
         view.custom_name.text = marker.title
         view.custom_details.text = marker.snippet
-
         return view
     }
 
@@ -134,4 +136,27 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
 
     }
 
+    class MarkerCallback(marker: Marker) : Callback {
+        override fun onError(e: Exception?) {
+            Timber.tag("Picasso Callback :").e(e)
+        }
+
+        var marker: Marker? = null
+
+        init {
+            this.marker = marker
+        }
+
+        override fun onSuccess() {
+            if (marker == null) {
+                return
+            }
+            if (!marker!!.isInfoWindowShown) {
+                return
+            }
+            // If Info Window is showing, then refresh it's contents:
+            marker!!.hideInfoWindow() // Calling only showInfoWindow() throws an error
+            marker!!.showInfoWindow()
+        }
+    }
 }

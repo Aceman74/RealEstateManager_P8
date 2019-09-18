@@ -1,8 +1,8 @@
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 17/09/19 23:02
+  ~  * Created by Lionel Joffray on 18/09/19 12:36
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 17/09/19 21:49
+  ~  * Last modified 18/09/19 11:31
   ~  */
   -->
 
@@ -82,4 +82,8 @@
     <string name="_0_8">0–8</string>
     <string name="_0_999m">0 – 999M</string>
     <string name="search">Search</string>
+    <string name="nearby">Nearby :</string>
+    <string name="school">School</string>
+    <string name="police_station">Police Station</string>
+    <string name="hospital">Hospital</string>
 </resources>
