@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /**
+  ~  * Created by Lionel Joffray on 18/09/19 23:09
+  ~  * Copyright (c) 2019 . All rights reserved.
+  ~  * Last modified 03/09/19 16:31
+  ~  */
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.map.MapFragment">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.mapwithmarker.MapsMarkerActivity"
+        map:cameraZoom="11"
+        map:mapType="terrain"
+        map:uiZoomControls="true"
+        map:uiZoomGestures="true" />
+
+</LinearLayout>

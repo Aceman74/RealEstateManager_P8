@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 17/09/19 23:02
+ *  * Created by Lionel Joffray on 18/09/19 23:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 17/09/19 16:21
+ *  * Last modified 18/09/19 17:43
  *
  */
 
@@ -128,6 +128,7 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
                 desc_agent_choice_txt.text = it[0].agent
                 desc_date_added_choice_txt.text = it[0].addDate
                 address_edit_txt.visibility = View.GONE
+
                 when (it[0].available) {
                     1 -> {
                         add_estate_state_txt.text = getString(R.string.sold)

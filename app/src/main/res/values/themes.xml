@@ -1,8 +1,8 @@
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 11/09/19 20:37
+  ~  * Created by Lionel Joffray on 18/09/19 23:09
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 11/09/19 11:16
+  ~  * Last modified 18/09/19 15:40
   ~  */
   -->
 
@@ -22,7 +22,6 @@
 
     <!-- ALTERNATIVE THEME -->
     <style name="AppTheme_1" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor_2</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor_2</item>
         <item name="isLightTheme">@color/primaryLightColor_2</item>
@@ -33,7 +32,6 @@
     </style>
 
     <style name="AppTheme_2" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor_3</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor_3</item>
         <item name="isLightTheme">@color/primaryLightColor_3</item>
@@ -44,7 +42,6 @@
     </style>
 
     <style name="AppTheme_3" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primaryColor_4</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor_4</item>
         <item name="isLightTheme">@color/primaryLightColor_4</item>
@@ -53,6 +50,7 @@
         <item name="textAppearanceHeadline2">@color/quantum_black_text</item>
         <item name="android:logo">@drawable/logo_black</item>
     </style>
+
     <!-- LOGIN ACTIVITY -->
     <style name="AppTheme.Login" parent="AppTheme">
         <item name="windowNoTitle">true</item>
@@ -60,4 +58,9 @@
         <item name="actionBarTheme">@null</item>
     </style>
 
+    <!-- NAVIGATION DRAWER -->
+    <style name="NavDrawerTextStyle" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">?textAppearanceHeadline1</item>
+        <item name="android:textSize">@dimen/normal_text_size</item>
+    </style>
 </resources>

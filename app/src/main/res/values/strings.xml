@@ -1,8 +1,8 @@
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 18/09/19 12:36
+  ~  * Created by Lionel Joffray on 18/09/19 23:09
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 18/09/19 11:31
+  ~  * Last modified 18/09/19 17:39
   ~  */
   -->
 
@@ -86,4 +86,7 @@
     <string name="school">School</string>
     <string name="police_station">Police Station</string>
     <string name="hospital">Hospital</string>
+    <string name="home">Home</string>
+    <string name="logout">Logout</string>
+    <string name="around_500_meters">Around (500 meters)</string>
 </resources>

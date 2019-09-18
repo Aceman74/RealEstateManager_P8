@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /**
+  ~  * Created by Lionel Joffray on 18/09/19 23:09
+  ~  * Copyright (c) 2019 . All rights reserved.
+  ~  * Last modified 18/09/19 23:09
+  ~  */
+  -->
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="2dp"
+    android:orientation="vertical"
+    tools:context=".activities.estatedetail.EstateDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_picture"
+                android:textSize="@dimen/small_text_size"
+                android:textColor="?textAppearanceHeadline2" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/border"
+                android:layout_margin="@dimen/small_margin">
+
+                <ImageView
+                    android:id="@+id/first_pic"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/ic_add_photo_24dp"
+                    android:padding="@dimen/login_title"
+                    android:scaleType="centerCrop"
+                    android:background="?android:attr/selectableItemBackground" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="0.5"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/additional"
+                android:textSize="@dimen/small_text_size"
+                android:textColor="?textAppearanceHeadline2" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/border"
+                android:layout_margin="@dimen/small_margin">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.7">
+
+                    <ImageView
+                        android:id="@+id/second_pic"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:src="@drawable/ic_add_photo_24dp"
+                        android:padding="@dimen/login_title"
+                        android:scaleType="centerCrop"
+                        android:background="?android:attr/selectableItemBackground" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/add_image_fading_lo"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    android:layout_weight="0.3"
+                    android:visibility="gone">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/primaryDarkColor"
+                            android:alpha="0.7" />
+
+                        <TextView
+                            android:id="@+id/add_image_x_more"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/x_more"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/small_title_size"
+                            android:textColor="@color/quantum_white_text" />
+
+                    </FrameLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -2,7 +2,7 @@
   ~ /**
   ~  * Created by Lionel Joffray on 18/09/19 23:09
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 18/09/19 18:27
+  ~  * Last modified 18/09/19 23:09
   ~  */
   -->
 
@@ -32,50 +32,73 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="0.5">
 
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/detail_estate_media"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.2"
-                        android:layout_margin="2dp"
-                        android:orientation="vertical"
-                        app:cardCornerRadius="2dp"
-                        app:cardElevation="2dp">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/slideshow_recyclerview"
+
+                        <LinearLayout
+                            android:id="@+id/detail_estate_pager"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="0dp"
+                            android:orientation="vertical"
+                            android:layout_weight="0.8">
 
-                    </androidx.cardview.widget.CardView>
+                            <include layout="@layout/fragment_description" />
 
 
-                <LinearLayout
-                    android:id="@+id/detail_estate_pager"
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="0.5">
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_weight="0.4"
+                    android:layout_margin="2dp"
                     android:orientation="vertical"
-                    android:layout_weight="0.8">
-
-                    <include layout="@layout/fragment_description" />
-
-                    <include layout="@layout/fragment_address_map" />
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="2dp">
 
 
-                </LinearLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/slideshow_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
 
+                </androidx.cardview.widget.CardView>
+
+                <include
+                    layout="@layout/fragment_address_map"
+                    android:layout_height="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_weight="0.6" />
             </LinearLayout>
-        </ScrollView>
+        </LinearLayout>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView

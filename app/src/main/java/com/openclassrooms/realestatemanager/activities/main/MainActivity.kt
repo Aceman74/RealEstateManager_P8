@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 18/09/19 23:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 14:23
+ *  * Last modified 18/09/19 15:38
  *
  */
 
@@ -12,6 +12,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.viewpager.widget.ViewPager
@@ -23,10 +24,13 @@ import com.openclassrooms.realestatemanager.activities.login.MainContract
 import com.openclassrooms.realestatemanager.activities.search.SearchActivity
 import com.openclassrooms.realestatemanager.activities.settings.SettingsActivity
 import com.openclassrooms.realestatemanager.adapters.MainPagerAdapter
+import com.openclassrooms.realestatemanager.fragments.list.ListFragment
+import com.openclassrooms.realestatemanager.fragments.map.MapFragment
 import com.openclassrooms.realestatemanager.utils.DepthPageTransformer
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
+
 
 class MainActivity(override val activityLayout: Int = R.layout.activity_main) : BaseActivity(), MainContract.MainViewInterface, NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
@@ -38,16 +42,38 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mPresenter.attachView(this)
+        configureAndShowMapFragment()
         configureView()
         configureItemListeners()
-        configureViewPager()
     }
 
     override fun configureView() {
         setSupportActionBar(findViewById(R.id.main_toolbar))
         configureDrawerLayout(main_drawer_layout, main_toolbar)
-        mPager = main_activity_viewpager
         navigationDrawerHeader(main_activity_nav_view)
+    }
+
+    fun configureAndShowMapFragment() {
+        if (main_activity_viewpager != null) {
+            mPager = main_activity_viewpager
+            main_activity_bottom_navigation.setOnNavigationItemSelectedListener(this)
+            configureViewPager()
+        } else {
+            var listFragment = supportFragmentManager.findFragmentById(R.id.main_activity_listview) as ListFragment?
+            var mapFragment = supportFragmentManager.findFragmentById(R.id.map) as MapFragment?
+            listFragment = ListFragment()
+            supportFragmentManager.beginTransaction()
+                    .add(R.id.main_activity_listview, listFragment)
+                    .commit()
+            //A - We only add DetailFragment in Tablet mode (If found frame_layout_detail)
+            if (mapFragment == null && findViewById<View>(R.id.main_activity_map) != null) {
+                mapFragment = MapFragment()
+                supportFragmentManager.beginTransaction()
+                        .add(R.id.main_activity_map, mapFragment)
+                        .commit()
+            }
+
+        }
     }
 
     /**
@@ -145,7 +171,6 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
 
     override fun configureItemListeners() {
         main_activity_nav_view.setNavigationItemSelectedListener(this)
-        main_activity_bottom_navigation.setOnNavigationItemSelectedListener(this)
     }
 
     override fun configureViewPager() {

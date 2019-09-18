@@ -2,7 +2,7 @@
   ~ /**
   ~  * Created by Lionel Joffray on 18/09/19 23:09
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 18/09/19 16:57
+  ~  * Last modified 18/09/19 16:51
   ~  */
   -->
 
@@ -43,14 +43,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/small_margin"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="104dp"
                 android:text="@string/required_fields"
                 android:textColor="?textAppearanceHeadline2"
                 android:textSize="@dimen/normal_text_size"
                 android:textStyle="italic"
                 android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/add_estate_state_txt"
+                app:layout_constraintEnd_toEndOf="@+id/add_estate_state_txt"
+                app:layout_constraintStart_toStartOf="@+id/add_estate_state_txt"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
             <TextView
                 android:id="@+id/add_estate_state_txt"
@@ -85,7 +88,6 @@
                 android:id="@+id/desc_estate_type_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin"
                 android:layout_marginTop="@dimen/small_margin"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
@@ -94,14 +96,13 @@
                 android:textColor="?textAppearanceHeadline2"
                 android:textSize="@dimen/small_title_size"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline14"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/desc_estate_neighborhood_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin"
                 android:layout_marginTop="@dimen/small_margin"
                 android:layout_marginBottom="@dimen/small_margin"
                 android:background="?android:attr/selectableItemBackground"
@@ -109,20 +110,19 @@
                 android:textColor="?isLightTheme"
                 android:textSize="@dimen/normal_text_size"
                 app:layout_constraintBottom_toTopOf="@+id/money_icon"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline14"
                 app:layout_constraintTop_toBottomOf="@+id/desc_estate_type_txt" />
 
             <TextView
                 android:id="@+id/money_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_margin"
                 android:layout_marginTop="@dimen/small_margin"
                 android:text="@string/dollars_devise"
                 android:textColor="?colorAccent"
                 android:textSize="@dimen/normal_title_size"
                 app:layout_constraintEnd_toStartOf="@+id/desc_estate_price_txt"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline14"
                 app:layout_constraintTop_toBottomOf="@+id/desc_estate_neighborhood_txt" />
 
             <TextView
@@ -148,8 +148,8 @@
                 android:layout_marginStart="@dimen/normal_margin"
                 android:background="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_edit_24dp"
-                android:visibility="invisible"
                 android:tint="?colorAccent"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/desc_estate_type_txt"
                 app:layout_constraintStart_toEndOf="@+id/desc_estate_type_txt"
                 app:layout_constraintTop_toTopOf="@+id/desc_estate_type_txt" />
@@ -161,8 +161,8 @@
                 android:layout_marginStart="@dimen/normal_margin"
                 android:background="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_edit_24dp"
-                android:visibility="invisible"
                 android:tint="?colorAccent"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/desc_estate_neighborhood_txt"
                 app:layout_constraintStart_toEndOf="@+id/desc_estate_neighborhood_txt"
                 app:layout_constraintTop_toTopOf="@+id/desc_estate_neighborhood_txt"
@@ -175,12 +175,19 @@
                 android:layout_marginStart="@dimen/normal_margin"
                 android:background="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_edit_24dp"
-                android:visibility="invisible"
                 android:tint="?colorAccent"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/desc_estate_price_txt"
                 app:layout_constraintStart_toEndOf="@+id/desc_estate_price_txt"
                 app:layout_constraintTop_toTopOf="@+id/desc_estate_price_txt"
                 app:layout_constraintVertical_bias="0.5" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.05" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -234,8 +241,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/normal_margin"
-                            android:textSize="@dimen/normal_text_size"
                             android:text="@string/description"
+                            android:textSize="@dimen/normal_text_size"
                             android:textColor="?textAppearanceHeadline1"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -251,11 +258,12 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/large_margin"
                         android:text="@string/describe_the_property_here"
+                        android:textSize="@dimen/normal_text_size"
                         android:textColor="?textAppearanceHeadline2"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guideline11"
                         app:layout_constraintTop_toBottomOf="@+id/desc_description_layout"
                         app:layout_constraintVertical_bias="0.0" />
 
@@ -422,18 +430,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/normal_margin"
                         android:layout_marginTop="@dimen/normal_margin"
                         android:layout_marginBottom="@dimen/small_title_size"
                         android:gravity="center"
                         android:text="@string/_0"
-                        android:textSize="@dimen/normal_text_size"
                         android:textColor="?colorAccent"
+                        android:textSize="@dimen/normal_text_size"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_bias="0.03"
+                        app:layout_constraintStart_toStartOf="@+id/guideline11"
                         app:layout_constraintTop_toBottomOf="@+id/appCompatImageView3"
                         app:layout_constraintVertical_bias="0.0" />
 
@@ -463,13 +470,13 @@
                         android:layout_margin="@dimen/normal_margin"
                         android:gravity="center"
                         android:text="@string/_0"
-                        android:textSize="@dimen/normal_text_size"
                         android:textColor="?colorAccent"
+                        android:textSize="@dimen/normal_text_size"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline3"
                         app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guideline11"
                         app:layout_constraintTop_toBottomOf="@+id/appCompatImageView"
                         app:layout_constraintVertical_bias="0.0" />
 
@@ -477,13 +484,12 @@
                         android:id="@+id/appCompatImageView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_surface_24dp"
-                        android:layout_marginStart="@dimen/normal_margin"
                         android:layout_marginTop="@dimen/normal_margin"
+                        android:src="@drawable/ic_surface_24dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline3"
                         app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guideline11"
                         app:layout_constraintTop_toBottomOf="@+id/fragment_desc_desc_txt"
                         app:layout_constraintVertical_bias="0.0" />
 
@@ -505,13 +511,12 @@
                         android:id="@+id/appCompatImageView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/normal_margin"
                         android:layout_marginTop="@dimen/large_margin"
                         android:src="@drawable/ic_bathroom_24dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline3"
                         app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guideline11"
                         app:layout_constraintTop_toBottomOf="@+id/desc_sqft_choice_txt"
                         app:layout_constraintVertical_bias="0.0" />
 
@@ -598,7 +603,14 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.5" />
+                        app:layout_constraintGuide_percent="0.55" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline11"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.05" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/desc_description_img"
@@ -712,18 +724,17 @@
                         android:id="@+id/desc_date_added_choice_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/normal_margin"
                         android:layout_marginTop="@dimen/normal_margin"
                         android:layout_marginBottom="@dimen/small_title_size"
                         android:gravity="center"
                         android:text="@string/date"
-                        android:textSize="@dimen/normal_text_size"
                         android:textColor="?colorAccent"
+                        android:textSize="@dimen/normal_text_size"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline5"
                         app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guideline13"
                         app:layout_constraintTop_toBottomOf="@+id/appCompatImageView8"
                         app:layout_constraintVertical_bias="0.0" />
 
@@ -748,19 +759,18 @@
                         android:id="@+id/desc_agent_choice_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constrainedWidth="true"
-                        android:layout_marginStart="@dimen/normal_margin"
                         android:layout_marginTop="@dimen/normal_margin"
                         android:layout_marginBottom="@dimen/small_title_size"
                         android:gravity="center"
                         android:text="@string/agent_name_example"
-                        android:textSize="@dimen/normal_text_size"
                         android:textColor="?colorAccent"
+                        android:textSize="@dimen/normal_text_size"
                         android:textStyle="bold|italic"
+                        app:layout_constrainedWidth="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline5"
                         app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guideline13"
                         app:layout_constraintTop_toBottomOf="@+id/appCompatImageView6"
                         app:layout_constraintVertical_bias="0.0" />
 
@@ -805,13 +815,12 @@
                         android:id="@+id/appCompatImageView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/normal_margin"
                         android:layout_marginTop="@dimen/normal_margin"
                         android:src="@drawable/ic_contacts_24dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline5"
                         app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guideline13"
                         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
                         app:layout_constraintVertical_bias="0.0" />
 
@@ -833,13 +842,12 @@
                         android:id="@+id/appCompatImageView8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/normal_margin"
                         android:layout_marginTop="@dimen/normal_margin"
                         android:src="@drawable/ic_date_add_24dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/guideline5"
                         app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guideline13"
                         app:layout_constraintTop_toBottomOf="@+id/desc_agent_choice_txt"
                         app:layout_constraintVertical_bias="0.0" />
 
@@ -878,7 +886,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.5" />
+                        app:layout_constraintGuide_percent="0.55" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.05" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

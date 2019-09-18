@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 18/09/19 23:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 16/09/19 21:09
+ *  * Last modified 18/09/19 17:20
  *
  */
 
@@ -44,6 +44,7 @@ class EstateViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClick
         } else price.text = devise + " " + estate.estate.price
         Glide.with(itemView)
                 .load(estate.pictures[0].picturePath)
+                .centerCrop()
                 .into(picture)
         itemView.setOnClickListener {
             listener(estate.estate.estateId!!.toInt())

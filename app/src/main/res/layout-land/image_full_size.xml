@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /**
+  ~  * Created by Lionel Joffray on 18/09/19 23:09
+  ~  * Copyright (c) 2019 . All rights reserved.
+  ~  * Last modified 17/09/19 17:38
+  ~  */
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="?colorPrimaryDark">
+
+
+    <ImageView
+        android:id="@+id/dialog_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
