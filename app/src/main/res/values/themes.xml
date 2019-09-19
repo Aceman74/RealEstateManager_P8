@@ -1,8 +1,8 @@
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 18/09/19 23:09
+  ~  * Created by Lionel Joffray on 19/09/19 21:47
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 18/09/19 15:40
+  ~  * Last modified 19/09/19 17:15
   ~  */
   -->
 
@@ -17,6 +17,7 @@
         <item name="colorAccent">@color/secondaryDarkColor</item>
         <item name="textAppearanceHeadline1">@color/quantum_white_text</item>
         <item name="textAppearanceHeadline2">@color/quantum_black_text</item>
+        <item name="colorButtonNormal">@color/primaryDarkColor</item>
         <item name="android:logo">@drawable/logo_black</item>
     </style>
 
@@ -28,6 +29,7 @@
         <item name="colorAccent">@color/secondaryDarkColor_2</item>
         <item name="textAppearanceHeadline1">@color/quantum_white_text</item>
         <item name="textAppearanceHeadline2">@color/quantum_black_text</item>
+        <item name="colorButtonNormal">@color/primaryDarkColor_2</item>
         <item name="android:logo">@drawable/logo_white</item>
     </style>
 
@@ -38,6 +40,7 @@
         <item name="colorAccent">@color/secondaryDarkColor_3</item>
         <item name="textAppearanceHeadline1">@color/quantum_white_text</item>
         <item name="textAppearanceHeadline2">@color/quantum_black_text</item>
+        <item name="colorButtonNormal">@color/primaryDarkColor_3</item>
         <item name="android:logo">@drawable/logo_black</item>
     </style>
 
@@ -48,6 +51,7 @@
         <item name="colorAccent">@color/secondaryDarkColor_4</item>
         <item name="textAppearanceHeadline1">@color/quantum_white_text</item>
         <item name="textAppearanceHeadline2">@color/quantum_black_text</item>
+        <item name="colorButtonNormal">@color/primaryDarkColor_4</item>
         <item name="android:logo">@drawable/logo_black</item>
     </style>
 

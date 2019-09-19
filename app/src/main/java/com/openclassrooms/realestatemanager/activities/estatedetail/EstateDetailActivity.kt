@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 18/09/19 23:09
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 18/09/19 17:43
+ *  * Last modified 19/09/19 21:47
  *
  */
 
@@ -30,7 +30,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.activities.addestate.AddEstateActivity
-import com.openclassrooms.realestatemanager.activities.login.EstateDetailPresenter
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
 import com.openclassrooms.realestatemanager.activities.settings.SettingsActivity
 import com.openclassrooms.realestatemanager.adapters.detailestate.EstateDetailAdapter
@@ -42,7 +41,7 @@ import com.openclassrooms.realestatemanager.models.EstateAndPictures
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
-import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
+import com.openclassrooms.realestatemanager.viewmodels.PictureViewModel
 import kotlinx.android.synthetic.main.activity_detail_estate.*
 import kotlinx.android.synthetic.main.fragment_address_map.*
 import kotlinx.android.synthetic.main.fragment_description.*
@@ -50,20 +49,32 @@ import timber.log.Timber
 import kotlin.math.absoluteValue
 
 
+/**
+ * This activity is for seeing the details of an existing Estate.
+ * Extends:
+ * @see BaseActivity for setting the view
+ * @see EstateDetailContract contract for MVP
+ * @NavigationView
+ * @OnMapReadyCallback for locating Estate on a Static Map
+ *
+ */
 class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_detail_estate) : BaseActivity(), EstateDetailContract.EstateViewInterface, NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
-
 
     lateinit var mRecyclerView: RecyclerView
     lateinit var mEstateViewModel: EstateViewModel
     lateinit var mPictureViewModel: PictureViewModel
     private val mPresenter = EstateDetailPresenter()
     var mEstateId = -1
+    var mUserId = ""
     var mDevise = "$"
     private lateinit var mMap: GoogleMap
     lateinit var mMarker: Marker
     lateinit var mObservePicture: List<EstateAndPictures>
 
-
+    /**
+     * Setting the presenter, view, preferences for devise, getting and showing the detail from Database,
+     * configure static map and pictures for recyclerview.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mPresenter.attachView(this)
@@ -74,6 +85,9 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
         configureRecyclerView()
     }
 
+    /**
+     * Set the view, get the estate Id intent from fragmentList.
+     */
     override fun configureView() {
         setSupportActionBar(findViewById(R.id.detail_estate_toolbar))
         configureDrawerLayout(detail_estate_drawer_layout, detail_estate_toolbar)
@@ -82,7 +96,9 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
         detail_estate_nav_view.setNavigationItemSelectedListener(this)
     }
 
-
+    /**
+     * Load user preferences.
+     */
     override fun loadSharedPref() {
         val shared = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
         mDevise = shared.getString("actual_devise", "$")!!
@@ -93,6 +109,9 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
         }
     }
 
+    /**
+     * On map ready.
+     */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.uiSettings.isMapToolbarEnabled = false
@@ -102,17 +121,24 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
         mMap.cameraPosition.zoom.absoluteValue
     }
 
+    /**
+     * Set the map.
+     */
     override fun configureMaps() {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.address_map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
 
+    /**
+     * Update the view with all detail with the ID from Intent, use EstateViewModel to observe the
+     * Estate list with LiveData.
+     */
     override fun configureDetails() {
         if (mEstateId != -1) {
             val mViewModelFactory = Injection.provideViewModelFactory(this)
             this.mEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
             mEstateViewModel.getEstateById(mEstateId.toLong()).observe(this, Observer {
-
+                mUserId = it[0].userId_fk
                 desc_estate_type_txt.text = Utils.ListOfString.listOfType()[it[0].type]
                 desc_estate_neighborhood_txt.text = Utils.ListOfString.listOfNeighborhood()[it[0].neighborhood]
                 desc_estate_price_txt.text = it[0].price
@@ -146,24 +172,25 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
         }
     }
 
+    /**
+     * Navigation drawer listeners.
+     */
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        //  Navigation Drawer item settings
         val id = item.itemId
-
         when (id) {
             R.id.drawer_first -> {
                 val intent = Intent(baseContext, MainActivity::class.java)
                 startActivity(intent)
-                Timber.i("Click Main")
+                Timber.i(getString(R.string.main_click))
             }
             R.id.drawer_second -> {
                 val intent = Intent(baseContext, SettingsActivity::class.java)
                 startActivity(intent)
-                Timber.i("Click Setting")
+                Timber.i(getString(R.string.settings_click))
             }
             R.id.drawer_third -> {
                 signOutUserFromFirebase()
-                Timber.i("Logout")
+                Timber.i(getString(R.string.logout))
             }
             else -> {
             }
@@ -187,10 +214,14 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
      */
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.toolbar_edit -> {
-            Toast.makeText(this, "Edit Estate", Toast.LENGTH_LONG).show()
-            val intent = Intent(this, AddEstateActivity::class.java)
-            intent.putExtra("mEstateId", mEstateId)
-            startActivity(intent)
+            if (mUserId == currentUser?.uid) {
+                Toast.makeText(this, "Edit Estate", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, AddEstateActivity::class.java)
+                intent.putExtra("mEstateId", mEstateId)
+                startActivity(intent)
+            } else {
+                Utils.snackBarPreset(findViewById(android.R.id.content), "This estate hasn't been added by you.")
+            }
             true
         }
         android.R.id.home -> {
@@ -201,13 +232,16 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
         }
     }
 
+    /**
+     * Create toolbar.
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.detail_estate_toolbar_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     /**
-     * Initialize the recyclerview for history.
+     * Initialize the recyclerview for picture preview.
      */
     override fun configureRecyclerView() {
         mRecyclerView = slideshow_recyclerview
@@ -226,7 +260,10 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
         })
     }
 
-    private fun showNearby(it: List<EstateAndPictures>?) {
+    /**
+     * This method show the nearby commodities if there is( from DATABASE).
+     */
+    override fun showNearby(it: List<EstateAndPictures>?) {
         if (it!![0].nearby.isNotEmpty()) {
             var i = 0
             var school = 0

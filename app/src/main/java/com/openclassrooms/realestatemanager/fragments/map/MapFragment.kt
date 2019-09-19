@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 18/09/19 12:36
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 18/09/19 12:25
+ *  * Last modified 19/09/19 19:27
  *
  */
 
@@ -38,7 +38,8 @@ import kotlin.math.absoluteValue
 
 
 /**
- * A simple [Fragment] subclass.
+ * Map Fragment is the fragment who show a dynamic map with all estate in New York.
+ * Used in Main Activity.
  */
 class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback, GoogleMap.InfoWindowAdapter {
 
@@ -54,21 +55,33 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
         }
     }
 
+    /**
+     * Create the view.
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
+    /**
+     * Once create, init presenter and Maps.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMap()
         mPresenter.attachView(this)
     }
 
-    fun initMap() {
+    /**
+     * Init the mapFragment.
+     */
+    override fun initMap() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 
+    /**
+     * This create a custom view of an Estate when user click on a marker.
+     */
     override fun getInfoContents(marker: Marker): View {
         val view = (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).layoutInflater
                 .inflate(R.layout.custom_info_window, null)
@@ -97,10 +110,16 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
         }
     }
 
+    /**
+     * For custom windows.
+     */
     override fun getInfoWindow(marker: Marker?): View? {
         return null
     }
 
+    /**
+     * Set the map and the markers.
+     */
     override fun configureMapMarkers() {
         val mViewModelFactory = Injection.provideViewModelFactory(this.requireContext())
         this.mEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
@@ -136,6 +155,9 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
 
     }
 
+    /**
+     * "Hack" used for loading the image in customInfoWindow.
+     */
     class MarkerCallback(marker: Marker) : Callback {
         override fun onError(e: Exception?) {
             Timber.tag("Picasso Callback :").e(e)

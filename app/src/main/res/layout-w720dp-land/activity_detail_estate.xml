@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 18/09/19 23:09
+  ~  * Created by Lionel Joffray on 19/09/19 21:47
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 18/09/19 23:09
+  ~  * Last modified 19/09/19 21:47
   ~  */
   -->
 
@@ -69,35 +69,40 @@
                 </ScrollView>
             </LinearLayout>
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:layout_height="wrap_content"
                 android:layout_weight="0.5">
 
-                <androidx.cardview.widget.CardView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.4"
-                    android:layout_margin="2dp"
-                    android:orientation="vertical"
-                    app:cardCornerRadius="2dp"
-                    app:cardElevation="2dp">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/slideshow_recyclerview"
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="0dp"
+                        android:layout_weight="0.4"
+                        android:layout_margin="2dp"
+                        android:orientation="vertical"
+                        app:cardCornerRadius="2dp"
+                        app:cardElevation="2dp">
 
-                </androidx.cardview.widget.CardView>
 
-                <include
-                    layout="@layout/fragment_address_map"
-                    android:layout_height="0dp"
-                    android:layout_width="match_parent"
-                    android:layout_weight="0.6" />
-            </LinearLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/slideshow_recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <include
+                        layout="@layout/fragment_address_map"
+                        android:layout_height="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="0.6" />
+                </LinearLayout>
+            </ScrollView>
         </LinearLayout>
     </LinearLayout>
 

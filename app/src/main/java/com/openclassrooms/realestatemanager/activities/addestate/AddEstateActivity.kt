@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 17/09/19 23:02
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 17/09/19 23:01
+ *  * Last modified 19/09/19 21:47
  *
  */
 
@@ -58,8 +58,8 @@ import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import com.openclassrooms.realestatemanager.utils.rxbus.RxBus
 import com.openclassrooms.realestatemanager.utils.rxbus.RxEvent
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
-import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
-import com.openclassrooms.realusermanager.activities.viewmodels.UserViewModel
+import com.openclassrooms.realestatemanager.viewmodels.PictureViewModel
+import com.openclassrooms.realestatemanager.viewmodels.UserViewModel
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_add_estate.*
 import kotlinx.android.synthetic.main.fragment_add_images.*
@@ -73,7 +73,17 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import kotlin.math.absoluteValue
 
-
+/**
+ * This activity is for adding or editing an existing Estate.
+ * Extends:
+ * @see BaseActivity for setting the view
+ * @see AddEstateContract contract for MVP
+ * @NavigationView
+ * @View
+ * @NumberPicker for choosing values
+ * @OnMapReadyCallback for locating Estate on a Static Map
+ *
+ */
 class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add_estate) : BaseActivity(), AddEstateContract.AddEstateViewInterface, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, NumberPicker.OnValueChangeListener, OnMapReadyCallback {
 
     private val AUTOCOMPLETE_REQUEST_CODE = 101
@@ -107,7 +117,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
     var mPicturePathArray = arrayListOf("", "", "", "", "", "", "", "")
     @State
     var mSchool = ArrayList<String>()
-    var mPolice: List<Result>? = null
+    var mPolices: List<Result>? = null
     var mHospital: List<Result>? = null
     @State
     var mIntentEId: Long = -1
@@ -117,11 +127,16 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
     lateinit var mMarker: Marker
     private lateinit var mPickerDisposable: Disposable
     lateinit var mEstateViewModel: EstateViewModel
-    lateinit var mUserViewModel: UserViewModel
     lateinit var mPictureViewModel: PictureViewModel
+    lateinit var mUserViewModel: UserViewModel
     lateinit var mEstatePhotosDir: File
     var PICK_IMAGE_REQUEST = 50
 
+    /**
+     * Settings view, listeners for NumberPickers and EditText, Presenter init, save folder creation,
+     * check with editIntent() if it's a new or existing Estate, loadSharedPref() for devise setting,
+     * autocomplete listener and 2 disposable for price and description save.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mPresenter.attachView(this)
@@ -144,6 +159,9 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         }
     }
 
+    /**
+     * Save NumberPickers selection on rotate.
+     */
     override fun onResume() {
         super.onResume()
         when {
@@ -157,10 +175,13 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
             mBedrooms != 0 -> desc_bedrooms_choice_txt.text = mBedrooms.toString()
             mAvailable != 0 -> desc_available_choice_txt.text = Utils.ListOfString.listOfAvailable()[mAvailable]
             mDateCreate != "" -> desc_date_added_choice_txt.text = mDateCreate
-            mAddress != "" -> desc_date_added_choice_txt.text = mAddress
+            mAddress != "" -> address_txt_view.text = mAddress
         }
     }
 
+    /**
+     * Setting the view.
+     */
     override fun configureView() {
         setSupportActionBar(findViewById(R.id.add_estate_toolbar))
         configureDrawerLayout(add_estate_drawer_layout, add_estate_toolbar)
@@ -171,6 +192,9 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         desc_agent_choice_txt.text = currentUser?.displayName.toString()
     }
 
+    /**
+     * Load devise preferences (€ or $)
+     */
     override fun loadSharedPref() {
         val shared = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
         mDevise = shared.getString("actual_devise", "$")!!
@@ -181,6 +205,10 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         }
     }
 
+    /**
+     * Check if user edit an existing Estate or create a New.
+     * Uses Intent and ViewModel Observer (LiveData)
+     */
     override fun editIntent() {
         if (mIntentEId.toInt() != -1) {
             mEstateViewModel.getEstatePictures(mIntentEId).observe(this, Observer {
@@ -245,6 +273,9 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         }
     }
 
+    /**
+     * Set the map.
+     */
     override fun configureMaps() {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.address_map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
@@ -263,111 +294,56 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         mMap.cameraPosition.zoom.absoluteValue
     }
 
+    /**
+     * Configure the ViewModel.
+     */
     override fun configureViewModel() {
         val mViewModelFactory = Injection.provideViewModelFactory(this)
         this.mEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
-        this.mUserViewModel = ViewModelProviders.of(this, mViewModelFactory).get(UserViewModel::class.java)
         this.mPictureViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PictureViewModel::class.java)
+        this.mUserViewModel = ViewModelProviders.of(this, mViewModelFactory).get(UserViewModel::class.java)
     }
 
+    /**
+     * This is the save method to add Estate to the Database.
+     */
     override fun addToDatabase() {
         if (mIntentEId.toInt() == -1) {
-            val user = User(currentUser!!.uid, currentUser!!.displayName.toString(), currentUser!!.email.toString(), currentUser!!.photoUrl.toString(), "TODAY")
+            val user = User(currentUser!!.uid, currentUser!!.displayName.toString(), currentUser!!.email.toString(), currentUser!!.photoUrl.toString(), Utils.todayDate)
             this.mUserViewModel.createUser(user)
             val estate = Estate(null, currentUser!!.uid, mType, mNeighborhood, mPriceResult, mDescResult, mSqft, mRooms, mBathrooms, mBedrooms, mAvailable, currentUser!!.displayName!!, Utils.todayDate, null, mSoldDate, mMarker.position.latitude, mMarker.position.longitude, mAddress)
-            mEstateViewModel.createEstate(estate, mPicturePathArray, mEstatePhotosDir, currentUser!!.displayName, mPictureViewModel, mEstateViewModel, mSchool, mPolice, mHospital)
+            mEstateViewModel.createEstate(estate, mPicturePathArray, mEstatePhotosDir, currentUser!!.displayName, mPictureViewModel, mEstateViewModel, mSchool, mPolices, mHospital)
         } else {
             val estate = Estate(mIntentEId, currentUser!!.uid, mType, mNeighborhood, mPriceResult, mDescResult, mSqft, mRooms, mBathrooms, mBedrooms, mAvailable, currentUser!!.displayName!!, mDateCreate, Utils.todayDate, mSoldDate, mMarker.position.latitude, mMarker.position.longitude, mAddress)
             this.mEstateViewModel.updateEstate(estate, mIntentEId, mPicturePathArray, mEstatePhotosDir, currentUser!!.displayName, mPictureViewModel)
         }
     }
 
-    override fun updateNearbySchool(details: Nearby) {
-        var i = 0
-        while (i < details.results!!.size) {
-            val name = details.results!![i].name!!
-            if (name.contains("Preschool") || name.contains("Elementary")
-                    || name.contains("Middle") || name.contains("High")
-                    || name.contains("College")) {
-                mSchool.add(name)
-                Timber.tag("School").i(name)
-            }
-            i++
-        }
-        if (mSchool.size > 0) {
-            school_nbr_ly.visibility = View.VISIBLE
-            title_nearby.visibility = View.VISIBLE
-            address_school_nbr.text = mSchool.size.toString()
-        }
-    }
+    /**
+     * Non null check for saving an estate with a minimum of required information.
+     */
+    override fun checkIfNoNull() {
+        when {
+            mPicturePathArray[0] == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), getString(R.string.req_select_picture))
+            mType == -1 -> Utils.snackBarPreset(findViewById(android.R.id.content), getString(R.string.req_select_type))
+            mNeighborhood == -1 -> Utils.snackBarPreset(findViewById(android.R.id.content), getString(R.string.req_select_hood))
+            mPriceResult == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), getString(R.string.req_select_price))
+            mAddress == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), getString(R.string.req_select_address))
+            else -> {
+                addToDatabase()
 
-    override fun updateNearbyPolice(details: Nearby) {
-        mPolice = details.results!!
-        if (mPolice!!.isNotEmpty()) {
-            police_station_nbr_ly.visibility = View.VISIBLE
-            title_nearby.visibility = View.VISIBLE
-            address_police_nbr.text = mPolice!!.size.toString()
-        }
-    }
-
-    override fun updateNearbyHospital(details: Nearby) {
-        mHospital = details.results!!
-        if (mHospital!!.isNotEmpty()) {
-            hospital_nbr_ly.visibility = View.VISIBLE
-            title_nearby.visibility = View.VISIBLE
-            address_hospital_nbr.text = mHospital!!.size.toString()
-        }
-    }
-
-    override fun onClick(v: View?) {
-        when (v) {
-            desc_estate_type_img, desc_estate_type_txt -> {
-                showNumberPicker(1, mPickerArray[0], null)
-                Timber.i("Click Type")
-            }
-            desc_neighbourhood_img, desc_estate_neighborhood_txt -> {
-                showNumberPicker(2, mPickerArray[1], null)
-                Timber.i("Click Neighbourhood")
-            }
-            desc_price_img, desc_estate_price_txt -> {
-                showNumberPicker(3, mPickerArray[0], String().priceRemoveSpace(mPriceResult))
-                Timber.i("Click Price")
-            }
-            desc_description_img, fragment_desc_desc_txt -> {
-                showNumberPicker(4, mPickerArray[0], mDescResult)
-                Timber.i("Click Description")
-            }
-            desc_sqft_img, surface_tv -> {
-                showNumberPicker(5, mPickerArray[4], null)
-                Timber.i("Click Sqft")
-            }
-            desc_rooms_img, rooms_tv -> {
-                showNumberPicker(6, mPickerArray[5], null)
-                Timber.i("Click Rooms")
-            }
-            desc_bathrooms_img, bathrooms_tv -> {
-                showNumberPicker(7, mPickerArray[6], null)
-                Timber.i("Click Bathrooms")
-            }
-            desc_bedrooms_img, bedrooms_tv -> {
-                showNumberPicker(8, mPickerArray[7], null)
-                Timber.i("Click Bedrooms")
-            }
-            desc_available_img, available_tv -> {
-                showNumberPicker(9, mPickerArray[8], null)
-                Timber.i("Click Available")
-            }
-            first_pic -> {
-                PICK_IMAGE_REQUEST = 1
-                imagePicker(PICK_IMAGE_REQUEST)
-            }
-            second_pic -> {
-                PICK_IMAGE_REQUEST = 2
-                imagePicker(PICK_IMAGE_REQUEST)
+                Utils.snackBarPreset(findViewById(android.R.id.content), getString(R.string.estate_saved))
+                Executors.newSingleThreadScheduledExecutor().schedule({
+                    val intent = Intent(baseContext, MainActivity::class.java)
+                    startActivity(intent)
+                }, 2, TimeUnit.SECONDS)
             }
         }
     }
 
+    /**
+     * This method start an image picker library for the user. Opens gallery.
+     */
     override fun imagePicker(pickImageRequest: Int) {
         when (pickImageRequest) {
             1 -> {
@@ -385,7 +361,31 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         }
     }
 
+    /**
+     * The Google Autocomplete intent method.
+     */
+    override fun autocompleteIntent() {
+        val fields = listOf(Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.ID)
 
+        val intent = Autocomplete.IntentBuilder(
+                AutocompleteActivityMode.OVERLAY, fields)
+                .setTypeFilter(TypeFilter.ADDRESS)
+                .setCountry("us")
+                .build(applicationContext)
+        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (!mPickerDisposable.isDisposed) mPickerDisposable.dispose()
+    }
+
+    /**
+     * Catch the result of ImagePicker or Autocomplete Intent.
+     * ImagePicker: Saves all images path to an array for later copy these to another database path.
+     * Autocomplete: Make 3 call to find the nearby Police Station, School and Hospital when an address
+     * is set.
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
             val images: List<Image> = ImagePicker.getImages(data)
@@ -443,32 +443,125 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 val status = Autocomplete.getStatusFromIntent(data!!)
                 Timber.i(status.statusMessage)
             } else if (resultCode == RESULT_CANCELED) {
-                // The user canceled the operation.
+                Utils.snackBarPreset(this.findViewById(android.R.id.content), getString(R.string.error_try_again))
             }
         }
     }
 
     /**
-     * The Google Autocomplete intent method.
+     * Method to add School to MapsNearby object, after HTTP request to Maps MapsNearby on location.
      */
-    override fun autocompleteIntent() {
-        val fields = listOf(Place.Field.LAT_LNG, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.ID)
-
-        val intent = Autocomplete.IntentBuilder(
-                AutocompleteActivityMode.OVERLAY, fields)
-                .setTypeFilter(TypeFilter.ADDRESS)
-                .setCountry("us")
-                .build(applicationContext)
-        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+    override fun updateNearbySchool(details: Nearby) {
+        var i = 0
+        while (i < details.results!!.size) {
+            val name = details.results!![i].name!!
+            if (name.contains("Preschool") || name.contains("Elementary")
+                    || name.contains("Middle") || name.contains("High")
+                    || name.contains("College")) {
+                mSchool.add(name)
+                Timber.tag("School").i(name)
+            }
+            i++
+        }
+        if (mSchool.size > 0) {
+            school_nbr_ly.visibility = View.VISIBLE
+            title_nearby.visibility = View.VISIBLE
+            address_school_nbr.text = mSchool.size.toString()
+        }
     }
-    override fun onDestroy() {
-        super.onDestroy()
-        if (!mPickerDisposable.isDisposed) mPickerDisposable.dispose()
+
+    /**
+     * Method to add Police to MapsNearby object, after HTTP request to Maps MapsNearby on location.
+     */
+    override fun updateNearbyPolice(details: Nearby) {
+        mPolices = details.results!!
+        if (mPolices!!.isNotEmpty()) {
+            police_station_nbr_ly.visibility = View.VISIBLE
+            title_nearby.visibility = View.VISIBLE
+            address_police_nbr.text = mPolices!!.size.toString()
+        }
     }
 
+    /**
+     * Method to add Hospital to MapsNearby object, after HTTP request to Maps MapsNearby on location.
+     */
+    override fun updateNearbyHospital(details: Nearby) {
+        mHospital = details.results!!
+        if (mHospital!!.isNotEmpty()) {
+            hospital_nbr_ly.visibility = View.VISIBLE
+            title_nearby.visibility = View.VISIBLE
+            address_hospital_nbr.text = mHospital!!.size.toString()
+        }
+    }
+
+    /**
+     * Method who shows numberpickers.
+     * @see NumberPickerDialog
+     */
+    override fun showNumberPicker(i: Int, mOldVal: Int?, string: String?) {
+        val newFragment = NumberPickerDialog(i, mOldVal, string)
+        newFragment.setValueChangeListener(this)
+        newFragment.show(supportFragmentManager, "time picker")
+    }
+
+    /**
+     * OnClick launch a dialog with number picker to set a new Estate.
+     * @see showNumberPicker
+     */
+    override fun onClick(v: View?) {
+        when (v) {
+            desc_estate_type_img, desc_estate_type_txt -> {
+                showNumberPicker(1, mPickerArray[0], null)
+                Timber.i("Click Type")
+            }
+            desc_neighbourhood_img, desc_estate_neighborhood_txt -> {
+                showNumberPicker(2, mPickerArray[1], null)
+                Timber.i("Click Neighbourhood")
+            }
+            desc_price_img, desc_estate_price_txt -> {
+                showNumberPicker(3, mPickerArray[0], String().priceRemoveSpace(mPriceResult))
+                Timber.i("Click Price")
+            }
+            desc_description_img, fragment_desc_desc_txt -> {
+                showNumberPicker(4, mPickerArray[0], mDescResult)
+                Timber.i("Click Description")
+            }
+            desc_sqft_img, surface_tv -> {
+                showNumberPicker(5, mPickerArray[4], null)
+                Timber.i("Click Sqft")
+            }
+            desc_rooms_img, rooms_tv -> {
+                showNumberPicker(6, mPickerArray[5], null)
+                Timber.i("Click Rooms")
+            }
+            desc_bathrooms_img, bathrooms_tv -> {
+                showNumberPicker(7, mPickerArray[6], null)
+                Timber.i("Click Bathrooms")
+            }
+            desc_bedrooms_img, bedrooms_tv -> {
+                showNumberPicker(8, mPickerArray[7], null)
+                Timber.i("Click Bedrooms")
+            }
+            desc_available_img, available_tv -> {
+                showNumberPicker(9, mPickerArray[8], null)
+                Timber.i("Click Available")
+            }
+            first_pic -> {
+                PICK_IMAGE_REQUEST = 1
+                imagePicker(PICK_IMAGE_REQUEST)
+            }
+            second_pic -> {
+                PICK_IMAGE_REQUEST = 2
+                imagePicker(PICK_IMAGE_REQUEST)
+            }
+        }
+    }
+
+    /**
+     * This method get the result of each numberpicker to update the view and save the values to an Array.
+     */
     override fun onValueChange(picker: NumberPicker?, oldVal: Int, newVal: Int) {
         val i: Int = picker?.tag as Int
-
         when (i) {
             1 -> {
                 desc_estate_type_txt.text = picker.displayedValues[newVal]
@@ -529,12 +622,9 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         }
     }
 
-    override fun showNumberPicker(i: Int, mOldVal: Int?, string: String?) {
-        val newFragment = NumberPickerDialog(i, mOldVal, string)
-        newFragment.setValueChangeListener(this)
-        newFragment.show(supportFragmentManager, "time picker")
-    }
-
+    /**
+     * Set all listener for this view.
+     */
     override fun configureListeners() {
         add_estate_nav_view.setNavigationItemSelectedListener(this)
 
@@ -574,6 +664,9 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         add_estate_drawer_layout.setOnClickListener { it.hideKeyboard() }
     }
 
+    /**
+     * Navigation drawer item listener.
+     */
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         //  Navigation Drawer item settings
 
@@ -581,16 +674,16 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
             R.id.drawer_first -> {
                 val intent = Intent(baseContext, MainActivity::class.java)
                 startActivity(intent)
-                Timber.i("Click Main")
+                Timber.i(getString(R.string.main_click))
             }
             R.id.drawer_second -> {
                 val intent = Intent(baseContext, SettingsActivity::class.java)
                 startActivity(intent)
-                Timber.i("Click Setting")
+                Timber.i(getString(R.string.settings_click))
             }
             R.id.drawer_third -> {
                 signOutUserFromFirebase()
-                Timber.i("Logout")
+                Timber.i(getString(R.string.logout))
             }
             else -> {
             }
@@ -616,24 +709,6 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         }
     }
 
-    override fun checkIfNoNull() {
-        when {
-            mPicturePathArray[0] == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to select a Main Picture")
-            mType == -1 -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to select a Type")
-            mNeighborhood == -1 -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to select a Neighborhood ")
-            mPriceResult == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to set a Price")
-            mAddress == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to enter an Address")
-            else -> {
-                addToDatabase()
-
-                Utils.snackBarPreset(findViewById(android.R.id.content), getString(R.string.estate_saved))
-                Executors.newSingleThreadScheduledExecutor().schedule({
-                    val intent = Intent(baseContext, MainActivity::class.java)
-                    startActivity(intent)
-                }, 2, TimeUnit.SECONDS)
-            }
-        }
-    }
 
     /**
      * Override on back pressed when drawer layout is open.
@@ -646,6 +721,9 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         }
     }
 
+    /**
+     * Create Toolbar.
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.add_estate_toolbar_menu, menu)
         return super.onCreateOptionsMenu(menu)

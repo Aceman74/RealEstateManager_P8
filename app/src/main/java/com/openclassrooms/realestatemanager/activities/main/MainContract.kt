@@ -1,12 +1,12 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 14:00
+ *  * Last modified 19/09/19 18:59
  *
  */
 
-package com.openclassrooms.realestatemanager.activities.login
+package com.openclassrooms.realestatemanager.activities.main
 
 
 import com.openclassrooms.realestatemanager.utils.base.BaseView
@@ -26,5 +26,6 @@ interface MainContract {
         fun configureView()
         fun configureItemListeners()
         fun configureViewPager()
+        fun configureAndShowMapFragment()
     }
 }

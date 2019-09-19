@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 17/09/19 23:02
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 17/09/19 23:01
+ *  * Last modified 19/09/19 20:03
  *
  */
 
@@ -22,10 +22,12 @@ import java.io.File
  * Created by Lionel JOFFRAY - on 28/05/2019.
  *
  *
- * The presenter for Login Activity.
+ * The presenter for AddEstate Activity.
  */
 class AddEstatePresenter : BasePresenter(), AddEstateContract.AddEstatePresenterInterface {
-
+    /**
+     * This method create the directory to sazve all images in DB.
+     */
     override fun createPhotosFolder(context: Context): File {
         val mEstatePhotosDir = File(context.applicationInfo.dataDir + "/files/", "estate_photos")
 
@@ -37,7 +39,9 @@ class AddEstatePresenter : BasePresenter(), AddEstateContract.AddEstatePresenter
         return mEstatePhotosDir
     }
 
-
+    /**
+     * get MapsNearby Schools.
+     */
     override fun nearbySchool(mLocation: String, mType: String, mRadius: Int) {
 
         val newDisposable = PlacesApi.instance.getLocationInfo(mLocation, mType, mRadius).subscribeWith(object : DisposableObserver<Nearby>() {
@@ -57,6 +61,9 @@ class AddEstatePresenter : BasePresenter(), AddEstateContract.AddEstatePresenter
         })
     }
 
+    /**
+     * get MapsNearby Police.
+     */
     override fun nearbyPolice(mLocation: String, mType: String, mRadius: Int) {
 
         val newDisposable = PlacesApi.instance.getLocationInfo(mLocation, mType, mRadius).subscribeWith(object : DisposableObserver<Nearby>() {
@@ -77,6 +84,9 @@ class AddEstatePresenter : BasePresenter(), AddEstateContract.AddEstatePresenter
         })
     }
 
+    /**
+     * get MapsNearby Hospitals.
+     */
     override fun nearbyHospital(mLocation: String, mType: String, mRadius: Int) {
 
         val newDisposable = PlacesApi.instance.getLocationInfo(mLocation, mType, mRadius).subscribeWith(object : DisposableObserver<Nearby>() {

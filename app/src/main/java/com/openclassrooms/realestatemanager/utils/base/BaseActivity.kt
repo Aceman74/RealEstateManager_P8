@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 20:37
+ *  * Last modified 19/09/19 21:35
  *
  */
 
@@ -37,13 +37,18 @@ import timber.log.Timber
 abstract class BaseActivity : AppCompatActivity() {
     val SIGN_OUT_TASK = 12
     var mTheme = 0
-
+    /**
+     * Load the theme from SharedPreferences.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         loadTheme()
         super.onCreate(savedInstanceState)
         this.setContentView(this.activityLayout)
     }
 
+    /**
+     * Load the theme.
+     */
     private fun loadTheme() {
         val shared = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
         mTheme = shared.getInt("actual_theme", 0)
@@ -105,6 +110,9 @@ abstract class BaseActivity : AppCompatActivity() {
         startActivity(start)
     }
 
+    /**
+     * Update UI.
+     */
     fun updateUIAfterRESTRequestsCompleted(origin: Int): OnSuccessListener<Void> {
         return OnSuccessListener {
             if (origin == SIGN_OUT_TASK) {

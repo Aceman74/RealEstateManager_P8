@@ -1,22 +1,23 @@
 /*
  * *
- *  * Created by Lionel Joffray on 06/09/19 20:07
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 06/09/19 20:07
+ *  * Last modified 19/09/19 21:35
  *
  */
 
 package com.openclassrooms.realestatemanager.utils
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.evernote.android.state.StateSaver
 import com.openclassrooms.realestatemanager.BuildConfig
 import timber.log.Timber
 
 /**
  * Created by Lionel JOFFRAY - on 06/09/2019.
+ * Init Timber and EverNote.
  */
-class RealEsateManager : Application() {
+class RealEsateManager : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()

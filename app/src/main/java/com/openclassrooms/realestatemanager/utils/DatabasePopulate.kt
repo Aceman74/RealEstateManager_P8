@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 17/09/19 23:02
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 17/09/19 16:04
+ *  * Last modified 19/09/19 21:35
  *
  */
 
@@ -16,6 +16,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 /**
  * Created by Lionel JOFFRAY - on 17/09/2019.
+ * Some pre defined Estate for demo.
  */
 class DatabasePopulate {
 

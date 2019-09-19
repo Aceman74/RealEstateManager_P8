@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 17:49
+ *  * Last modified 19/09/19 19:07
  *
  */
 
@@ -23,13 +23,17 @@ import kotlinx.android.synthetic.main.slideshow_item.view.*
 
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
+ *
+ * The viewHolder for pictures showing in DetailEstate.
  */
 class EstateDetailViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
     var image: ImageView = view.slideshow_img
     var text: TextView = view.slideshow_txt
 
-
+    /**
+     * Update the view with the picture, and handle the click on it with full scree preview.
+     */
     fun updateWithItem(pictures: List<Picture>, position: Int, listener: (Int) -> Unit) {
 
         text.text = (position + 1).toString() + "/" + pictures.size

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 06/09/19 20:07
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 06/09/19 17:01
+ *  * Last modified 19/09/19 21:35
  *
  */
 
@@ -10,6 +10,8 @@ package com.openclassrooms.realestatemanager.utils.rxbus
 
 /**
  * Created by Lionel JOFFRAY - on 27/08/2019.
+ * Event use with RxBus
+ *
  */
 class RxEvent {
 

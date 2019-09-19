@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 17/09/19 23:02
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 17/09/19 15:51
+ *  * Last modified 19/09/19 19:15
  *  
  */
 
@@ -16,7 +16,7 @@ import com.openclassrooms.realestatemanager.utils.base.BaseView
  * Created by Lionel JOFFRAY - on 04/06/2019.
  *
  *
- * Workmates Contracts.
+ * Fragment List Contracts.
  */
 interface ListContract {
 

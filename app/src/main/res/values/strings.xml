@@ -1,8 +1,8 @@
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 18/09/19 23:09
+  ~  * Created by Lionel Joffray on 19/09/19 21:47
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 18/09/19 17:39
+  ~  * Last modified 19/09/19 18:59
   ~  */
   -->
 
@@ -89,4 +89,19 @@
     <string name="home">Home</string>
     <string name="logout">Logout</string>
     <string name="around_500_meters">Around (500 meters)</string>
+    <string name="error_try_again">Error, please try again.</string>
+    <string name="main_click">Click Main</string>
+    <string name="settings_click">Click Setting</string>
+    <string name="req_select_picture">You have to select a Main Picture</string>
+    <string name="req_select_type">You have to select a Type</string>
+    <string name="req_select_hood">You have to select a Neighborhood</string>
+    <string name="req_select_price">You have to set a Price</string>
+    <string name="req_select_address">You have to enter an Address</string>
+    <string name="list_click">Click List</string>
+    <string name="map_click">Click Map</string>
+    <string name="adding_estate">Adding an Estate</string>
+    <string name="searching_estate">Search an Estate</string>
+    <string name="set_amount">You have to set an amount</string>
+    <string name="set_rate">You have to set a rate</string>
+    <string name="set_years">You have to set the years</string>
 </resources>

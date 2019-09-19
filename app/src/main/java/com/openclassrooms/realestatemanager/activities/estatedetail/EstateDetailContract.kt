@@ -1,21 +1,22 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 14:00
+ *  * Last modified 19/09/19 18:28
  *
  */
 
 package com.openclassrooms.realestatemanager.activities.estatedetail
 
 
+import com.openclassrooms.realestatemanager.models.EstateAndPictures
 import com.openclassrooms.realestatemanager.utils.base.BaseView
 
 /**
  * Created by Lionel JOFFRAY - on 28/05/2019.
  *
  *
- * The contracts for Main Activity.
+ * The contracts for EstateDetailActivity.
  */
 interface EstateDetailContract {
 
@@ -27,5 +28,6 @@ interface EstateDetailContract {
         fun configureMaps()
         fun configureDetails()
         fun configureRecyclerView()
+        fun showNearby(it: List<EstateAndPictures>?)
     }
 }

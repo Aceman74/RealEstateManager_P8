@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 17/09/19 23:02
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 17/09/19 16:04
+ *  * Last modified 19/09/19 19:10
  *
  */
 
@@ -23,6 +23,7 @@ import com.openclassrooms.realestatemanager.utils.DatabasePopulate
 
 /**
  * Created by Lionel JOFFRAY - on 26/08/2019.
+ * The App Database with Room SqLite.
  */
 @Database(entities = [User::class, Estate::class, Picture::class, Nearby::class], version = 1, exportSchema = false)
 abstract class RealEstateDatabase : RoomDatabase() {
@@ -40,6 +41,10 @@ abstract class RealEstateDatabase : RoomDatabase() {
                     INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
                 }
 
+        /**
+         * Init the database with some Estate for Demo
+         * @see DatabasePopulate
+         */
         private fun buildDatabase(context: Context) =
                 Room.databaseBuilder(context.applicationContext,
                         RealEstateDatabase::class.java, "EstateDatabase.db")

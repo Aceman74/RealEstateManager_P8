@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 03/09/19 16:31
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 02/09/19 19:29
+ *  * Last modified 19/09/19 19:27
  *
  */
 
@@ -14,7 +14,6 @@ import androidx.room.PrimaryKey
 
 /**
  * Created by Lionel JOFFRAY - on 02/05/2019.
- *
  *
  * User is a user object to save for user data (private).
  * Used for multiple class.

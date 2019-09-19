@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 16/09/19 21:09
+ *  * Last modified 19/09/19 21:35
  *
  */
 
@@ -17,7 +17,6 @@ import android.widget.EditText
 import android.widget.NumberPicker
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.extensions.priceAddSpace
 import com.openclassrooms.realestatemanager.extensions.setMaxLength
 import com.openclassrooms.realestatemanager.utils.rxbus.RxBus
@@ -26,7 +25,8 @@ import java.util.*
 
 
 /**
- * A simple [Fragment] subclass.
+ * This class is used in AddEstate, Search and EditEstate.
+ * All pickers are from here, and are set for this app.
  */
 class NumberPickerDialog(val i: Int, private var mOldVal: Int?, val s: String? = null) : DialogFragment() {
     private lateinit var valueChangeListener: NumberPicker.OnValueChangeListener

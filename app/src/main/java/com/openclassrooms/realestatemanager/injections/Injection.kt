@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 03/09/19 16:31
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 02/09/19 19:29
+ *  * Last modified 19/09/19 19:27
  *
  */
 
@@ -17,21 +17,31 @@ import java.util.concurrent.Executors
 
 /**
  * Created by Lionel JOFFRAY - on 29/08/2019.
+ *
+ * Injection class for providing database.
  */
 class Injection {
 
     companion object {
-
-        fun provideEstateDataSource(context: Context): EstateDataRepository {
+        /**
+         * provide the datasource
+         */
+        private fun provideEstateDataSource(context: Context): EstateDataRepository {
             val database = RealEstateDatabase.getInstance(context)
             return EstateDataRepository(database.estateDao())
         }
 
 
-        fun provideExecutor(): Executor {
+        /**
+         * provide the Executor
+         */
+        private fun provideExecutor(): Executor {
             return Executors.newSingleThreadExecutor()
         }
 
+        /**
+         * provide the ViewModel Factory
+         */
         fun provideViewModelFactory(context: Context): ViewModelFactory {
             val dataSourceItem = provideEstateDataSource(context)
             val executor = provideExecutor()

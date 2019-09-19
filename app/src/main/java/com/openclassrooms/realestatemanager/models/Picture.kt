@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 13/09/19 11:33
+ *  * Last modified 19/09/19 19:27
  *
  */
 
@@ -15,6 +15,8 @@ import androidx.room.PrimaryKey
 
 /**
  * Created by Lionel JOFFRAY - on 26/08/2019.
+ *
+ * Save a picture related to an Estate.
  */
 
 @Entity(foreignKeys = [ForeignKey(entity = Estate::class, parentColumns = arrayOf("estateId"), childColumns = arrayOf("estateId_fk"), onDelete = ForeignKey.CASCADE)])

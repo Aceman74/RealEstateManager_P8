@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 16/09/19 20:56
+ *  * Last modified 19/09/19 19:15
  *
  */
 
@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager
 
 /**
  * Created by Lionel JOFFRAY - on 16/09/2019.
+ * Hide the keyboard on click.
  */
 fun View.hideKeyboard() {
     val inputMethodManager = context!!.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager

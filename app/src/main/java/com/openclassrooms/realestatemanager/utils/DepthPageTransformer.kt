@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 06/09/19 20:07
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 06/09/19 19:00
+ *  * Last modified 19/09/19 21:35
  *
  */
 
@@ -13,6 +13,8 @@ import androidx.viewpager.widget.ViewPager
 
 /**
  * Created by Lionel JOFFRAY - on 06/09/2019.
+ *
+ * Anim class from Android for pager animation.
  */
 private const val MIN_SCALE = 0.75f
 

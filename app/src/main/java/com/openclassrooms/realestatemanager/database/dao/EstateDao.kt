@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 16/09/19 21:09
+ *  * Last modified 19/09/19 19:07
  *
  */
 
@@ -17,6 +17,8 @@ import com.openclassrooms.realestatemanager.models.Nearby
 
 /**
  * Created by Lionel JOFFRAY - on 26/08/2019.
+ *
+ * Data Access Object for the Estate in RealEstateDatabase.
  */
 @Dao
 interface EstateDao {

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 17/09/19 23:02
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 17/09/19 11:38
+ *  * Last modified 19/09/19 20:03
  *
  */
 
@@ -18,7 +18,7 @@ import java.io.File
  * Created by Lionel JOFFRAY - on 28/05/2019.
  *
  *
- * The contracts for Main Activity.
+ * The contracts for AddEstate Activity.
  */
 interface AddEstateContract {
 

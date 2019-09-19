@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 06/09/19 20:07
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 06/09/19 20:07
+ *  * Last modified 19/09/19 21:47
  *
  */
 
@@ -16,10 +16,10 @@ import com.openclassrooms.realestatemanager.fragments.list.ListFragment
 
 import com.openclassrooms.realestatemanager.fragments.map.MapFragment
 
-
+/**
+ * Mainpager for settings Fragments in MainActivity.
+ */
 class MainPagerAdapter(mgr: FragmentManager, private val mContext: Context) : FragmentPagerAdapter(mgr) {
-
-
     /**
      * Page numbers.
      *
@@ -35,16 +35,16 @@ class MainPagerAdapter(mgr: FragmentManager, private val mContext: Context) : Fr
      * @param position actual view
      * @return the fragment
      */
-    override fun getItem(position: Int): Fragment? {
-        when (position) {
-            0 //Page number 1
-            -> return ListFragment.newInstance()
-            1 //Page number 2
-            -> return MapFragment.newInstance()
-            else -> return null
-        }
+    override fun getItem(position: Int): Fragment {
+        return if (position == 0)  //Page number 1
+            ListFragment.newInstance()
+        else //Page number 2
+            MapFragment.newInstance()
     }
 
+    /**
+     * Page titles.
+     */
     override fun getPageTitle(position: Int): CharSequence? {
         when (position) {
             0 -> return "List"

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 16/09/19 21:09
+ *  * Last modified 19/09/19 18:59
  *
  */
 
@@ -17,9 +17,12 @@ import kotlin.math.round
  * Created by Lionel JOFFRAY - on 28/05/2019.
  *
  *
- * The presenter for Login Activity.
+ * The presenter for Settings Activity.
  */
 class SettingsPresenter : BasePresenter(), SettingsContract.SettingsPresenterInterface {
+    /**
+     * Method to calculate a loan, calculate the total month, monthly amount and interest paid.
+     */
     override fun calculateLoan(mIntArray: DoubleArray, mAmount: Int, mRate: Double, mYears: Int): DoubleArray {
         val duration: Double = mYears.toDouble() * 12
         val firstVal = mAmount * (mRate / 100) / 12

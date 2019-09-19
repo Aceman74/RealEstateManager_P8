@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 17/09/19 23:02
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 17/09/19 12:14
+ *  * Last modified 19/09/19 20:20
  *
  */
 
@@ -20,12 +20,13 @@ import com.openclassrooms.realestatemanager.models.User
 import com.openclassrooms.realestatemanager.models.places.nearby_search.Result
 import com.openclassrooms.realestatemanager.repositories.EstateDataRepository
 import com.openclassrooms.realestatemanager.utils.Utils
-import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
 import java.io.File
 import java.util.concurrent.Executor
 
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
+ *
+ * ViewModel for Estate .
  */
 class EstateViewModel(application: Application, val executor: Executor) : AndroidViewModel(application) {
 
@@ -103,6 +104,11 @@ class EstateViewModel(application: Application, val executor: Executor) : Androi
         executor.execute { repository.findByAvailability(available) }
     }
 
+    /**
+     * Here the estate is created, and the Foreign Key is used to save Pictures and Nearby next.
+     * @see Utils.savePictureToCustomPath
+     * @see Utils.createNearby
+     */
     fun createEstate(estate: Estate, mPath: ArrayList<String>, mDir: File, mName: String?, mViewModel: PictureViewModel, mEstateViewModel: EstateViewModel, mSchool: java.util.ArrayList<String>, mPolice: List<Result>?, mHospital: List<Result>?) {
         executor.execute {
             val eid: Long = repository.createEstate(estate)
@@ -124,6 +130,9 @@ class EstateViewModel(application: Application, val executor: Executor) : Androi
         executor.execute { repository.deleteEstate(estate) }
     }
 
+    /**
+     * Update estate and get Foreign key for saving Pictures too.
+     */
     fun updateEstate(estate: Estate, eid: Long, mPath: ArrayList<String>, mDir: File, mName: String?, mViewModel: PictureViewModel) {
         executor.execute {
             repository.createEstate(estate)

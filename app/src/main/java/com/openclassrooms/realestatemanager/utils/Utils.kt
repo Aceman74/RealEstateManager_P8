@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 17/09/19 23:02
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 17/09/19 17:36
+ *  * Last modified 19/09/19 21:39
  *
  */
 
@@ -20,7 +20,7 @@ import com.openclassrooms.realestatemanager.extensions.backSlashRemover
 import com.openclassrooms.realestatemanager.models.Picture
 import com.openclassrooms.realestatemanager.models.places.nearby_search.Result
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
-import com.openclassrooms.realpicturemanager.activities.viewmodels.PictureViewModel
+import com.openclassrooms.realestatemanager.viewmodels.PictureViewModel
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -32,6 +32,9 @@ import kotlin.math.roundToInt
 
 /**
  * Created by Philippe on 21/02/2018.
+ * Edited by Lionel.
+ *
+ * Class Utils contains all methods utils for the app.
  */
 
 object Utils {
@@ -81,6 +84,9 @@ object Utils {
         return activeNetwork
     }
 
+    /**
+     * Default snackbar for app.
+     */
     fun snackBarPreset(view: View, message: String): Unit {
         val snack = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
         val snackView = snack.view
@@ -90,6 +96,9 @@ object Utils {
         return snack.show()
     }
 
+    /**
+     * Convert Date to millis for comparing in SearchActivity.
+     */
     fun dateToMillis(year: Int, monthOfYear: Int, dayOfMonth: Int): Long {
         var cal = Calendar.getInstance()
         cal.set(Calendar.YEAR, year)
@@ -99,6 +108,9 @@ object Utils {
         return cal.timeInMillis
     }
 
+    /**
+     * Convert Millis to date.
+     */
     fun millisToDate(millis: Long): String {
         val dateFormat = SimpleDateFormat("ddMMyyyy")
         val result = Date(millis)
@@ -106,6 +118,9 @@ object Utils {
         return dateFormat.format(result)
     }
 
+    /**
+     * Convert date with / custom format to millis.
+     */
     fun dateWithBSToMillis(dateString: String): Long {
         val string = String().backSlashRemover(dateString)
 
@@ -113,7 +128,7 @@ object Utils {
     }
 
     /**
-     * copy contents from source file to mappPath file
+     * copy contents from source file to app Path file
      *
      * @param sourceFilePath  Source file path address
      * @param destinationFilePath Destination file path address
@@ -137,6 +152,9 @@ object Utils {
         }
     }
 
+    /**
+     * Method who convert source path to a custom unique path for saving in Database.
+     */
     fun savePictureToCustomPath(eid: Long, mPicturePathArray: ArrayList<String>, mEstatePhotosDir: File, displayName: String?, mPictureViewModel: PictureViewModel) {
 
         var i = 0
@@ -159,10 +177,16 @@ object Utils {
         }
     }
 
+    /**
+     * Save picture to database.
+     */
     fun savePicture(pictureName: String, fileDest: String, eid: Long, mPictureViewModel: PictureViewModel) {
         mPictureViewModel.createPicture(Picture(null, eid, pictureName, fileDest))
     }
 
+    /**
+     * Save a Nearby object to database.
+     */
     fun createNearby(eid: Long, mSchool: ArrayList<String>, mPolice: List<Result>?, mHospital: List<Result>?, mEstateViewModel: EstateViewModel) {
         when {
             mSchool.size > 0 -> {
@@ -192,19 +216,32 @@ object Utils {
         }
     }
 
+    /**
+     * Start a fade animation, for Recyclerview items.
+     */
     fun setFadeAnimation(view: View, context: Context) {
         val anim = AnimationUtils.loadAnimation(context, R.anim.fade_in)
         view.startAnimation(anim)
     }
+
+    /**
+     * This class is used in numberpicker, makes save easier in Estate (only Int no full string).
+     */
     class ListOfString {
 
         companion object {
+            /**
+             * A list of Estate Type.
+             */
             fun listOfType(): Array<String> {
                 return listOf("Apartment", "Castle", "Chalet / Cottage", "Country House", "Hotel",
                         "House", "Island", "Land", "Loft", "Mansion", "Office", "Penthouse",
                         "Residential complex", "Townhouse", "Villa").toTypedArray().sortedArray()
             }
 
+            /**
+             * A list of Neighborhood Type.
+             */
             fun listOfNeighborhood(): Array<String> {
 
                 return listOf("Albany", "Allegany", "Bronx", "Broome", "Cattaraugus", "Cayuga",
@@ -220,6 +257,9 @@ object Utils {
                         "Wayne", "Westchester", "Wyoming", "Yates").toTypedArray().sortedArray()
             }
 
+            /**
+             * A list of Availability Type.
+             */
             fun listOfAvailable(): Array<String> {
                 return listOf("For Sale", "Sold").toTypedArray()
             }

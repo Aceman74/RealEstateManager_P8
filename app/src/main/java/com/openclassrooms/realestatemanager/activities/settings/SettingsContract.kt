@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 16/09/19 21:09
+ *  * Last modified 19/09/19 18:59
  *
  */
 
@@ -29,5 +29,6 @@ interface SettingsContract {
         fun configureListeners()
         fun loadSharedPref()
         fun applyNewTheme()
+        fun loanSimulation()
     }
 }

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 11/09/19 20:37
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 11/09/19 13:43
+ *  * Last modified 19/09/19 18:59
  *
  */
 
@@ -15,6 +15,6 @@ import com.openclassrooms.realestatemanager.utils.base.BasePresenter
  * Created by Lionel JOFFRAY - on 28/05/2019.
  *
  *
- * The presenter for Login Activity.
+ * The presenter for Search Activity.
  */
 class SearchPresenter : BasePresenter(), SearchContract.SearchPresenterInterface

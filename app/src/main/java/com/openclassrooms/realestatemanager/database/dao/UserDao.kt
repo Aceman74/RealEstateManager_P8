@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 03/09/19 16:31
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 02/09/19 19:33
+ *  * Last modified 19/09/19 19:07
  *
  */
 
@@ -14,6 +14,8 @@ import com.openclassrooms.realestatemanager.models.User
 
 /**
  * Created by Lionel JOFFRAY - on 26/08/2019.
+ *
+ * Data Access Object for the User in RealEstateDatabase.
  */
 @Dao
 interface UserDao {

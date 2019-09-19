@@ -1,12 +1,12 @@
 /*
  * *
- *  * Created by Lionel Joffray on 03/09/19 16:31
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 03/09/19 11:10
+ *  * Last modified 19/09/19 20:20
  *
  */
 
-package com.openclassrooms.realpicturemanager.activities.viewmodels
+package com.openclassrooms.realestatemanager.viewmodels
 
 import android.app.Application
 import androidx.annotation.Nullable
@@ -15,11 +15,13 @@ import androidx.lifecycle.LiveData
 import com.openclassrooms.realestatemanager.database.RealEstateDatabase
 import com.openclassrooms.realestatemanager.models.Picture
 import com.openclassrooms.realestatemanager.models.User
-import com.openclassrooms.realpicturemanager.repositories.PicturerDataRepository
+import com.openclassrooms.realestatemanager.repositories.PicturerDataRepository
 import java.util.concurrent.Executor
 
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
+ *
+ * ViewModel for Picture .
  */
 class PictureViewModel(application: Application, val executor: Executor) : AndroidViewModel(application) {
 

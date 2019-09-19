@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 19/09/19 21:35
  *
  */
 
@@ -13,8 +13,10 @@ import io.reactivex.subjects.PublishSubject
 
 /**
  * Created by Lionel JOFFRAY - on 27/08/2019.
+ * Object for having a Singleton.
+ * For event handler, callback
  */
-// Use object so we have a singleton instance
+
 object RxBus {
 
     private val publisher = PublishSubject.create<Any>()

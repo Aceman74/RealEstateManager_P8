@@ -1,12 +1,12 @@
 /*
  * *
- *  * Created by Lionel Joffray on 03/09/19 16:31
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 03/09/19 11:10
+ *  * Last modified 19/09/19 20:20
  *
  */
 
-package com.openclassrooms.realpicturemanager.repositories
+package com.openclassrooms.realestatemanager.repositories
 
 import androidx.lifecycle.LiveData
 import com.openclassrooms.realestatemanager.database.dao.PictureDao
@@ -15,6 +15,8 @@ import com.openclassrooms.realestatemanager.models.Picture
 
 /**
  * Created by Lionel JOFFRAY - on 29/08/2019.
+ *
+ * Repository for Picture Data.
  */
 class PicturerDataRepository(val pictureDao: PictureDao) {
 

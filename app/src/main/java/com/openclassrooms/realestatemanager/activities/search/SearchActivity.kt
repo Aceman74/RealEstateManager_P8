@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 18/09/19 12:36
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 18/09/19 12:23
+ *  * Last modified 19/09/19 18:59
  *
  */
 
@@ -35,7 +35,19 @@ import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_search.*
 
-
+/**
+ * Created by Lionel JOFFRAY - on 06/08/2019.
+ *
+ * This activity is the Search, who look in the database with a live observer.
+ * Use the same numberpickers than AddEstate.
+ * Extends:
+ * @see BaseActivity for setting the view
+ * @see SearchContract contract for MVP
+ * @View
+ * @NumberPicker for values
+ * @DatePicker for date
+ *
+ */
 class SearchActivity(override val activityLayout: Int = R.layout.activity_search) : BaseActivity(), SearchContract.SearchViewInterface, View.OnClickListener, NumberPicker.OnValueChangeListener, DatePicker.OnDateChangedListener {
 
     private val mPresenter = SearchPresenter()
@@ -47,7 +59,9 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
     private lateinit var mRecyclerView: RecyclerView
     lateinit var mObservePicture: List<EstateAndPictures>
     var mDevise = "$"
-
+    /**
+     * Set the view, presenter, viewmodel for Estate and Photos, load the currency preferences.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mPresenter.attachView(this)
@@ -65,11 +79,17 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         onSearchBtnClick()
     }
 
+    /**
+     * Load shared pref for devise.
+     */
     override fun loadSharedPref() {
         val shared = applicationContext.getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
         mDevise = shared?.getString("actual_devise", "$")!!
     }
 
+    /**
+     * Set the view.
+     */
     override fun configureView() {
         setSupportActionBar(findViewById(R.id.search_toolbar))
         mPickerArray[4] = -1
@@ -77,6 +97,21 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
+    /**
+     * Configure the EstateViewmodel for searching live in the Database.
+     */
+    override fun configureViewModel() {
+        val mViewModelFactory = Injection.provideViewModelFactory(applicationContext)
+        this.mEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
+        mEstateViewModel.allEstateWithPitures.observe(this, Observer {
+            mObservePicture = it
+        })
+    }
+
+    /**
+     * Perform search on click, filtered by a method.
+     * @see executeFilteredSearch
+     */
     override fun onSearchBtnClick() {
         mRecyclerView = search_recycler_view
         button_search.setOnClickListener {
@@ -86,14 +121,10 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         }
     }
 
-    override fun configureViewModel() {
-        val mViewModelFactory = Injection.provideViewModelFactory(applicationContext)
-        this.mEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
-        mEstateViewModel.allEstateWithPitures.observe(this, Observer {
-            mObservePicture = it
-        })
-    }
-
+    /**
+     * Filtered the list returned by the livedata.
+     * Get all the Estate and photo, put them in a list, then remove the Estate who not fit the search.
+     */
     override fun executeFilteredSearch(observePicture: List<EstateAndPictures>): List<EstateAndPictures> {
         val filteredList: MutableList<EstateAndPictures> = ArrayList()
         filteredList.addAll(mObservePicture)
@@ -189,17 +220,27 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         return filteredList
     }
 
+    /**
+     * Remove Estate from list at index i.
+     */
     private fun removeEstateFromList(filteredList: MutableList<EstateAndPictures>, observePicture: List<EstateAndPictures>, i: Int) {
         if (filteredList.contains(observePicture[i]))
             filteredList.remove(observePicture[i])
     }
 
+    /**
+     * On click on estate, open the details.
+     */
     override fun lauchDetailActivity(it: Int) {
         val intent = Intent(applicationContext, EstateDetailActivity::class.java)
         intent.putExtra("mEstateId", it)
         startActivity(intent)
     }
 
+    /**
+     * Show the numberpicker dialog.
+     * @see NumberPickerDialog
+     */
     override fun showNumberPicker(i: Int, mOldVal: Int?, string: String?) {
         val newFragment = NumberPickerDialog(i, mOldVal, string)
         newFragment.setValueChangeListener(this)
@@ -207,6 +248,9 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         newFragment.show(supportFragmentManager, "time picker")
     }
 
+    /**
+     * On value change, update the view and save the values.
+     */
     override fun onValueChange(picker: NumberPicker?, oldVal: Int, newVal: Int) {
         if (picker?.tag != null) {
             val i: Int = picker.tag as Int
@@ -250,9 +294,11 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
                 }
             }
         }
-
     }
 
+    /**
+     * On value change, update the view and save the values.
+     */
     override fun onDateChanged(datePicker: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
 
         if (datePicker?.tag != null) {
@@ -298,7 +344,9 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         }
     }
 
-
+    /**
+     * onClick listener for Dialogs.
+     */
     override fun onClick(v: View?) {
         when (v) {
             search_price_first -> {
@@ -337,6 +385,9 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         }
     }
 
+    /**
+     * Listeners initialisation.
+     */
     override fun configureItemListeners() {
         search_price_first.setOnClickListener(this)
         search_price_second.setOnClickListener(this)

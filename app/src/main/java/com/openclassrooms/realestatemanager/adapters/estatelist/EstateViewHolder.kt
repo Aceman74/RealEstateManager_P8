@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 18/09/19 23:09
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 18/09/19 17:20
+ *  * Last modified 19/09/19 19:07
  *
  */
 
@@ -23,6 +23,8 @@ import kotlinx.android.synthetic.main.estate_item.view.*
 
 /**
  * Created by Lionel JOFFRAY - on 15/08/2019.
+ *
+ * The viewHolder for Estate in MainActivity and Search.
  */
 class EstateViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
@@ -32,7 +34,9 @@ class EstateViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClick
     var sold: ImageView = view.estate_item_sold_icon
     var picture: ImageView = view.estate_img
 
-
+    /**
+     * Update the view with the picture, and handle the click on it who opens DetailActivity.
+     */
     fun updateWithItem(estate: EstateAndPictures, position: Int, listener: (Int) -> Unit, devise: String) {
         var id: Int
 

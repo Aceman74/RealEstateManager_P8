@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 16/09/19 21:09
+ *  * Last modified 19/09/19 20:38
  *  
  */
 
@@ -15,6 +15,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProviders
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
@@ -22,26 +23,38 @@ import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsListener
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.activities.main.MainActivity
+import com.openclassrooms.realestatemanager.injections.Injection
+import com.openclassrooms.realestatemanager.models.User
+import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.Utils.isInternetAvailable
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
+import com.openclassrooms.realestatemanager.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 
 /**
  * Created by Lionel JOFFRAY - on 06/08/2019.
+ *
+ * This activity is for login the user to the app.
+ * Extends:
+ * @see BaseActivity for setting the view
+ * @see LoginContract contract for MVP
+ *
  */
-
 @Suppress("DEPRECATED_IDENTITY_EQUALS")
 class LoginActivity(override val activityLayout: Int = R.layout.activity_login) : BaseActivity(), LoginContract.LoginViewInterface {
 
     private val mPresenter: LoginPresenter = LoginPresenter()
     private val RC_SIGN_IN = 111
     private var mAlertDialog: AlertDialog.Builder? = null
-    var mDevise = "$"
-
+    private lateinit var mUserViewModel: UserViewModel
+    /**
+     * Set the presenter, configure UserViewModel, check permission for the app, check logged or not,
+     * also check if internet connexion.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
-        loadSharedPref()
         super.onCreate(savedInstanceState)
         mPresenter.attachView(this)
+        configureViewModel()
         checkPermission()
         isCurrentUserLogged
         isInternetAvailable(applicationContext)
@@ -63,21 +76,8 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
         }
     }
 
-    override fun loadSharedPref() {
-        val shared = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
-        mDevise = shared.getString("actual_devise", "$")!!
-        when (mDevise) {
-            "$" -> {
-                setTheme(R.style.AppTheme)
-            }
-            "€" -> {
-                setTheme(R.style.AppTheme_1)
-            }
-        }
-    }
-
     /**
-     * Check if user already grant permission
+     * Check if user already grant permission.
      */
     override fun checkPermission() {
         if (ContextCompat.checkSelfPermission(applicationContext,
@@ -94,8 +94,8 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
     override fun askPermission() {
         if (mAlertDialog == null) {
             mAlertDialog = AlertDialog.Builder(this)
-            mAlertDialog!!.setTitle("NEED TO ASK")
-            mAlertDialog!!.setMessage("REGULAR BLA BLA")
+            mAlertDialog!!.setTitle("Real Estate Manager")
+            mAlertDialog!!.setMessage("For fully working features, this application needs some permissions from you.")
             mAlertDialog!!.setPositiveButton(android.R.string.yes) { dialog, _ ->
                 dialog.dismiss()
                 dexterInit()
@@ -106,13 +106,29 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
     }
 
     /**
+     * Set the userViewModel to save.
+     */
+    override fun configureViewModel() {
+        val mViewModelFactory = Injection.provideViewModelFactory(this)
+        this.mUserViewModel = ViewModelProviders.of(this, mViewModelFactory).get(UserViewModel::class.java)
+    }
+
+    /**
+     * Save user to Database.
+     */
+    override fun saveUserToDatabase() {
+        val user = User(currentUser!!.uid, currentUser!!.displayName.toString(), currentUser!!.email.toString(), currentUser!!.photoUrl.toString(), Utils.todayDate)
+        this.mUserViewModel.createUser(user)
+    }
+
+    /**
      * Dexter library used for permissions.
      */
     override fun dexterInit() {
         val dialogMultiplePermissionsListener = DialogOnAnyDeniedMultiplePermissionsListener.Builder
                 .withContext(this)
-                .withTitle("NEED PERM")
-                .withMessage("I NEED SOME ACCESS DUDE")
+                .withTitle("Permissions denied")
+                .withMessage("Unfortunately, you cannot run the application without these permissions.")
                 .withButtonText(android.R.string.ok)
                 .build()
 
@@ -128,6 +144,9 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                 .check()
     }
 
+    /**
+     * Start the signin activity, with google or email.
+     */
     override fun startSignInActivity() {
 
         startActivityForResult(
@@ -148,7 +167,6 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
      * @param resultCode  resultCode
      * @param data        data
      */
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -158,12 +176,10 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
             if (resultCode == Activity.RESULT_OK) {
                 // Successfully signed in
                 val user = FirebaseAuth.getInstance().currentUser
+                saveUserToDatabase()
                 // ...
             } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
+                Utils.snackBarPreset(this.findViewById(android.R.id.content), getString(R.string.error_try_again))
             }
         }
     }

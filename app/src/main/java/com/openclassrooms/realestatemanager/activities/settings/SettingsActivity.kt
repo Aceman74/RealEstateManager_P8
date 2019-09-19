@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 17/09/19 23:02
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 17/09/19 23:01
+ *  * Last modified 19/09/19 21:47
  *
  */
 
@@ -25,11 +25,24 @@ import kotlinx.android.synthetic.main.activity_settings.*
 import timber.log.Timber
 import kotlin.math.roundToInt
 
+/**
+ * Created by Lionel JOFFRAY - on 06/08/2019.
+ *
+ * This activity is the Settings, where user can change devise, theme and simulate a loan.
+ * Extends:
+ * @see BaseActivity for setting the view
+ * @see SettingsContract contract for MVP
+ * @View
+ * @NavigationView
+ *
+ */
 class SettingsActivity(override val activityLayout: Int = R.layout.activity_settings) : BaseActivity(), SettingsContract.SettingsViewInterface, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     var mDevise: String = "$"
     private val mPresenter = SettingsPresenter()
-
+    /**
+     * Set the view, presenter, listeners and load devise.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mPresenter.attachView(this)
@@ -39,26 +52,30 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
         loanSimulation()
     }
 
+    /**
+     * Init the view with toolbar, drawer etc.
+     */
     override fun configureView() {
         setSupportActionBar(findViewById(R.id.settings_tb))
         configureDrawerLayout(settings_dl, settings_tb)
         navigationDrawerHeader(settings_activity_nav_view)
     }
 
+    /**
+     * Load the devise.
+     */
     override fun loadSharedPref() {
         val shared = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
         mDevise = shared.getString("actual_devise", "$")!!
         when (mDevise) {
             "$" -> {
                 dollars_btn.setBackgroundResource(R.drawable.button_style_round)
-                euros_btn.setBackgroundResource(R.drawable.button_style_round_primary)
                 amount_money_tv.text = "$"
                 interest_money_tv.text = "$"
                 monthly_money_tv.text = "$"
             }
             "€" -> {
                 euros_btn.setBackgroundResource(R.drawable.button_style_round)
-                dollars_btn.setBackgroundResource(R.drawable.button_style_round_primary)
                 amount_money_tv.text = "€"
                 interest_money_tv.text = "€"
                 monthly_money_tv.text = "€"
@@ -70,23 +87,22 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
      * On navigation drawer or bottom navigation itemSelected.
      */
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        //  Navigation Drawer item settings
         val id = item.itemId
 
         when (id) {
             R.id.drawer_first -> {
                 val intent = Intent(baseContext, MainActivity::class.java)
                 startActivity(intent)
-                Timber.i("Click Main")
+                Timber.i(getString(R.string.main_click))
             }
             R.id.drawer_second -> {
                 val intent = Intent(baseContext, SettingsActivity::class.java)
                 startActivity(intent)
-                Timber.i("Click Setting")
+                Timber.i(getString(R.string.settings_click))
             }
             R.id.drawer_third -> {
                 signOutUserFromFirebase()
-                Timber.i("Logout")
+                Timber.i(getString(R.string.logout))
             }
             else -> {
                 super.onOptionsItemSelected(item)
@@ -95,13 +111,16 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
         return true
     }
 
-
-    private fun loanSimulation() {
+    /**
+     * User can simulate a loan, with null check.
+     * @see SettingsPresenter.calculateLoan
+     */
+    override fun loanSimulation() {
         button_loans.setOnClickListener {
             when {
-                loan_amount_it.text.toString() == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to set an amount")
-                loan_rate_it.text.toString() == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to set a rate")
-                loan_years_it.text.toString() == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), "You have to set the years")
+                loan_amount_it.text.toString() == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), getString(R.string.set_amount))
+                loan_rate_it.text.toString() == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), getString(R.string.set_rate))
+                loan_years_it.text.toString() == "" -> Utils.snackBarPreset(findViewById(android.R.id.content), getString(R.string.set_years))
                 else -> {
                     val mAmount: Int = loan_amount_it.text.toString().toInt()
                     val mRate: Double = loan_rate_it.text.toString().toDouble()
@@ -123,6 +142,12 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
 
         }
     }
+
+    /**
+     * On Click the buttons of settings.
+     * For changing devise, or Themes, save them in SharedPreferences.
+     * @see applyNewTheme
+     */
     override fun onClick(v: View?) {
         when (v) {
             dollars_btn -> {
@@ -169,6 +194,9 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
         applyNewTheme()
     }
 
+    /**
+     * Apply a new theme to the app. Restart the app.
+     */
     override fun applyNewTheme() {
         finish()
         val intent = Intent.makeMainActivity(ComponentName(
@@ -188,6 +216,9 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
         }
     }
 
+    /**
+     * Set the listeners.
+     */
     override fun configureListeners() {
         settings_activity_nav_view.setNavigationItemSelectedListener(this)
         dollars_btn.setOnClickListener(this)

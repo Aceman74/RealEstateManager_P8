@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 17/09/19 23:02
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 17/09/19 16:21
+ *  * Last modified 19/09/19 19:15
  *
  */
 
@@ -31,7 +31,8 @@ import timber.log.Timber
 
 
 /**
- * A simple [Fragment] subclass.
+ * List Fragment is the fragment who show the list of all estate.
+ * Used in Main Activity.
  */
 class ListFragment : Fragment(), ListContract.ListViewInterface {
 
@@ -48,10 +49,16 @@ class ListFragment : Fragment(), ListContract.ListViewInterface {
         }
     }
 
+    /**
+     * Create view.
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
+    /**
+     * When create, init presenter, load devise preferences, set the recyclerview and Viewmodel.
+     */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mPresenter.attachView(this)
@@ -60,11 +67,17 @@ class ListFragment : Fragment(), ListContract.ListViewInterface {
         configureViewModel()
     }
 
+    /**
+     * Load devise.
+     */
     override fun loadSharedPref() {
         val shared = activity?.getSharedPreferences(getString(R.string.app_name), AppCompatActivity.MODE_PRIVATE)
         mDevise = shared?.getString("actual_devise", "$")!!
     }
 
+    /**
+     * Configure the livedata observer for passing the list to RecyclerView.
+     */
     override fun configureViewModel() {
         val mViewModelFactory = Injection.provideViewModelFactory(requireContext())
         this.estateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
@@ -78,6 +91,9 @@ class ListFragment : Fragment(), ListContract.ListViewInterface {
         })
     }
 
+    /**
+     * Launch detail activity on item clicked with Estate ID.
+     */
     override fun launchDetailActivity(it: Int) {
         val intent = Intent(context, EstateDetailActivity::class.java)
         intent.putExtra("mEstateId", it)

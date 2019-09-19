@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 12/09/19 20:50
+ *  * Created by Lionel Joffray on 19/09/19 21:47
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 12/09/19 14:39
+ *  * Last modified 19/09/19 20:07
  *
  */
 
@@ -12,8 +12,6 @@ import com.google.gson.annotations.SerializedName
 
 class Result {
 
-    @SerializedName("geometry")
-    private var mGeometry: Geometry? = null
     @SerializedName("name")
     var name: String? = null
     @SerializedName("types")
