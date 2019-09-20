@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 20/09/19 18:13
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 19:07
+ *  * Last modified 20/09/19 17:37
  *
  */
 
@@ -39,6 +39,7 @@ class EstateDetailViewHolder(view: View) : RecyclerView.ViewHolder(view), View.O
         text.text = (position + 1).toString() + "/" + pictures.size
         Glide.with(itemView)
                 .load(pictures[position].picturePath)
+
                 .into(image)
         itemView.setOnClickListener {
             listener(pictures[position].pictureId!!.toInt())

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 20/09/19 18:13
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 18:59
+ *  * Last modified 20/09/19 14:24
  *
  */
 
@@ -94,7 +94,6 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         setSupportActionBar(findViewById(R.id.search_toolbar))
         mPickerArray[4] = -1
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     /**

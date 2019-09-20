@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 20/09/19 18:13
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 21:47
+ *  * Last modified 20/09/19 17:40
  *
  */
 
@@ -41,7 +41,6 @@ import com.openclassrooms.realestatemanager.models.EstateAndPictures
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.utils.base.BaseActivity
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
-import com.openclassrooms.realestatemanager.viewmodels.PictureViewModel
 import kotlinx.android.synthetic.main.activity_detail_estate.*
 import kotlinx.android.synthetic.main.fragment_address_map.*
 import kotlinx.android.synthetic.main.fragment_description.*
@@ -62,7 +61,6 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
 
     lateinit var mRecyclerView: RecyclerView
     lateinit var mEstateViewModel: EstateViewModel
-    lateinit var mPictureViewModel: PictureViewModel
     private val mPresenter = EstateDetailPresenter()
     var mEstateId = -1
     var mUserId = ""
@@ -246,9 +244,6 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
     override fun configureRecyclerView() {
         mRecyclerView = slideshow_recyclerview
         mRecyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
-        val mViewModelFactory = Injection.provideViewModelFactory(applicationContext)
-        this.mEstateViewModel = ViewModelProviders.of(this, mViewModelFactory).get(EstateViewModel::class.java)
-        this.mPictureViewModel = ViewModelProviders.of(this, mViewModelFactory).get(PictureViewModel::class.java)
         mRecyclerView.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
         mEstateViewModel.getEstatePictures(mEstateId.toLong()).observe(this, Observer {
             mObservePicture = it
@@ -282,13 +277,13 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
                         police_station_nbr_ly.visibility = View.VISIBLE
                         title_nearby.visibility = View.VISIBLE
                         police++
-                        address_police_nbr.text = school.toString()
+                        address_police_nbr.text = police.toString()
                     }
                     it[0].nearby[i].type == "Hospital" -> {
                         hospital_nbr_ly.visibility = View.VISIBLE
                         address_title.visibility = View.VISIBLE
                         hospital++
-                        address_hospital_nbr.text = school.toString()
+                        address_hospital_nbr.text = hospital.toString()
                     }
                 }
                 i++

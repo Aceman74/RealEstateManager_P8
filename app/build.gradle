@@ -6,9 +6,9 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'jacoco-android'
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 20/09/19 18:13
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 10:35
+ *  * Last modified 20/09/19 10:27
  *
  */  // Google Play services Gradle plugin
 apply plugin: 'io.fabric'   //  CrashLytics
@@ -54,10 +54,10 @@ dependencies {
     implementation 'com.android.support:design:28.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.12'
     testImplementation 'androidx.test:core:1.2.0'
     testImplementation 'org.mockito:mockito-core:2.25.1'
     testImplementation "android.arch.core:core-testing:1.1.1"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation "android.arch.core:core-testing:1.1.1"
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

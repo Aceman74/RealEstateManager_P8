@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 20/09/19 18:13
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 19:15
+ *  * Last modified 20/09/19 14:12
  *
  */
 
@@ -53,7 +53,7 @@ fun String.formatAddress(string: String): String {
 /**
  * Used to save images, may be still usefull.
  */
-fun String.custromTimeStamp(): String {
+fun String.customTimeStamp(): String {
     val dateFormat = SimpleDateFormat("ddMM_HH:mm")
     return dateFormat.format(Date()).toString()
 }

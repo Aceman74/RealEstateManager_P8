@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 20/09/19 18:13
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 21:39
+ *  * Last modified 20/09/19 16:32
  *
  */
 
@@ -34,7 +34,7 @@ import kotlin.math.roundToInt
  * Created by Philippe on 21/02/2018.
  * Edited by Lionel.
  *
- * Class Utils contains all methods utils for the app.
+ * Objects class like Utils contains all methods utils for the app.
  */
 
 object Utils {
@@ -168,7 +168,7 @@ object Utils {
                 } else {
                     fileDest = File(mEstatePhotosDir.path + "/" + pictureName + ".jpg")
                 }
-                if (!fileDest.exists()) {
+                if (fileDest.totalSpace != file.totalSpace) {
                     copyFile(file, fileDest)
                 }
                 savePicture(pictureName, fileDest.toString(), eid, mPictureViewModel)
@@ -188,33 +188,27 @@ object Utils {
      * Save a Nearby object to database.
      */
     fun createNearby(eid: Long, mSchool: ArrayList<String>, mPolice: List<Result>?, mHospital: List<Result>?, mEstateViewModel: EstateViewModel) {
-        when {
-            mSchool.size > 0 -> {
-                var i = 0
-                while (i < mSchool.size) {
-                    val nearby = com.openclassrooms.realestatemanager.models.Nearby(null, eid, "School", mSchool[i])
-                    mEstateViewModel.createNearby(nearby)
-                    i++
-                }
-            }
-            mPolice!!.isNotEmpty() -> {
-                var i = 0
-                while (i < mPolice.size) {
-                    val nearby = com.openclassrooms.realestatemanager.models.Nearby(null, eid, "Police Station", mPolice[i].name!!)
-                    mEstateViewModel.createNearby(nearby)
-                    i++
-                }
-            }
-            mHospital!!.isNotEmpty() -> {
-                var i = 0
-                while (i < mHospital.size) {
-                    val nearby = com.openclassrooms.realestatemanager.models.Nearby(null, eid, "Hospital", mHospital[i].name!!)
-                    mEstateViewModel.createNearby(nearby)
-                    i++
-                }
-            }
+        var i = 0
+        var j = 0
+        var k = 0
+
+        while (i < mSchool.size) {
+            val nearby = com.openclassrooms.realestatemanager.models.Nearby(null, eid, "School", mSchool[i])
+            mEstateViewModel.createNearby(nearby)
+            i++
+        }
+        while (j < mPolice!!.size) {
+            val nearby = com.openclassrooms.realestatemanager.models.Nearby(null, eid, "Police Station", mPolice[i].name!!)
+            mEstateViewModel.createNearby(nearby)
+            j++
+        }
+        while (k < mHospital!!.size) {
+            val nearby = com.openclassrooms.realestatemanager.models.Nearby(null, eid, "Hospital", mHospital[i].name!!)
+            mEstateViewModel.createNearby(nearby)
+            k++
         }
     }
+
 
     /**
      * Start a fade animation, for Recyclerview items.
@@ -225,45 +219,41 @@ object Utils {
     }
 
     /**
-     * This class is used in numberpicker, makes save easier in Estate (only Int no full string).
+     * This object is used in numberpicker, makes save easier in Estate (only Int no full string).
      */
-    class ListOfString {
+    object ListOfString {
+        /**
+         * A list of Estate Type.
+         */
+        fun listOfType(): Array<String> {
+            return listOf("Apartment", "Castle", "Chalet / Cottage", "Country House", "Hotel",
+                    "House", "Island", "Land", "Loft", "Mansion", "Office", "Penthouse",
+                    "Residential complex", "Townhouse", "Villa").toTypedArray().sortedArray()
+        }
 
-        companion object {
-            /**
-             * A list of Estate Type.
-             */
-            fun listOfType(): Array<String> {
-                return listOf("Apartment", "Castle", "Chalet / Cottage", "Country House", "Hotel",
-                        "House", "Island", "Land", "Loft", "Mansion", "Office", "Penthouse",
-                        "Residential complex", "Townhouse", "Villa").toTypedArray().sortedArray()
-            }
+        /**
+         * A list of Neighborhood Type.
+         */
+        fun listOfNeighborhood(): Array<String> {
 
-            /**
-             * A list of Neighborhood Type.
-             */
-            fun listOfNeighborhood(): Array<String> {
+            return listOf("Albany", "Allegany", "Bronx", "Broome", "Cattaraugus", "Cayuga",
+                    "Chautauqua", "Chemung", "Chenango", "Clinton", "Columbia", "Cortland",
+                    "Delaware", "Dutchess", "Erie", "Essex", "Franklin", "Fulton", "Genesee",
+                    "Greene", "Hamilton", "Herkimer", "Jefferson", "Kings (Brooklyn)",
+                    "Lewis", "Livingston", "Madison", "Monroe", "Montgomery", "Nassau",
+                    "New York (Manhattan)", "Niagara", "Oneida", "Onondaga", "Ontario",
+                    "Orange", "Orleans", "Oswego", "Otsego", "Putnam", "Queens", "Rensselaer",
+                    "Richmond (Staten Island)", "Rockland", "Saint Lawrence", "Saratoga",
+                    "Schenectady", "Schoharie", "Schuyler", "Seneca", "Steuben", "Suffolk",
+                    "Sullivan", "Tioga", "Tompkins", "Ulster", "Warren", "Washington",
+                    "Wayne", "Westchester", "Wyoming", "Yates").toTypedArray().sortedArray()
+        }
 
-                return listOf("Albany", "Allegany", "Bronx", "Broome", "Cattaraugus", "Cayuga",
-                        "Chautauqua", "Chemung", "Chenango", "Clinton", "Columbia", "Cortland",
-                        "Delaware", "Dutchess", "Erie", "Essex", "Franklin", "Fulton", "Genesee",
-                        "Greene", "Hamilton", "Herkimer", "Jefferson", "Kings (Brooklyn)",
-                        "Lewis", "Livingston", "Madison", "Monroe", "Montgomery", "Nassau",
-                        "New York (Manhattan)", "Niagara", "Oneida", "Onondaga", "Ontario",
-                        "Orange", "Orleans", "Oswego", "Otsego", "Putnam", "Queens", "Rensselaer",
-                        "Richmond (Staten Island)", "Rockland", "Saint Lawrence", "Saratoga",
-                        "Schenectady", "Schoharie", "Schuyler", "Seneca", "Steuben", "Suffolk",
-                        "Sullivan", "Tioga", "Tompkins", "Ulster", "Warren", "Washington",
-                        "Wayne", "Westchester", "Wyoming", "Yates").toTypedArray().sortedArray()
-            }
-
-            /**
-             * A list of Availability Type.
-             */
-            fun listOfAvailable(): Array<String> {
-                return listOf("For Sale", "Sold").toTypedArray()
-            }
-
+        /**
+         * A list of Availability Type.
+         */
+        fun listOfAvailable(): Array<String> {
+            return listOf("For Sale", "Sold").toTypedArray()
         }
 
     }

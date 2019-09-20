@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 16/09/19 21:09
+ *  * Created by Lionel Joffray on 20/09/19 18:13
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 16/09/19 16:07
+ *  * Last modified 20/09/19 17:25
  *
  */
 
@@ -44,7 +44,6 @@ class PictureDaoTest {
 
     private val USER_DEMO = User(USER_ID, "Aceman", "azerty@qwerty.fr", "https://ceci_est_un_test.fr", date)
     private val HOTEL_ESTATE = Estate(ESTATE_ID, USER_ID, 3, 5, "5 000 000", "Greate Hostel", 850, 20, 20, 20, 0, "bob", date, null, null, 10.1, 10.1, "New York")
-    private val HOUSE_ESTATE = Estate(ESTATE_ID_1, USER_ID, 8, 22, "3 333 000", "Greate House", 550, 10, 2, 4, 1, "bob", date, null, null, 10.1, 10.1, "New York")
     private val PICTURE_DEMO = Picture(1, ESTATE_ID, "Photo 1", "//Device")
 
 

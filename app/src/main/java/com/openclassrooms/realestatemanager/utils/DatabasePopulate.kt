@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 20/09/19 18:13
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 21:35
+ *  * Last modified 20/09/19 18:13
  *
  */
 
@@ -21,6 +21,23 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 class DatabasePopulate {
 
     companion object {
+
+        fun userTest(): RoomDatabase.Callback {
+            return object : RoomDatabase.Callback() {
+                override fun onCreate(db: SupportSQLiteDatabase) {
+                    super.onCreate(db)
+                    val user1 = ContentValues()
+                    user1.put("userId", "74es9wx1c")
+                    user1.put("username", "Jean Paul")
+                    user1.put("email", "azerty@qwerty.com")
+                    user1.put("urlPicture", "https://ceci_est_un_test.com")
+                    user1.put("dateCreated", "2019")
+
+                    db.insert("User", OnConflictStrategy.IGNORE, user1)
+
+                }
+            }
+        }
 
         fun populate(): RoomDatabase.Callback {
             return object : RoomDatabase.Callback() {

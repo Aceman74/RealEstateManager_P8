@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 20/09/19 18:13
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 21:47
+ *  * Last modified 20/09/19 17:49
  *
  */
 
@@ -113,7 +113,6 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
     var mSoldDate: String? = null
     @State
     var mPickerArray = IntArray(9)
-    @State
     var mPicturePathArray = arrayListOf("", "", "", "", "", "", "", "")
     @State
     var mSchool = ArrayList<String>()
@@ -437,6 +436,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.latLng, 14f))
                 mPresenter.nearbySchool(locat, "school", 500)
                 mPresenter.nearbyPolice(locat, "police", 500)
+                mPresenter.nearbyHospital(locat, "hospital", 500)
 
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // Handle the error.

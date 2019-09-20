@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /**
+  ~  * Created by Lionel Joffray on 20/09/19 18:13
+  ~  * Copyright (c) 2019 . All rights reserved.
+  ~  * Last modified 20/09/19 18:13
+  ~  */
+  -->
+
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/settings_dl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/settings_activity_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            tools:context=".activities.settings.SettingsActivity"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/settings_tb"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <Button
+                android:id="@+id/theme_0_btn"
+                android:layout_width="@dimen/round_btn"
+                android:layout_height="@dimen/round_btn"
+                android:background="@drawable/button_style_round_primary"
+                android:text="accent"
+                android:textAllCaps="false"
+                android:textColor="?colorAccent"
+                android:textSize="@dimen/small_text_size"
+                android:theme="@style/AppTheme"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintHorizontal_bias="0.8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9"
+                app:layout_constraintVertical_bias="0.1" />
+
+            <Button
+                android:id="@+id/theme_2_btn"
+                android:layout_width="@dimen/round_btn"
+                android:layout_height="@dimen/round_btn"
+                android:background="@drawable/button_style_round_primary"
+                android:text="accent"
+                android:textAllCaps="false"
+                android:textColor="?colorAccent"
+                android:textSize="@dimen/small_text_size"
+                android:theme="@style/AppTheme_2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintHorizontal_bias="0.8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/theme_0_btn"
+                app:layout_constraintVertical_bias="0.209" />
+
+            <Button
+                android:id="@+id/theme_3_btn"
+                android:layout_width="@dimen/round_btn"
+                android:layout_height="@dimen/round_btn"
+                android:background="@drawable/button_style_round_primary"
+                android:text="accent"
+                android:textAllCaps="false"
+                android:textColor="?colorAccent"
+                android:textSize="@dimen/small_text_size"
+                android:theme="@style/AppTheme_3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/theme_1_btn"
+                app:layout_constraintVertical_bias="0.209" />
+
+            <Button
+                android:id="@+id/theme_1_btn"
+                android:layout_width="@dimen/round_btn"
+                android:layout_height="@dimen/round_btn"
+                android:background="@drawable/button_style_round_primary"
+                android:text="accent"
+                android:textAllCaps="false"
+                android:textColor="?colorAccent"
+                android:textSize="@dimen/small_text_size"
+                android:theme="@style/AppTheme_1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/textView9"
+                app:layout_constraintVertical_bias="0.1" />
+
+            <Button
+                android:id="@+id/button_loans"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/square_logo"
+                android:background="@drawable/button_style_round_primary"
+                android:text="@string/simulate"
+                android:textAllCaps="false"
+                android:textColor="?textAppearanceHeadline1"
+                android:textSize="@dimen/small_text_size"
+                app:layout_constraintBottom_toTopOf="@+id/loan_years_it"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.623"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/loan_rate_it"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <Button
+                android:id="@+id/dollars_btn"
+                android:layout_width="@dimen/round_btn"
+                android:layout_height="@dimen/round_btn"
+                android:layout_marginTop="@dimen/large_margin"
+                android:background="@drawable/button_style_round_primary"
+                android:text="$"
+                android:textColor="?textAppearanceHeadline1"
+                android:textSize="@dimen/small_text_size"
+                app:layout_constraintBottom_toTopOf="@+id/textView13"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintHorizontal_bias="0.906"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/euros_btn"
+                android:layout_width="@dimen/round_btn"
+                android:layout_height="@dimen/round_btn"
+                android:layout_marginTop="@dimen/large_margin"
+                android:background="@drawable/button_style_round_primary"
+                android:text="€"
+                android:textColor="?textAppearanceHeadline1"
+                android:textSize="@dimen/small_text_size"
+                app:layout_constraintBottom_toTopOf="@+id/textView13"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.085"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/textView10"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/amount_money_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin"
+                android:text="€"
+                android:textColor="?textAppearanceHeadline2"
+                android:textSize="@dimen/small_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/loan_rate_it"
+                app:layout_constraintStart_toEndOf="@+id/loan_amount_it"
+                app:layout_constraintTop_toTopOf="@+id/loan_amount_it" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin"
+                android:text="%"
+                android:textColor="?textAppearanceHeadline2"
+                android:textSize="@dimen/small_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/loan_rate_it"
+                app:layout_constraintStart_toEndOf="@+id/loan_rate_it"
+                app:layout_constraintTop_toTopOf="@+id/loan_rate_it" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin"
+                android:text="@string/years"
+                android:textColor="?textAppearanceHeadline2"
+                android:textSize="@dimen/small_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/loan_years_it"
+                app:layout_constraintStart_toEndOf="@+id/loan_years_it"
+                app:layout_constraintTop_toBottomOf="@+id/loan_rate_it" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/choose_a_currency"
+                android:textColor="?textAppearanceHeadline2"
+                android:textSize="@dimen/large_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintHorizontal_bias="0.502"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/settings_tb"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/real_estate_loans"
+                android:textColor="?textAppearanceHeadline2"
+                android:textSize="@dimen/large_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintHorizontal_bias="0.505"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toBottomOf="@+id/textView10"
+                app:layout_constraintVertical_bias="0.121" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loan_amount"
+                android:textColor="?textAppearanceHeadline2"
+                android:textSize="@dimen/small_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/loan_rate_it"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintHorizontal_bias="0.336"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/loan_amount_it" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loan_term"
+                android:textColor="?textAppearanceHeadline2"
+                android:textSize="@dimen/small_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/loan_years_it"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintHorizontal_bias="0.412"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/loan_years_it" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/interest_rate"
+                android:textColor="?textAppearanceHeadline2"
+                android:textSize="@dimen/small_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/loan_years_it"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintHorizontal_bias="0.341"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/loan_rate_it" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_a_theme_color"
+                android:textColor="?textAppearanceHeadline2"
+                android:textSize="@dimen/large_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.808" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/settings_tb"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="?colorPrimary"
+                android:minHeight="?actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:title="@string/settings"
+                app:titleTextColor="?textAppearanceHeadline1" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin"
+                android:visibility="invisible"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="2dp"
+                app:layout_constraintBottom_toTopOf="@+id/textView9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loan_years_it">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toTopOf="@+id/textView9"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/loan_years_it"
+                    app:layout_constraintVertical_bias="1.0">
+
+                    <TextView
+                        android:id="@+id/textView26"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/small_margin"
+                        android:text="@string/months"
+                        android:textColor="?textAppearanceHeadline2"
+                        android:textSize="@dimen/small_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/loan_duration_tv"
+                        app:layout_constraintStart_toEndOf="@+id/loan_duration_tv"
+                        app:layout_constraintTop_toTopOf="@+id/loan_duration_tv" />
+
+                    <TextView
+                        android:id="@+id/textView21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/total_interest_paid"
+                        android:textColor="?textAppearanceHeadline2"
+                        android:textSize="@dimen/small_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.75" />
+
+                    <TextView
+                        android:id="@+id/loan_duration_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="duration"
+                        android:textColor="?colorAccent"
+                        android:textSize="@dimen/small_title_size"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView18"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.217"
+                        app:layout_constraintStart_toEndOf="@+id/textView18"
+                        app:layout_constraintTop_toTopOf="@+id/textView18"
+                        app:layout_constraintVertical_bias="0.5" />
+
+                    <TextView
+                        android:id="@+id/loan_rate_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4"
+                        android:textColor="?colorAccent"
+                        android:textSize="@dimen/small_title_size"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="@+id/loan_monthly_tv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.547"
+                        app:layout_constraintStart_toEndOf="@+id/loan_monthly_tv"
+                        app:layout_constraintTop_toTopOf="@+id/loan_monthly_tv"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                    <TextView
+                        android:id="@+id/monthly_money_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/small_margin"
+                        android:text="€"
+                        android:textColor="?textAppearanceHeadline2"
+                        android:textSize="@dimen/small_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/loan_monthly_tv"
+                        app:layout_constraintEnd_toStartOf="@+id/loan_monthly_tv"
+                        app:layout_constraintTop_toTopOf="@+id/loan_monthly_tv" />
+
+                    <TextView
+                        android:id="@+id/loan_monthly_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/price"
+                        android:textColor="?colorAccent"
+                        android:textSize="@dimen/small_title_size"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView20"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.248"
+                        app:layout_constraintStart_toEndOf="@+id/textView20"
+                        app:layout_constraintTop_toTopOf="@+id/textView20"
+                        app:layout_constraintVertical_bias="0.5" />
+
+                    <TextView
+                        android:id="@+id/textView31"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/small_margin"
+                        android:text="%"
+                        android:textColor="?textAppearanceHeadline2"
+                        android:textSize="@dimen/small_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/loan_rate_tv"
+                        app:layout_constraintStart_toEndOf="@+id/loan_rate_tv"
+                        app:layout_constraintTop_toTopOf="@+id/loan_rate_tv" />
+
+                    <TextView
+                        android:id="@+id/interest_money_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/small_margin"
+                        android:text="€"
+                        android:textColor="?textAppearanceHeadline2"
+                        android:textSize="@dimen/small_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/loan_interest_tv"
+                        app:layout_constraintEnd_toStartOf="@+id/loan_interest_tv"
+                        app:layout_constraintTop_toTopOf="@+id/loan_interest_tv" />
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/loan_duration"
+                        android:textColor="?textAppearanceHeadline2"
+                        android:textSize="@dimen/small_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.167"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.3" />
+
+                    <TextView
+                        android:id="@+id/loan_interest_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/price"
+                        android:textColor="?colorAccent"
+                        android:textSize="@dimen/small_title_size"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView21"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.231"
+                        app:layout_constraintStart_toEndOf="@+id/textView21"
+                        app:layout_constraintTop_toTopOf="@+id/textView21"
+                        app:layout_constraintVertical_bias="0.5" />
+
+                    <TextView
+                        android:id="@+id/textView20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/monthly_payment"
+                        android:textColor="?textAppearanceHeadline2"
+                        android:textSize="@dimen/small_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@+id/textView21"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.098"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView18"
+                        app:layout_constraintVertical_bias="0.462" />
+
+                    <TextView
+                        android:id="@+id/textView32"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/small_margin"
+                        android:text="rate :"
+                        android:textColor="?textAppearanceHeadline2"
+                        android:textSize="@dimen/small_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/loan_rate_tv"
+                        app:layout_constraintEnd_toStartOf="@+id/loan_rate_tv"
+                        app:layout_constraintTop_toTopOf="@+id/loan_rate_tv" />
+
+                    <TextView
+                        android:id="@+id/textView17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/result"
+                        android:textColor="?textAppearanceHeadline2"
+                        android:textSize="@dimen/normal_title_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.084" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loan_amount_it"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="amount"
+                android:inputType="number"
+                android:maxLength="12"
+                android:maxLines="1"
+                android:textColor="?colorAccent"
+                android:textSize="@dimen/small_title_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loan_years_it"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="years"
+                android:inputType="number"
+                android:maxLength="2"
+                android:maxLines="1"
+                android:textColor="?colorAccent"
+                android:textSize="@dimen/small_title_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loan_rate_it" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loan_rate_it"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="rate"
+                android:inputType="numberDecimal"
+                android:maxLength="4"
+                android:maxLines="1"
+                android:textColor="?colorAccent"
+                android:textSize="@dimen/small_title_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loan_amount_it" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/settings_activity_nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/primaryDarkColor"
+        android:fitsSystemWindows="true"
+        app:elevation="@dimen/normal_margin"
+        app:headerLayout="@layout/navigation_drawer_header"
+        app:itemIconTint="@color/primaryTextColor"
+        app:itemTextColor="@color/primaryTextColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/settings_dl"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/navigation_drawer">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="@dimen/normal_margin"
+            android:src="@drawable/logo_black" />
+
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>

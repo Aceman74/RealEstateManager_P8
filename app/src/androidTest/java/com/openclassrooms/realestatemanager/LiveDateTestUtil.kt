@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 29/08/19 22:26
+ *  * Created by Lionel Joffray on 20/09/19 18:13
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 29/08/19 22:22
+ *  * Last modified 20/09/19 12:47
  *
  */
 
@@ -17,6 +17,9 @@ import java.util.concurrent.TimeUnit
 
 /**
  * Created by Lionel JOFFRAY - on 28/08/2019.
+ *
+ * Utils class for livedata Testing in
+ * @see EstateDaoTest
  */
 object LiveDataTestUtil {
     @Throws(InterruptedException::class)

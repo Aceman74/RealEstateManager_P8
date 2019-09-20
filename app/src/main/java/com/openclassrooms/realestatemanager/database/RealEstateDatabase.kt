@@ -1,14 +1,15 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 20/09/19 18:13
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 19:10
+ *  * Last modified 20/09/19 10:34
  *
  */
 
 package com.openclassrooms.realestatemanager.database
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -50,6 +51,18 @@ abstract class RealEstateDatabase : RoomDatabase() {
                         RealEstateDatabase::class.java, "EstateDatabase.db")
                         .addCallback(DatabasePopulate.populate())
                         .build()
-    }
 
+        /**
+         * Switches the internal implementation with an empty in-memory database.
+         *
+         * @param context The context.
+         */
+        @VisibleForTesting
+        fun switchToInMemory(context: Context) {
+            INSTANCE = Room.inMemoryDatabaseBuilder(context.applicationContext,
+                    RealEstateDatabase::class.java)
+                    .addCallback(DatabasePopulate.userTest())
+                    .build()
+        }
+    }
 }

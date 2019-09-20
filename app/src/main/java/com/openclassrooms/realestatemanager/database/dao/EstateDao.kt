@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 20/09/19 18:13
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 19:07
+ *  * Last modified 20/09/19 10:46
  *
  */
 
@@ -87,7 +87,7 @@ interface EstateDao {
     @Query("SELECT * FROM Estate WHERE estateId LIKE :estateId")
     fun selectEstateByEid(estateId: Long): Cursor
 
-    @Query("SELECT * FROM Estate WHERE estateId LIKE :estateId")
+    @Query("DELETE FROM Estate WHERE estateId LIKE :estateId")
     fun deleteById(estateId: Long): Int
 
 }
