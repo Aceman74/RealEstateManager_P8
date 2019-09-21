@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 20/09/19 18:13
+ *  * Created by Lionel Joffray on 21/09/19 12:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 20/09/19 16:32
+ *  * Last modified 21/09/19 11:43
  *
  */
 
@@ -156,7 +156,6 @@ object Utils {
      * Method who convert source path to a custom unique path for saving in Database.
      */
     fun savePictureToCustomPath(eid: Long, mPicturePathArray: ArrayList<String>, mEstatePhotosDir: File, displayName: String?, mPictureViewModel: PictureViewModel) {
-
         var i = 0
         lateinit var fileDest: File
         while (i < mPicturePathArray.size) {
@@ -168,9 +167,8 @@ object Utils {
                 } else {
                     fileDest = File(mEstatePhotosDir.path + "/" + pictureName + ".jpg")
                 }
-                if (fileDest.totalSpace != file.totalSpace) {
                     copyFile(file, fileDest)
-                }
+
                 savePicture(pictureName, fileDest.toString(), eid, mPictureViewModel)
             }
             i++
@@ -197,13 +195,13 @@ object Utils {
             mEstateViewModel.createNearby(nearby)
             i++
         }
-        while (j < mPolice!!.size) {
-            val nearby = com.openclassrooms.realestatemanager.models.Nearby(null, eid, "Police Station", mPolice[i].name!!)
+        while (mPolice != null && j < mPolice.size) {
+            val nearby = com.openclassrooms.realestatemanager.models.Nearby(null, eid, "Police Station", mPolice[j].name!!)
             mEstateViewModel.createNearby(nearby)
             j++
         }
-        while (k < mHospital!!.size) {
-            val nearby = com.openclassrooms.realestatemanager.models.Nearby(null, eid, "Hospital", mHospital[i].name!!)
+        while (mHospital != null && k < mHospital.size) {
+            val nearby = com.openclassrooms.realestatemanager.models.Nearby(null, eid, "Hospital", mHospital[k].name!!)
             mEstateViewModel.createNearby(nearby)
             k++
         }

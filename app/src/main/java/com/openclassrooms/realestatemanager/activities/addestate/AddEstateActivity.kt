@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 20/09/19 18:13
+ *  * Created by Lionel Joffray on 21/09/19 12:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 20/09/19 17:49
+ *  * Last modified 21/09/19 12:04
  *
  */
 
@@ -253,6 +253,8 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                     add_estate_state_txt.text = getString(R.string.sold)
                     add_estate_state_txt.setTextColor(resources.getColor(R.color.quantum_googred))
                 }
+                val locat = result.estate.latitude.toString() + "," + result.estate.longitude.toString()
+                callForNearby(locat)
                 mMarker.position = LatLng(result.estate.latitude!!, result.estate.longitude!!)
                 mMarker.title = "That's Here !"
                 var i = 0
@@ -260,6 +262,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                     mPicturePathArray[i] = result.pictures[i].picturePath
                     i++
                 }
+
                 first_pic.setPadding(0, 0, 0, 0)
                 second_pic.setPadding(0, 0, 0, 0)
                 Glide.with(this)
@@ -314,7 +317,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
             mEstateViewModel.createEstate(estate, mPicturePathArray, mEstatePhotosDir, currentUser!!.displayName, mPictureViewModel, mEstateViewModel, mSchool, mPolices, mHospital)
         } else {
             val estate = Estate(mIntentEId, currentUser!!.uid, mType, mNeighborhood, mPriceResult, mDescResult, mSqft, mRooms, mBathrooms, mBedrooms, mAvailable, currentUser!!.displayName!!, mDateCreate, Utils.todayDate, mSoldDate, mMarker.position.latitude, mMarker.position.longitude, mAddress)
-            this.mEstateViewModel.updateEstate(estate, mIntentEId, mPicturePathArray, mEstatePhotosDir, currentUser!!.displayName, mPictureViewModel)
+            this.mEstateViewModel.createEstate(estate, mPicturePathArray, mEstatePhotosDir, currentUser!!.displayName, mPictureViewModel, mEstateViewModel, mSchool, mPolices, mHospital)
         }
     }
 
@@ -434,10 +437,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 mMarker.position = place.latLng
                 val locat = place.latLng?.latitude.toString() + "," + place.latLng?.longitude.toString()
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.latLng, 14f))
-                mPresenter.nearbySchool(locat, "school", 500)
-                mPresenter.nearbyPolice(locat, "police", 500)
-                mPresenter.nearbyHospital(locat, "hospital", 500)
-
+                callForNearby(locat)
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // Handle the error.
                 val status = Autocomplete.getStatusFromIntent(data!!)
@@ -446,6 +446,16 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 Utils.snackBarPreset(this.findViewById(android.R.id.content), getString(R.string.error_try_again))
             }
         }
+    }
+
+    /**
+     * Call for nearby to maps.
+     */
+    override fun callForNearby(locat: String) {
+
+        mPresenter.nearbySchool(locat, "school", 500)
+        mPresenter.nearbyPolice(locat, "police", 500)
+        mPresenter.nearbyHospital(locat, "hospital", 500)
     }
 
     /**

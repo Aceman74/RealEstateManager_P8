@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 21/09/19 12:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 20:20
+ *  * Last modified 21/09/19 12:09
  *
  */
 
@@ -57,6 +57,9 @@ class PicturerDataRepository(val pictureDao: PictureDao) {
         pictureDao.deletePicture(picture)
     }
 
+    fun deletePictureByEid(pictureEid: Long): Int {
+        return pictureDao.deletePictureByEid(pictureEid)
+    }
     // --- UPDATE ---
     fun updatePicture(picture: Picture) {
         pictureDao.updatePicture(picture)

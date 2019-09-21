@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 21/09/19 12:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 19:07
+ *  * Last modified 21/09/19 12:09
  *
  */
 
@@ -40,6 +40,9 @@ interface PictureDao {
 
     @Delete
     fun deletePicture(picture: Picture)
+
+    @Query("DELETE FROM Picture WHERE estateId_fk LIKE :estateId_fk")
+    fun deletePictureByEid(estateId_fk: Long): Int
 
     @Update
     fun updatePicture(vararg picture: Picture)

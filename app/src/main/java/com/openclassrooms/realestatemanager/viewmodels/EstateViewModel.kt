@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 20/09/19 18:13
+ *  * Created by Lionel Joffray on 21/09/19 12:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 20/09/19 17:32
+ *  * Last modified 21/09/19 12:05
  *
  */
 
@@ -136,8 +136,8 @@ class EstateViewModel(application: Application, val executor: Executor) : Androi
     fun updateEstate(estate: Estate, eid: Long, mPath: ArrayList<String>, mDir: File, mName: String?, mViewModel: PictureViewModel) {
         executor.execute {
             repository.createEstate(estate)
+            Utils.savePictureToCustomPath(eid, mPath, mDir, mName, mViewModel)
         }
-        Utils.savePictureToCustomPath(eid, mPath, mDir, mName, mViewModel)
     }
 
 }

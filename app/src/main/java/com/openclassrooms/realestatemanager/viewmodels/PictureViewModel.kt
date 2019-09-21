@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 21/09/19 12:09
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 20:20
+ *  * Last modified 21/09/19 12:09
  *
  */
 
@@ -72,6 +72,9 @@ class PictureViewModel(application: Application, val executor: Executor) : Andro
         executor.execute { repository.deletePicture(picture) }
     }
 
+    fun deletePictureEid(pictureEid: Long) {
+        executor.execute { val int = repository.deletePictureByEid(pictureEid) }
+    }
     fun updatePicture(picture: Picture) {
         executor.execute { repository.updatePicture(picture) }
     }
