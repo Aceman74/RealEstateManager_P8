@@ -1,14 +1,15 @@
 /*
  * *
- *  * Created by Lionel Joffray on 21/09/19 12:09
+ *  * Created by Lionel Joffray on 23/09/19 21:08
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 21/09/19 12:05
+ *  * Last modified 23/09/19 21:08
  *
  */
 
 package com.openclassrooms.realestatemanager.viewmodels
 
 import android.app.Application
+import android.content.Context
 import androidx.annotation.Nullable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -109,10 +110,10 @@ class EstateViewModel(application: Application, val executor: Executor) : Androi
      * @see Utils.savePictureToCustomPath
      * @see Utils.createNearby
      */
-    fun createEstate(estate: Estate, mPath: ArrayList<String>, mDir: File, mName: String?, mViewModel: PictureViewModel, mEstateViewModel: EstateViewModel, mSchool: java.util.ArrayList<String>, mPolice: List<Result>?, mHospital: List<Result>?) {
+    fun createEstate(estate: Estate, mPath: ArrayList<String>, mContext: Context, mName: String?, mViewModel: PictureViewModel, mEstateViewModel: EstateViewModel, mSchool: java.util.ArrayList<String>, mPolice: List<Result>?, mHospital: List<Result>?) {
         executor.execute {
             val eid: Long = repository.createEstate(estate)
-            Utils.savePictureToCustomPath(eid, mPath, mDir, mName, mViewModel)
+            Utils.savePictureToCustomPath(eid, mPath, mContext, mName, mViewModel)
             Utils.createNearby(eid, mSchool, mPolice, mHospital, mEstateViewModel)
         }
     }
@@ -136,7 +137,6 @@ class EstateViewModel(application: Application, val executor: Executor) : Androi
     fun updateEstate(estate: Estate, eid: Long, mPath: ArrayList<String>, mDir: File, mName: String?, mViewModel: PictureViewModel) {
         executor.execute {
             repository.createEstate(estate)
-            Utils.savePictureToCustomPath(eid, mPath, mDir, mName, mViewModel)
         }
     }
 

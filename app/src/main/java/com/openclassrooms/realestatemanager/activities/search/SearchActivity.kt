@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 20/09/19 18:13
+ *  * Created by Lionel Joffray on 23/09/19 21:08
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 20/09/19 14:24
+ *  * Last modified 23/09/19 21:08
  *
  */
 
@@ -77,6 +77,14 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
             mPriceMax = it.priceMax
         }
         onSearchBtnClick()
+    }
+
+    /**
+     * On back anim.
+     */
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     /**
@@ -234,6 +242,7 @@ class SearchActivity(override val activityLayout: Int = R.layout.activity_search
         val intent = Intent(applicationContext, EstateDetailActivity::class.java)
         intent.putExtra("mEstateId", it)
         startActivity(intent)
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     /**

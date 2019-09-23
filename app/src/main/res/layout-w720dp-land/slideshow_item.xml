@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ /**
-  ~  * Created by Lionel Joffray on 19/09/19 21:47
+  ~  * Created by Lionel Joffray on 23/09/19 21:08
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 18/09/19 23:09
+  ~  * Last modified 23/09/19 18:30
   ~  */
   -->
 
@@ -17,7 +17,7 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/slideshow_img"
+        android:id="@+id/estate_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="center">

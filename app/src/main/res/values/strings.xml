@@ -1,8 +1,8 @@
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 19/09/19 21:47
+  ~  * Created by Lionel Joffray on 23/09/19 21:08
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 19/09/19 18:59
+  ~  * Last modified 23/09/19 17:39
   ~  */
   -->
 
@@ -104,4 +104,5 @@
     <string name="set_amount">You have to set an amount</string>
     <string name="set_rate">You have to set a rate</string>
     <string name="set_years">You have to set the years</string>
+    <string name="enter">Enter</string>
 </resources>

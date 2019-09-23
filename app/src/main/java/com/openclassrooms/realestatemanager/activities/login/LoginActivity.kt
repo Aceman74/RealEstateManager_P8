@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 23/09/19 21:08
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 20:38
+ *  * Last modified 23/09/19 21:08
  *  
  */
 
@@ -66,9 +66,9 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                 askPermission()
             } else {
                 if (isCurrentUserLogged == true) {
-                    //  mPresenter.alreadyLogged()
                     val intent = Intent(baseContext, MainActivity::class.java)
                     startActivity(intent)
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 } else {
                     startSignInActivity()
                 }
@@ -111,6 +111,8 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
     override fun configureViewModel() {
         val mViewModelFactory = Injection.provideViewModelFactory(this)
         this.mUserViewModel = ViewModelProviders.of(this, mViewModelFactory).get(UserViewModel::class.java)
+        if (isCurrentUserLogged!!)
+            login_btn.text = getString(R.string.enter)
     }
 
     /**

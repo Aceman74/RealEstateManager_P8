@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 23/09/19 21:08
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 21:35
+ *  * Last modified 23/09/19 21:08
  *
  */
 
@@ -108,6 +108,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 .addOnFailureListener(onFailureListener())
         val start = Intent(applicationContext, LoginActivity::class.java)
         startActivity(start)
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     /**

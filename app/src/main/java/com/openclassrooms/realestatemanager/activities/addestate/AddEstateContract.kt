@@ -1,18 +1,16 @@
 /*
  * *
- *  * Created by Lionel Joffray on 21/09/19 12:09
+ *  * Created by Lionel Joffray on 23/09/19 21:08
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 21/09/19 12:09
+ *  * Last modified 23/09/19 21:08
  *
  */
 
 package com.openclassrooms.realestatemanager.activities.addestate
 
 
-import android.content.Context
 import com.openclassrooms.realestatemanager.models.places.nearby_search.Nearby
 import com.openclassrooms.realestatemanager.utils.base.BaseView
-import java.io.File
 
 /**
  * Created by Lionel JOFFRAY - on 28/05/2019.
@@ -24,7 +22,6 @@ interface AddEstateContract {
 
     interface AddEstatePresenterInterface {
 
-        fun createPhotosFolder(context: Context): File
         fun nearbySchool(mLocation: String, mType: String, mRadius: Int)
         fun nearbyPolice(mLocation: String, mType: String, mRadius: Int)
         fun nearbyHospital(mLocation: String, mType: String, mRadius: Int)

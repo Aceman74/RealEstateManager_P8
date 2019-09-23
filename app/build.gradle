@@ -6,9 +6,9 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'jacoco-android'
 /*
  * *
- *  * Created by Lionel Joffray on 20/09/19 18:13
+ *  * Created by Lionel Joffray on 23/09/19 21:08
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 20/09/19 10:27
+ *  * Last modified 23/09/19 17:27
  *
  */  // Google Play services Gradle plugin
 apply plugin: 'io.fabric'   //  CrashLytics
@@ -44,7 +44,13 @@ android {
         sourceCompatibility = "1.8"
         targetCompatibility = "1.8"
     }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
     buildToolsVersion = '28.0.3'
+
 }
 
 dependencies {

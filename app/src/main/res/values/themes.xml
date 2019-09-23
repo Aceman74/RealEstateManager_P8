@@ -1,8 +1,8 @@
 <!--
   ~ /**
-  ~  * Created by Lionel Joffray on 19/09/19 21:47
+  ~  * Created by Lionel Joffray on 23/09/19 21:08
   ~  * Copyright (c) 2019 . All rights reserved.
-  ~  * Last modified 19/09/19 17:15
+  ~  * Last modified 23/09/19 18:34
   ~  */
   -->
 
@@ -19,6 +19,7 @@
         <item name="textAppearanceHeadline2">@color/quantum_black_text</item>
         <item name="colorButtonNormal">@color/primaryDarkColor</item>
         <item name="android:logo">@drawable/logo_black</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <!-- ALTERNATIVE THEME -->
@@ -31,6 +32,7 @@
         <item name="textAppearanceHeadline2">@color/quantum_black_text</item>
         <item name="colorButtonNormal">@color/primaryDarkColor_2</item>
         <item name="android:logo">@drawable/logo_white</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="AppTheme_2" parent="Theme.AppCompat.Light.NoActionBar">
@@ -42,6 +44,7 @@
         <item name="textAppearanceHeadline2">@color/quantum_black_text</item>
         <item name="colorButtonNormal">@color/primaryDarkColor_3</item>
         <item name="android:logo">@drawable/logo_black</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="AppTheme_3" parent="Theme.AppCompat.Light.NoActionBar">
@@ -53,6 +56,7 @@
         <item name="textAppearanceHeadline2">@color/quantum_black_text</item>
         <item name="colorButtonNormal">@color/primaryDarkColor_4</item>
         <item name="android:logo">@drawable/logo_black</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <!-- LOGIN ACTIVITY -->

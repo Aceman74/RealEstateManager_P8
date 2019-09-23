@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 23/09/19 21:08
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 21:47
+ *  * Last modified 23/09/19 21:08
  *
  */
 
@@ -93,11 +93,13 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
             R.id.drawer_first -> {
                 val intent = Intent(baseContext, MainActivity::class.java)
                 startActivity(intent)
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 Timber.i(getString(R.string.main_click))
             }
             R.id.drawer_second -> {
                 val intent = Intent(baseContext, SettingsActivity::class.java)
                 startActivity(intent)
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 Timber.i(getString(R.string.settings_click))
             }
             R.id.drawer_third -> {
@@ -203,6 +205,7 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
                 this@SettingsActivity, LoginActivity::class.java))
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     /**
@@ -213,6 +216,7 @@ class SettingsActivity(override val activityLayout: Int = R.layout.activity_sett
             settings_dl.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
     }
 

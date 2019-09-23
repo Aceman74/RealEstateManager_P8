@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 21/09/19 12:09
+ *  * Created by Lionel Joffray on 23/09/19 21:08
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 21/09/19 12:04
+ *  * Last modified 23/09/19 21:08
  *
  */
 
@@ -66,7 +66,6 @@ import kotlinx.android.synthetic.main.fragment_add_images.*
 import kotlinx.android.synthetic.main.fragment_address_map.*
 import kotlinx.android.synthetic.main.fragment_description.*
 import timber.log.Timber
-import java.io.File
 import java.io.IOException
 import java.util.*
 import java.util.concurrent.Executors
@@ -128,7 +127,6 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
     lateinit var mEstateViewModel: EstateViewModel
     lateinit var mPictureViewModel: PictureViewModel
     lateinit var mUserViewModel: UserViewModel
-    lateinit var mEstatePhotosDir: File
     var PICK_IMAGE_REQUEST = 50
 
     /**
@@ -141,7 +139,6 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
         mPresenter.attachView(this)
         configureView()
         configureListeners()
-        mEstatePhotosDir = mPresenter.createPhotosFolder(applicationContext)
         configureViewModel()
         configureMaps()
         mIntentEId = intent.getIntExtra("mEstateId", -1).toLong()
@@ -314,10 +311,10 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
             val user = User(currentUser!!.uid, currentUser!!.displayName.toString(), currentUser!!.email.toString(), currentUser!!.photoUrl.toString(), Utils.todayDate)
             this.mUserViewModel.createUser(user)
             val estate = Estate(null, currentUser!!.uid, mType, mNeighborhood, mPriceResult, mDescResult, mSqft, mRooms, mBathrooms, mBedrooms, mAvailable, currentUser!!.displayName!!, Utils.todayDate, null, mSoldDate, mMarker.position.latitude, mMarker.position.longitude, mAddress)
-            mEstateViewModel.createEstate(estate, mPicturePathArray, mEstatePhotosDir, currentUser!!.displayName, mPictureViewModel, mEstateViewModel, mSchool, mPolices, mHospital)
+            mEstateViewModel.createEstate(estate, mPicturePathArray, applicationContext, currentUser!!.displayName, mPictureViewModel, mEstateViewModel, mSchool, mPolices, mHospital)
         } else {
             val estate = Estate(mIntentEId, currentUser!!.uid, mType, mNeighborhood, mPriceResult, mDescResult, mSqft, mRooms, mBathrooms, mBedrooms, mAvailable, currentUser!!.displayName!!, mDateCreate, Utils.todayDate, mSoldDate, mMarker.position.latitude, mMarker.position.longitude, mAddress)
-            this.mEstateViewModel.createEstate(estate, mPicturePathArray, mEstatePhotosDir, currentUser!!.displayName, mPictureViewModel, mEstateViewModel, mSchool, mPolices, mHospital)
+            this.mEstateViewModel.createEstate(estate, mPicturePathArray, applicationContext, currentUser!!.displayName, mPictureViewModel, mEstateViewModel, mSchool, mPolices, mHospital)
         }
     }
 
@@ -338,6 +335,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 Executors.newSingleThreadScheduledExecutor().schedule({
                     val intent = Intent(baseContext, MainActivity::class.java)
                     startActivity(intent)
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 }, 2, TimeUnit.SECONDS)
             }
         }
@@ -375,6 +373,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                 .setCountry("us")
                 .build(applicationContext)
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     override fun onDestroy() {
@@ -403,6 +402,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                             mPicturePathArray[0] = images[0].path
                         }
                         2 -> {
+
                             var i = 0
                             if (images.size > 1) {
                                 add_image_fading_lo.visibility = View.VISIBLE
@@ -412,6 +412,10 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
                             imageView.setPadding(0, 0, 0, 0)
                             while (i < images.size) {
                                 mPicturePathArray[i + 1] = images[i].path
+                                i++
+                            }
+                            while (i < 7) {
+                                mPicturePathArray[i + 1] = ""
                                 i++
                             }
                         }
@@ -684,11 +688,13 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
             R.id.drawer_first -> {
                 val intent = Intent(baseContext, MainActivity::class.java)
                 startActivity(intent)
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 Timber.i(getString(R.string.main_click))
             }
             R.id.drawer_second -> {
                 val intent = Intent(baseContext, SettingsActivity::class.java)
                 startActivity(intent)
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 Timber.i(getString(R.string.settings_click))
             }
             R.id.drawer_third -> {
@@ -728,6 +734,7 @@ class AddEstateActivity(override val activityLayout: Int = R.layout.activity_add
             add_estate_drawer_layout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
     }
 

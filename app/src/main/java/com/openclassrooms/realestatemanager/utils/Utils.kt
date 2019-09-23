@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 21/09/19 12:09
+ *  * Created by Lionel Joffray on 23/09/19 21:08
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 21/09/19 11:43
+ *  * Last modified 23/09/19 21:08
  *
  */
 
@@ -17,10 +17,12 @@ import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.extensions.backSlashRemover
+import com.openclassrooms.realestatemanager.extensions.customTimeStamp
 import com.openclassrooms.realestatemanager.models.Picture
 import com.openclassrooms.realestatemanager.models.places.nearby_search.Result
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import com.openclassrooms.realestatemanager.viewmodels.PictureViewModel
+import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -155,26 +157,47 @@ object Utils {
     /**
      * Method who convert source path to a custom unique path for saving in Database.
      */
-    fun savePictureToCustomPath(eid: Long, mPicturePathArray: ArrayList<String>, mEstatePhotosDir: File, displayName: String?, mPictureViewModel: PictureViewModel) {
+    fun savePictureToCustomPath(eid: Long, mPicturePathArray: ArrayList<String>, mContext: Context, displayName: String?, mPictureViewModel: PictureViewModel) {
+        val mPhotoDir: File = createPhotosFolder(mContext, eid)
+        mPictureViewModel.deletePictureEid(eid)
+        if (mPhotoDir.exists()) {
+            val children = mPhotoDir.listFiles()
+            for (child in children) {
+                child.delete()
+            }
+        }
         var i = 0
         lateinit var fileDest: File
         while (i < mPicturePathArray.size) {
             if (mPicturePathArray[i] != "") {
+
                 val file = File(mPicturePathArray[i])
                 val pictureName = eid.toString() + "_" + displayName + "_" + "$i"
                 if (i == 0) {
-                    fileDest = File(mEstatePhotosDir.path + "/" + pictureName + "_main.jpg")
+                    fileDest = File(mPhotoDir.path + "/" + String().customTimeStamp() + pictureName + "_main.jpg")
                 } else {
-                    fileDest = File(mEstatePhotosDir.path + "/" + pictureName + ".jpg")
+                    fileDest = File(mPhotoDir.path + "/" + String().customTimeStamp() + pictureName + ".jpg")
                 }
-                    copyFile(file, fileDest)
-
+                copyFile(file, fileDest)
                 savePicture(pictureName, fileDest.toString(), eid, mPictureViewModel)
             }
             i++
         }
     }
 
+    /**
+     * This method create the directory to sazve all images in DB.
+     */
+    fun createPhotosFolder(context: Context, eid: Long): File {
+        val mEstatePhotosDir = File(context.applicationInfo.dataDir + "/files/estate_photos/", eid.toString())
+
+        if (mEstatePhotosDir.mkdir()) {
+            Timber.tag("Folder FUN").d("Directory created")
+        } else {
+            Timber.tag("Folder FUN").d("Directory is not created")
+        }
+        return mEstatePhotosDir
+    }
     /**
      * Save picture to database.
      */

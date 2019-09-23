@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 20/09/19 18:13
+ *  * Created by Lionel Joffray on 23/09/19 21:08
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 20/09/19 17:40
+ *  * Last modified 23/09/19 21:08
  *
  */
 
@@ -179,11 +179,13 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
             R.id.drawer_first -> {
                 val intent = Intent(baseContext, MainActivity::class.java)
                 startActivity(intent)
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 Timber.i(getString(R.string.main_click))
             }
             R.id.drawer_second -> {
                 val intent = Intent(baseContext, SettingsActivity::class.java)
                 startActivity(intent)
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 Timber.i(getString(R.string.settings_click))
             }
             R.id.drawer_third -> {
@@ -204,6 +206,7 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
             detail_estate_drawer_layout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
     }
 
@@ -217,6 +220,7 @@ class EstateDetailActivity(override val activityLayout: Int = R.layout.activity_
                 val intent = Intent(this, AddEstateActivity::class.java)
                 intent.putExtra("mEstateId", mEstateId)
                 startActivity(intent)
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             } else {
                 Utils.snackBarPreset(findViewById(android.R.id.content), "This estate hasn't been added by you.")
             }

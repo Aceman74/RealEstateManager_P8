@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 23/09/19 21:08
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 18:59
+ *  * Last modified 23/09/19 21:08
  *
  */
 
@@ -103,11 +103,13 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
             R.id.drawer_first -> {
                 val intent = Intent(baseContext, MainActivity::class.java)
                 startActivity(intent)
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 Timber.i(getString(R.string.main_click))
             }
             R.id.drawer_second -> {
                 val intent = Intent(baseContext, SettingsActivity::class.java)
                 startActivity(intent)
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 Timber.i(getString(R.string.settings_click))
             }
             R.id.drawer_third -> {
@@ -159,6 +161,7 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
             main_drawer_layout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
     }
 
@@ -170,12 +173,14 @@ class MainActivity(override val activityLayout: Int = R.layout.activity_main) : 
             Toast.makeText(this, getString(R.string.adding_estate), Toast.LENGTH_LONG).show()
             intent = Intent(this, AddEstateActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             true
         }
         R.id.toolbar_search -> {
             Toast.makeText(this, getString(R.string.searching_estate), Toast.LENGTH_LONG).show()
             intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             true
         }
         android.R.id.home -> {

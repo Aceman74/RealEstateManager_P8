@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 20/09/19 18:13
+ *  * Created by Lionel Joffray on 23/09/19 21:08
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 20/09/19 17:37
+ *  * Last modified 23/09/19 18:30
  *
  */
 
@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.slideshow_item.view.*
  */
 class EstateDetailViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
-    var image: ImageView = view.slideshow_img
+    var image: ImageView = view.estate_img
     var text: TextView = view.slideshow_txt
 
     /**
@@ -39,7 +39,6 @@ class EstateDetailViewHolder(view: View) : RecyclerView.ViewHolder(view), View.O
         text.text = (position + 1).toString() + "/" + pictures.size
         Glide.with(itemView)
                 .load(pictures[position].picturePath)
-
                 .into(image)
         itemView.setOnClickListener {
             listener(pictures[position].pictureId!!.toInt())
