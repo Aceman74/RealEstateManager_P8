@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 20/09/19 18:13
+ *  * Created by Lionel Joffray on 24/09/19 11:30
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 20/09/19 18:13
+ *  * Last modified 24/09/19 11:30
  *
  */
 
@@ -57,7 +57,7 @@ class ExtensionsTest {
 
     @Test
     fun stringCustomTimeStampTest() {
-        val dateFormat = SimpleDateFormat("ddMM_HH:mm")
+        val dateFormat = SimpleDateFormat("HH:mm:ss_")
         val date = Date()
 
         val stringResult = String().customTimeStamp()
