@@ -1,16 +1,16 @@
+/*
+ * *
+ *  * Created by Lionel Joffray on 24/09/19 11:15
+ *  * Copyright (c) 2019 . All rights reserved.
+ *  * Last modified 24/09/19 09:22
+ *
+ */
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'jacoco-android'
-/*
- * *
- *  * Created by Lionel Joffray on 23/09/19 21:08
- *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 23/09/19 17:27
- *
- */  // Google Play services Gradle plugin
 apply plugin: 'io.fabric'   //  CrashLytics
 
 android {
@@ -71,7 +71,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.1.0"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
-
     // GOOGLE  //
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.libraries.places:places:2.0.0'
@@ -119,7 +118,6 @@ dependencies {
     // EVERNOTE //
     implementation 'com.evernote:android-state:1.4.1'
     kapt 'com.evernote:android-state-processor:1.4.1'
-
     implementation "org.jetbrains.anko:anko-commons:0.10.4"
 }
 repositories {

@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 23/09/19 21:08
+ *  * Created by Lionel Joffray on 24/09/19 11:15
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 23/09/19 21:08
+ *  * Last modified 24/09/19 09:19
  *  
  */
 
@@ -179,6 +179,7 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
                 // Successfully signed in
                 val user = FirebaseAuth.getInstance().currentUser
                 saveUserToDatabase()
+                login_btn.text = getString(R.string.enter)
                 // ...
             } else {
                 Utils.snackBarPreset(this.findViewById(android.R.id.content), getString(R.string.error_try_again))
@@ -186,7 +187,11 @@ class LoginActivity(override val activityLayout: Int = R.layout.activity_login) 
         }
     }
     /**
+     * 2 bug fixes.
      *
+    textViewMain = activity_main_activity_text_view_main    //  Fix the ID from second activity to main activity.
+    textViewQuantity = activity_main_activity_text_view_quantity
+
     private fun configureTextViewMain() {
     textViewMain.textSize = 15f
     textViewMain.text = "Le premier bien immobilier enregistré vaut "
