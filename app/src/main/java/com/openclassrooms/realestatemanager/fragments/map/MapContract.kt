@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 27/09/19 11:20
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 19:27
+ *  * Last modified 27/09/19 09:45
  *
  */
 
@@ -26,5 +26,6 @@ interface MapContract {
         fun getLocationPermission()
         fun configureMapMarkers()
         fun initMap()
+        fun loadSharedPref()
     }
 }

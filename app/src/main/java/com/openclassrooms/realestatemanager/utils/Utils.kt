@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 23/09/19 21:08
+ *  * Created by Lionel Joffray on 27/09/19 11:20
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 23/09/19 21:08
+ *  * Last modified 27/09/19 11:20
  *
  */
 
@@ -158,6 +158,7 @@ object Utils {
      * Method who convert source path to a custom unique path for saving in Database.
      */
     fun savePictureToCustomPath(eid: Long, mPicturePathArray: ArrayList<String>, mContext: Context, displayName: String?, mPictureViewModel: PictureViewModel) {
+        createBasePhotosFolder(mContext)
         val mPhotoDir: File = createPhotosFolder(mContext, eid)
         mPictureViewModel.deletePictureEid(eid)
         if (mPhotoDir.exists()) {
@@ -186,7 +187,20 @@ object Utils {
     }
 
     /**
-     * This method create the directory to sazve all images in DB.
+     * This method create the Base directory to save all images in DB.
+     */
+    fun createBasePhotosFolder(context: Context) {
+        val mEstatePhotosDir = File(context.applicationInfo.dataDir + "/files/", "estate_photos")
+
+        if (mEstatePhotosDir.mkdir()) {
+            Timber.tag("Folder BASE").d("Directory created")
+        } else {
+            Timber.tag("Folder BASE").d("Directory is not created")
+        }
+
+    }
+    /**
+     * This method create the directory to save all images in DB.
      */
     fun createPhotosFolder(context: Context, eid: Long): File {
         val mEstatePhotosDir = File(context.applicationInfo.dataDir + "/files/estate_photos/", eid.toString())
@@ -198,6 +212,7 @@ object Utils {
         }
         return mEstatePhotosDir
     }
+
     /**
      * Save picture to database.
      */

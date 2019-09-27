@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 19/09/19 21:47
+ *  * Created by Lionel Joffray on 27/09/19 11:20
  *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 19/09/19 19:27
+ *  * Last modified 27/09/19 11:20
  *
  */
 
@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -28,12 +29,16 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.extensions.formatAddress
+import com.openclassrooms.realestatemanager.extensions.priceAddSpace
+import com.openclassrooms.realestatemanager.extensions.priceRemoveSpace
 import com.openclassrooms.realestatemanager.injections.Injection
+import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.viewmodels.EstateViewModel
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.custom_info_window.view.*
 import timber.log.Timber
+import java.io.File
 import kotlin.math.absoluteValue
 
 
@@ -47,6 +52,7 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
     lateinit var mEstateViewModel: EstateViewModel
     val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 100
     private lateinit var mMap: GoogleMap
+    var mDevise = "$"
 
     companion object {
 
@@ -68,6 +74,7 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMap()
+        loadSharedPref()
         mPresenter.attachView(this)
     }
 
@@ -80,16 +87,33 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
     }
 
     /**
+     * Load devise preferences (€ or $)
+     */
+    override fun loadSharedPref() {
+        val shared = activity!!.getSharedPreferences(getString(R.string.app_name), AppCompatActivity.MODE_PRIVATE)
+        mDevise = shared.getString("actual_devise", "$")!!
+    }
+
+    /**
      * This create a custom view of an Estate when user click on a marker.
      */
     override fun getInfoContents(marker: Marker): View {
         val view = (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment).layoutInflater
                 .inflate(R.layout.custom_info_window, null)
-        Picasso.get()
-                .load(marker.tag.toString())
-                .resize(100, 100)
-                .centerCrop()
-                .into(view.custom_pic, MarkerCallback(marker))
+        if (marker.tag.toString().contains("http")) {
+            Picasso.get()
+                    .load(marker.tag.toString())
+                    .resize(100, 100)
+                    .centerCrop()
+                    .into(view.custom_pic, MarkerCallback(marker))
+        } else {
+            var file: File = File(marker.tag.toString())
+            Picasso.get()
+                    .load(file)
+                    .resize(100, 100)
+                    .centerCrop()
+                    .into(view.custom_pic, MarkerCallback(marker))
+        }
         view.custom_name.text = marker.title
         view.custom_details.text = marker.snippet
         return view
@@ -130,7 +154,8 @@ class MapFragment : Fragment(), MapContract.MapViewInterface, OnMapReadyCallback
                 mMap.addMarker(MarkerOptions()
                         .snippet(String().formatAddress(estate[i].estate.fullAddress))
                         .position(LatLng(estate[i].estate.latitude!!, estate[i].estate.longitude!!))
-                        .title("$ " + estate[i].estate.price))
+                        .title(mDevise + " " + if (mDevise == "$") estate[i].estate.price
+                        else String().priceAddSpace(Utils.convertDollarToEuro(String().priceRemoveSpace(estate[i].estate.price).toInt()).toString())))
                         .tag = when (estate[i].pictures.isEmpty()) {
                     true -> "0"
                     false -> estate[i].pictures[0].picturePath
