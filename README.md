@@ -1,6 +1,8 @@
 # RealEstateManager_P8
 Projet 8 de mon parcours Android
 
+Si tu es étudiant OC, laisse moi un petit mot si tu "emprunte" mon code! 
+
 Une grande agence new-yorkaise est spécialisée dans la vente de biens d’exception : duplex, lofts, penthouse et manoirs.
 Jusqu’à présent, elle a fonctionné selon les bonnes vieilles techniques du 19ème siècle : des dossiers papier et un crayon.
 Il est grand temps de s’inscrire dans le digital (et de préserver les forêts). Le board vous demande donc de développer 
