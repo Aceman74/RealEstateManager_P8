@@ -1,8 +1,8 @@
 /*
  * *
- *  * Created by Lionel Joffray on 27/09/19 11:20
- *  * Copyright (c) 2019 . All rights reserved.
- *  * Last modified 27/09/19 10:07
+ *  * Created by Lionel Joffray on 06/02/20 07:04
+ *  * Copyright (c) 2020 . All rights reserved.
+ *  * Last modified 06/02/20 06:58
  *
  */
 apply plugin: 'com.android.application'
@@ -26,12 +26,12 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField "String", "google_maps_key", "\"AIzaSyAmRODU3jNUDegOT_p9eqZQytzUnX5oHXI\""
+            buildConfigField "String", "google_maps_key","\"$System.env.REALESTATE_GOOGLE_API\""
 
         }
         release {
             minifyEnabled false
-            buildConfigField "String", "google_maps_key", "\"AIzaSyAmRODU3jNUDegOT_p9eqZQytzUnX5oHXI\""
+            buildConfigField "String", "google_maps_key","\"$System.env.REALESTATE_GOOGLE_API\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -111,8 +111,8 @@ dependencies {
     implementation 'android.arch.persistence.room:runtime:1.1.1'
     kapt 'android.arch.persistence.room:compiler:1.1.1'
     // IMAGEPICKER //
-    implementation 'com.github.esafirm.android-image-picker:imagepicker:2.1.0'
-    implementation 'com.github.esafirm.android-image-picker:rximagepicker:2.1.0'
+    implementation 'com.github.esafirm.android-image-picker:imagepicker:2.2.0'
+    implementation 'com.github.esafirm.android-image-picker:rximagepicker:2.2.0'
     // EVERNOTE //
     implementation 'com.evernote:android-state:1.4.1'
     kapt 'com.evernote:android-state-processor:1.4.1'
